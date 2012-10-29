@@ -33,12 +33,12 @@ $nGare = 0;
 		
 		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 			<tr>
-				<td align="center">#</td>
-				<td align="center">Nome</td>
-				<td align="center">Localita'</td>
-				<td align="center">Campionato</td>
-				<td align="center">Data</td>
-				<td align="center">Stagione</td>
+				<td class="FacetFormHeaderFont">#</td>
+				<td class="FacetFormHeaderFont">Nome</td>
+				<td class="FacetFormHeaderFont">Localita'</td>
+				<td class="FacetFormHeaderFont">Campionato</td>
+				<td class="FacetFormHeaderFont">Data</td>
+				<td class="FacetFormHeaderFont">Stagione</td>
 			</tr>
 <?php
 		$elencoGare = $GareAtletaManager::lista($idAtleta);
@@ -62,4 +62,3 @@ $nGare = 0;
 		</table>
 	</body>
 </html>
-

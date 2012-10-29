@@ -1,4 +1,3 @@
-
 <?php
 require_once("ClassificaManager.php");
 
@@ -29,10 +28,10 @@ $presenze = ClassificaManager::lista($stagione);
 ?>		
 		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 			<tr>
-				<td align="center">#</td>
-				<td align="center">Atleta</td>
-				<td align="center">Sesso</td>
-				<td align="center">Punti</td>
+				<td class="FacetFormHeaderFont">#</td>
+				<td class="FacetFormHeaderFont">Atleta</td>
+				<td class="FacetFormHeaderFont">Sesso</td>
+				<td class="FacetFormHeaderFont">Punti</td>
 			</tr>
 <?php
 		$contatore = 1;
@@ -50,4 +49,3 @@ $presenze = ClassificaManager::lista($stagione);
 		</table>
 	</body>
 </html>
-

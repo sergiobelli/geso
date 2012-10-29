@@ -100,7 +100,7 @@
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 			<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 				<tr>
-					<td align="center">Atleta</td>
+					<td class="FacetFormHeaderFont">Atleta</td>
 					<td align="right">
 						
 						<select name="idAtleta">
@@ -120,15 +120,15 @@
 					</td>
 				</tr>
 				<tr>
-					<td align="center">Data Scadenza</td>
+					<td class="FacetFormHeaderFont">Data Scadenza</td>
 					<td align="center"><input type="text" id="dataScadenza" name="dataScadenza" value="<?php echo $dataScadenza ?>"/></td>
 				</tr>				
 				<tr>
-					<td align="center">Agonistico</td>
+					<td class="FacetFormHeaderFont">Agonistico</td>
 					<td align="center"><input type="text" id="agonistico" name="agonistico" value="<?php echo $agonistico ?>"/></td>
 				</tr>
 				<tr>
-					<td align="center">&nbsp;</td>
+					<td class="FacetFormHeaderFont">&nbsp;</td>
 					<td align="right">
 						<input type="button" id="cancella" name="cancella" value="cancella" />
 						<input type="submit" id="salva" name="submit" value="salva" />
@@ -148,30 +148,68 @@
 ?>		
 		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 			<tr>
-				<td align="center">#</td>
-				<td align="center">Cognome</td>
-				<td align="center">Nome</td>
-				<td align="center">Sesso</td>
-				<td align="center">Data di Nascita</td>
-				<td align="center">Data Scadenza</td>
-				<td align="center">Agonistico</td>
-				<td align="center" colspan="2">Operazioni</td>
+				<td class="FacetFormHeaderFont">#</td>
+				<td class="FacetFormHeaderFont">Cognome</td>
+				<td class="FacetFormHeaderFont">Nome</td>
+				<td class="FacetFormHeaderFont">Sesso</td>
+				<td class="FacetFormHeaderFont">Data di Nascita</td>
+				<td class="FacetFormHeaderFont">Data Scadenza</td>
+				<td class="FacetFormHeaderFont">Agonistico</td>
+				<td class="FacetFormHeaderFont" colspan="2">Operazioni</td>
 			</tr>
 <?php
 		$contatore = 1;
 		while ($elencoCertificatiMedici_row = dbms_fetch_array($elencoCertificatiMedici)) {
+			
+			$dataScadenzaCertificato = $elencoCertificatiMedici_row["data_scadenza"];
+			$diffDate = fDateDiff(date("Y-m-d"), $dataScadenzaCertificato);
+			
 			print "<tr>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$contatore."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoCertificatiMedici_row["cognome_atleta"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoCertificatiMedici_row["nome_atleta"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoCertificatiMedici_row["sesso_atleta"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoCertificatiMedici_row["data_nascita_atleta"]." &nbsp;</td>";
-			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoCertificatiMedici_row["data_scadenza"]." &nbsp;</td>";
+			
+			if ($diffDate >= 90) {
+				print "<td class=\"FacetDataTDGreen\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
+			} else if ($diffDate < 90 && $diffDate >= 30) {
+				print "<td class=\"FacetDataTDOrange\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
+			} else if ($diffDate < 30) {
+				print "<td class=\"FacetDataTDRed\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
+			} else {
+				print "<td class=\"FacetDataTD\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
+			}
+			
+			
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoCertificatiMedici_row["agonistico"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='CertificatoMedicoView.php?operazione=cancella&idCertificatoMedico=".$elencoCertificatiMedici_row["id_certificato_medico"]."'>cancella</a></td>";
 			print "</tr>";
 			$contatore++;
 		}
+		
+		function fDateDiff($dateFrom, $dateA) {
+		
+			if ($dateA != '') {
+				list($d, $m, $y) = explode('/', $dateA);
+				$mk=mktime(0, 0, 0, $m, $d, $y);
+				$dateTo=strftime('%Y-%m-%d',$mk);
+			} else {
+				return 100;
+			}
+			
+			if(empty($dateFrom)) $dateFrom = date('Y-m-d'); 
+			if(empty($dateTo)) $dateTo = date('Y-m-d'); 
+			
+			$a_1 = explode('-',$dateFrom); 
+			$a_2 = explode('-',$dateTo); 
+			$mktime1 = mktime(0, 0, 0, $a_1[1], $a_1[2], $a_1[0]); 
+			$mktime2 = mktime(0, 0, 0, $a_2[1], $a_2[2], $a_2[0]); 
+			$secondi = $mktime1 - $mktime2; 
+			$giorni = intval($secondi / 86400);  
+			return -($giorni);
+		}
+		
 ?>			
 		</table>
 		

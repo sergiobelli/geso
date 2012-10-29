@@ -119,34 +119,34 @@
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 			<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 				<tr>
-					<td align="center">Nome</td>
+					<td class="FacetFormHeaderFont">Nome</td>
 					<td align="center">
 						<input type="hidden" id="idGara" name="idGara" value="<?php echo $idGara ?>" />
 						<input type="text" id="nome" name="nome" value="<?php echo $nome ?>" />
 					</td>
 				</tr>				
 				<tr>
-					<td align="center">Localita'</td>
+					<td class="FacetFormHeaderFont">Localita'</td>
 					<td align="center"><input type="text" id="localita" name="localita" value="<?php echo $localita ?>" /></td>
 				</tr>
 				<tr>
-					<td align="center">Campionato</td>
+					<td class="FacetFormHeaderFont">Campionato</td>
 					<td align="center"><input type="text" id="campionato" name="campionato" value="<?php echo $campionato ?>" /></td>
 				</tr>				
 				<tr>
-					<td align="center">Nostra</td>
-					<td align="center">
+					<td class="FacetFormHeaderFont">Nostra</td>
+					<td class="FacetFormHeaderFont">
 						<input type="radio" id="nostra" name="nostra" value="S" <?php $nostra == 'S' ? print 'checked="checked" '  : '' ?> /> Si
 						<br/>
 						<input type="radio" id="nostra" name="nostra" value="N" <?php $nostra == 'N' || $nostra == '' ? print 'checked="checked" '  : '' ?> /> No
 					</td>
 				</tr>
 				<tr>
-					<td align="center">Data</td>
+					<td class="FacetFormHeaderFont">Data</td>
 					<td align="center"><input type="text" id="data" name="data" value="<?php echo $data ?>" /></td>
 				</tr>
 				<tr>
-					<td align="center">&nbsp;</td>
+					<td class="FacetFormHeaderFont">&nbsp;</td>
 					<td align="right">
 						<input type="button" id="cancella" name="cancella" value="cancella" />
 						<input type="submit" id="salva" name="submit" value="salva" />
@@ -168,14 +168,14 @@
 ?>		
 		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 			<tr>
-				<td align="center">#</td>
-				<td align="center">Codice</td>
-				<td align="center">Nome</td>
-				<td align="center">Localita'</td>
-				<td align="center">Campionato</td>				
-				<td align="center">Nostra</td>
-				<td align="center">Data</td>
-				<td align="center" colspan="2">Operazioni</td>
+				<td class="FacetFormHeaderFont">#</td>
+				<td class="FacetFormHeaderFont">Codice</td>
+				<td class="FacetFormHeaderFont">Nome</td>
+				<td class="FacetFormHeaderFont">Localita'</td>
+				<td class="FacetFormHeaderFont">Campionato</td>				
+				<td class="FacetFormHeaderFont">Nostra</td>
+				<td class="FacetFormHeaderFont">Data</td>
+				<td class="FacetFormHeaderFont" colspan="2">Operazioni</td>
 			</tr>
 <?php
 		$contatore = 1;

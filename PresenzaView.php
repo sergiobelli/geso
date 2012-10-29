@@ -93,7 +93,7 @@
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 			<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 				<tr>
-					<td align="center">Atleta</td>
+					<td class="FacetFormHeaderFont">Atleta</td>
 					<td align="right">
 						<input type="hidden" id="idPresenza" name="idPresenza" value="<?php echo $idPresenza ?>" />
 						<select name="atleta">
@@ -113,7 +113,7 @@
 					</td>
 				</tr>				
 				<tr>
-					<td align="center">Gara</td>
+					<td class="FacetFormHeaderFont">Gara</td>
 					<td align="right">
 						<select name="gara">
 							<option> </option>
@@ -132,7 +132,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td align="center">Stagione</td>
+					<td class="FacetFormHeaderFont">Stagione</td>
 					<td align="right">
 						<select name="stagione">
 <?php
@@ -174,12 +174,12 @@ $PresenzaManager = new PresenzaManager();
 ?>		
 		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 			<tr>
-				<td align="center">#</td>
-				<td align="center">Atleta</td>
-				<td align="center">Gara</td>
-				<td align="center">Data Gara</td>
-				<td align="center">Stagione</td>
-				<td align="center" colspan="2">Operazioni</td>
+				<td class="FacetFormHeaderFont">#</td>
+				<td class="FacetFormHeaderFont">Atleta</td>
+				<td class="FacetFormHeaderFont">Gara</td>
+				<td class="FacetFormHeaderFont">Data Gara</td>
+				<td class="FacetFormHeaderFont">Stagione</td>
+				<td class="FacetFormHeaderFont" colspan="2">Operazioni</td>
 			</tr>
 <?php
 

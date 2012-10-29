@@ -122,34 +122,34 @@ $codiceFidal= trim($_POST['codiceFidal']);
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 			<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 				<tr>
-					<td align="center">Cognome</td>
+					<td class="FacetFormHeaderFont">Cognome</td>
 					<td align="center">
 						<input type="hidden" id="idAtleta" name="idAtleta" value="<?php echo $idAtleta ?>" />
 						<input type="text" id="cognome" name="cognome" value="<?php echo $cognome ?>" />
 					</td>
 				</tr>
 				<tr>
-					<td align="center">Nome</td>
+					<td class="FacetFormHeaderFont">Nome</td>
 					<td align="center"><input type="text" id="nome" name="nome" value="<?php echo $nome ?>"/></td>
 				</tr>				
 				<tr>
-					<td align="center">Sesso</td>
+					<td class="FacetFormHeaderFont">Sesso</td>
 					<td align="center"><input type="text" id="sesso" name="sesso" value="<?php echo $sesso ?>"/></td>
 				</tr>
 				<tr>
-					<td align="center">Data di Nascita</td>
+					<td class="FacetFormHeaderFont">Data di Nascita</td>
 					<td align="center"><input type="text" id="dataNascita" name="dataNascita" value="<?php echo $dataNascita ?>"/></td>
 				</tr>
 				<tr>
-					<td align="center">Data di Tesseramento</td>
+					<td class="FacetFormHeaderFont">Data di Tesseramento</td>
 					<td align="center"><input type="text" id="dataTesseramento" name="dataTesseramento" value="<?php echo $dataTesseramento?>"/></td>
 				</tr>
 				<tr>
-					<td align="center">Codice Fidal</td>
+					<td class="FacetFormHeaderFont">Codice Fidal</td>
 					<td align="center"><input type="text" id="codiceFidal" name="codiceFidal" value="<?php echo $codiceFidal?>"/></td>
 				</tr>
 				<tr>
-					<td align="center">&nbsp;</td>
+					<td class="FacetFormHeaderFont">&nbsp;</td>
 					<td align="right">
 						<input type="button" id="cancella" name="cancella" value="cancella" />
 						<input type="submit" id="salva" name="submit" value="salva" />
@@ -169,19 +169,22 @@ $codiceFidal= trim($_POST['codiceFidal']);
 ?>		
 		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 			<tr>
-				<td align="center">#</td>
-				<td align="center">Cognome</td>
-				<td align="center">Nome</td>
-				<td align="center">Sesso</td>
-				<td align="center">Data di Nascita</td>
-				<td align="center">Data di Tesseramento</td>
-				<td align="center">Codice Fidal</td>
-				<td align="center">Data scadenza certificato medico</td>
-				<td align="center" colspan="2">Operazioni</td>
+				<td class="FacetFormHeaderFont">#</td>
+				<td class="FacetFormHeaderFont">Cognome</td>
+				<td class="FacetFormHeaderFont">Nome</td>
+				<td class="FacetFormHeaderFont">Sesso</td>
+				<td class="FacetFormHeaderFont">Data di Nascita</td>
+				<td class="FacetFormHeaderFont">Data di Tesseramento</td>
+				<td class="FacetFormHeaderFont">Codice Fidal</td>
+				<td class="FacetFormHeaderFont">Data scadenza certificato medico</td>
+				<td class="FacetFormHeaderFont" colspan="2">Operazioni</td>
 			</tr>
 <?php
 		$contatore = 1;
 		while ($elencoAtleti_row = dbms_fetch_array($elencoAtleti)) {
+		
+			$dataScadenzaCertificato = $elencoAtleti_row["DATA_SCADENZA_CERTIFICATO_MEDICO"];
+			$diffDate = fDateDiff(date("Y-m-d"), $dataScadenzaCertificato);
 			print "<tr>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$contatore."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoAtleti_row["COGNOME"]."</td>";
@@ -190,11 +193,43 @@ $codiceFidal= trim($_POST['codiceFidal']);
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["DATA_NASCITA"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["DATA_TESSERAMENTO"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["CODICE_FIDAL"]." &nbsp;</td>";
-			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["DATA_SCADENZA_CERTIFICATO_MEDICO"]." &nbsp;</td>";
+			if ($diffDate >= 90) {
+				print "<td class=\"FacetDataTDGreen\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
+			} else if ($diffDate < 90 && $diffDate >= 30) {
+				print "<td class=\"FacetDataTDOrange\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
+			} else if ($diffDate < 30) {
+				print "<td class=\"FacetDataTDRed\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
+			} else {
+				print "<td class=\"FacetDataTD\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
+			}
+			
+			
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='AtletaView.php?operazione=modifica&idAtleta=".$elencoAtleti_row["ID"]."'>modifica</a></td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='AtletaView.php?operazione=cancella&idAtleta=".$elencoAtleti_row["ID"]."'>cancella</a></td>";
 			print "</tr>";
 			$contatore++;
+		}
+		
+		function fDateDiff($dateFrom, $dateA) {
+		
+			if ($dateA != '') {
+				list($d, $m, $y) = explode('/', $dateA);
+				$mk=mktime(0, 0, 0, $m, $d, $y);
+				$dateTo=strftime('%Y-%m-%d',$mk);
+			} else {
+				return 100;
+			}
+			
+			if(empty($dateFrom)) $dateFrom = date('Y-m-d'); 
+			if(empty($dateTo)) $dateTo = date('Y-m-d'); 
+			
+			$a_1 = explode('-',$dateFrom); 
+			$a_2 = explode('-',$dateTo); 
+			$mktime1 = mktime(0, 0, 0, $a_1[1], $a_1[2], $a_1[0]); 
+			$mktime2 = mktime(0, 0, 0, $a_2[1], $a_2[2], $a_2[0]); 
+			$secondi = $mktime1 - $mktime2; 
+			$giorni = intval($secondi / 86400);  
+			return -($giorni);
 		}
 ?>			
 		</table>

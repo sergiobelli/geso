@@ -2,7 +2,7 @@
 BODY, TABLE, TH, TR, TD, UL, OL, LI, P, FONT, A, BLOCKQUOTE, LABEL  {
 	font-family : Tahoma, Verdana, Arial, Helvetica;
 	font-size : 13px;
-	color : #4586bc;
+	color : #504C43;
 }
 
 A:active {
@@ -17,7 +17,7 @@ A:visited {
 }
 
 A:hover {
-	color : #008000;
+	color : Olive;
 	
 }
 
@@ -25,23 +25,20 @@ A:hover {
 
 	bgcolor: #FFFFFF; 
 	color: #000000; 
-	link: #4586bc;
+	link: #504C43;
 	alink: #000000; 
-	vlink: #4586bc; 
+	vlink: #504C43; 
 	text: #000000;
 }
 
 .FacetFormTABLE  {
-	border : solid 1px #4586bc;
-	color: #FFFFFF; 
-	background-color : #4586bc;
+	border : solid 1px #000000;
 }
 
 .FacetFormHeaderFont  {
-	color : #FFFFFF;
-	font-size : 12px;
+	color : #000000;
+	font-size : 16px;
 	font-weight : bold;
-	text-align: center;
 }
 
 .FacetFieldCaptionTD  {
@@ -51,35 +48,35 @@ A:hover {
 }
 
 .FacetDataTD  {
-	background-color : #FFFFFF;
+	background-color : #EFEFEF;
 	color : #000000;
 	font-size : 13px;
 	top : middle;
 }
 
 .FacetDataTDRed {
-	background-color : #FFFFFF;
+	background-color : #EFEFEF;
 	color : #FF0000;
-	font-size : 15px;
+	font-size : 13px;
 	top : middle;
 }
 
 .FacetDataTDOrange {
-	background-color : #FFFFFF;
+	background-color : #EFEFEF;
 	color : #ff9c00;
-	font-size : 14px;
+	font-size : 13px;
 	top : middle;
 }
 
 .FacetDataTDGreen {
-	background-color : #FFFFFF;
+	background-color : #EFEFEF;
 	color : #008000;
 	font-size : 13px;
 	top : middle;
 }
 
 .FacetColumnTD  {
-	color : #4586bc;
+	color : #504C43;
 	background-color : #E5E1D7;
 	font-size : 13px;
 }
@@ -102,7 +99,7 @@ A:hover {
 }
 
 a.FacetSorterLink:link,a.FacetSorterLink:visited  {
-	color : #4586bc;
+	color : #504C43;
 	font-size : 13px;
 	text-decoration : underline;
 }
@@ -114,7 +111,7 @@ a.FacetSorterLink:hover,a.FacetSorterLink:active  {
 }
 
 a.FacetDataLink:link,a.FacetDataLink:visited  {
-	color : #4586bc;
+	color : #504C43;
 	font-size : 13px;
 	text-decoration : underline;
 }
@@ -126,7 +123,7 @@ a.FacetDataLink:hover,a.FacetDataLink:active  {
 }
 
 a.FacetNavigatorLink:link,a.FacetNavigatorLink:visited  {
-	color : #4586bc;
+	color : #504C43;
 	text-decoration : underline;
 }
 
@@ -175,3 +172,4 @@ a.FacetNavigatorLink:hover,a.FacetNavigatorLink:active  {
 	font-size : 10px;
 	font-family : Tahoma, Verdana, Arial, Helvetica;;
 }
+

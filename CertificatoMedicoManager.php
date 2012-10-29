@@ -22,7 +22,7 @@ class CertificatoMedicoManager {
 			where
 				certificato_medico.id_atleta = atleta.id
 			order by
-				atleta.COGNOME, atleta.NOME
+				certificato_medico.data_scadenza
 			");
     }
 	
@@ -31,12 +31,28 @@ class CertificatoMedicoManager {
 			"
 			select 
 				certificato_medico.id,
+				certificato_medico.id_atleta,
 				DATE_FORMAT(certificato_medico.data_scadenza, '%d/%m/%Y') data_scadenza,
 				certificato_medico.agonistico
 			from 
 				certificato_medico
 			where
 				certificato_medico.id = '".$idCertificatoMedico."'
+			");
+    }
+	
+	function getByAtleta ($idAtleta) {
+        return connetti_query(
+			"
+			select 
+				certificato_medico.id,
+				certificato_medico.id_atleta,
+				DATE_FORMAT(certificato_medico.data_scadenza, '%d/%m/%Y') data_scadenza,
+				certificato_medico.agonistico
+			from 
+				certificato_medico
+			where
+				certificato_medico.id_atleta = '".$idAtleta."'
 			");
     }
 	
@@ -47,7 +63,7 @@ class CertificatoMedicoManager {
 		list($d, $m, $y) = explode('/', $dataScadenza);
 		$mk=mktime(0, 0, 0, $m, $d, $y);
 		$dataDiScadenza=strftime('%Y-%m-%d',$mk);
-
+		
 		$t = "certificato_medico"; # nome della tabella
 		$v = array ($idAtleta,$dataDiScadenza,$agonistico); # valori da inserire
 		$r =  "id_atleta,data_scadenza,agonistico"; # campi da popolare
@@ -56,6 +72,7 @@ class CertificatoMedicoManager {
 		$data->connetti();
 		$data->inserisci($t,$v,$r);
 		$data->disconnetti();
+		
 	}
 	
 	function modifica ($idCertificatoMedico, $idAtleta, $dataScadenza, $agonistico) {
