@@ -174,8 +174,9 @@ $codiceFidal= trim($_POST['codiceFidal']);
 				<td align="center">Nome</td>
 				<td align="center">Sesso</td>
 				<td align="center">Data di Nascita</td>
-<td align="center">Data di Tesseramento</td>
-<td align="center">Codice Fidal</td>
+				<td align="center">Data di Tesseramento</td>
+				<td align="center">Codice Fidal</td>
+				<td align="center">Data scadenza certificato medico</td>
 				<td align="center" colspan="2">Operazioni</td>
 			</tr>
 <?php
@@ -187,8 +188,9 @@ $codiceFidal= trim($_POST['codiceFidal']);
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoAtleti_row["NOME"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["SESSO"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["DATA_NASCITA"]." &nbsp;</td>";
-print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["DATA_TESSERAMENTO"]." &nbsp;</td>";
-print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["CODICE_FIDAL"]." &nbsp;</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["DATA_TESSERAMENTO"]." &nbsp;</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["CODICE_FIDAL"]." &nbsp;</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["DATA_SCADENZA_CERTIFICATO_MEDICO"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='AtletaView.php?operazione=modifica&idAtleta=".$elencoAtleti_row["ID"]."'>modifica</a></td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='AtletaView.php?operazione=cancella&idAtleta=".$elencoAtleti_row["ID"]."'>cancella</a></td>";
 			print "</tr>";

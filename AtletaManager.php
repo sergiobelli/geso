@@ -8,16 +8,20 @@ class AtletaManager {
         return connetti_query(
 			"
 				select 
-					a.ID as ID,
-					a.COGNOME as COGNOME, 
-					a.NOME as NOME, 
-					a.SESSO as SESSO,
-					DATE_FORMAT(a.DATA_NASCITA, '%d/%m/%Y') as DATA_NASCITA,
-DATE_FORMAT(a.DATA_TESSERAMENTO, '%d/%m/%Y') as DATA_TESSERAMENTO,
-a.CODICE_FIDAL as CODICE_FIDAL
+					atleta.ID as ID,
+					atleta.COGNOME as COGNOME, 
+					atleta.NOME as NOME, 
+					atleta.SESSO as SESSO,
+					DATE_FORMAT(atleta.DATA_NASCITA, '%d/%m/%Y') as DATA_NASCITA,
+					DATE_FORMAT(atleta.DATA_TESSERAMENTO, '%d/%m/%Y') as DATA_TESSERAMENTO,
+					atleta.CODICE_FIDAL as CODICE_FIDAL,
+					DATE_FORMAT((select certificato_medico.data_scadenza 
+					 from certificato_medico 
+					 where certificato_medico.id_atleta = atleta.id), '%d/%m/%Y') as DATA_SCADENZA_CERTIFICATO_MEDICO
 				from 
-					atleta a
-				group by a.COGNOME, a.NOME
+					atleta
+				group by 
+					atleta.COGNOME, atleta.NOME
 			");
     }
 	
