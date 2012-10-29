@@ -14,6 +14,7 @@ class StagioneManager {
 				from 
 					stagione s
 				group by s.ANNO
+                                order by s.ANNO desc
 			");
     }
 

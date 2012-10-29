@@ -1,1 +1,1 @@
-<div align="right" class="version">v_1_0_0_20111215</div><div align="center">	<a href="AtletaView.php">Atleti</a> 	| <a href="GaraView.php"> Gare </a>	| <a href="PresenzaView.php"> Presenze </a>	| <a href="ClassificaView.php" target="new"> Classifica </a></div><br /><br />
+<div align="right" class="version">v_1_2_0_20120622</div><div align="center">	<a href="AtletaView.php">Atleti</a> 	| <a href="GaraView.php"> Gare </a>	| <a href="PresenzaView.php"> Presenze </a>	| <a href="ClassificaView.php" target="new"> Classifica </a></div><br /><br />

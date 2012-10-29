@@ -29,7 +29,7 @@ class PresenzaManager {
 					and p.ID_GARA = g.ID
 					and p.ID_STAGIONE = s.ID
 				group by p.ID
-				order by g.DATA, g.NOME, a.COGNOME
+				order by g.DATA desc, g.NOME, a.COGNOME
 			");
     }
 

@@ -35,6 +35,24 @@ class GaraManager {
 			");
     }
 
+    function listaByLocalita () {
+        return connetti_query(
+			"
+				select 
+					g.ID as ID,
+					g.CODICE as CODICE,
+					g.NOME as NOME, 
+					g.LOCALITA as LOCALITA,
+				    g.CAMPIONATO as CAMPIONATO,
+				    g.NOSTRA as NOSTRA,
+					DATE_FORMAT(g.DATA, '%d/%m/%Y') as DATA
+				from 
+					gara g
+				group by g.LOCALITA, g.NOME, g.DATA
+                                order by g.LOCALITA
+			");
+    }
+
     function listaOrganizzate () {
         return connetti_query(
 			"

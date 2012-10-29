@@ -1,4 +1,3 @@
-
 <?php
 	require_once("Header.php");
 	require_once("PresenzaManager.php");
@@ -22,10 +21,10 @@
 	// se la sessione di autenticazione
 	// è già impostata non sarà necessario effettuare il login
 	// e il browser verrà reindirizzato alla pagina di scrittura dei post
-	//if (isset($_SESSION['login'])) {
-	//	// reindirizzamento alla homepage in caso di login mancato
-	//	header("Location: LoginView.php");
-	//}
+	if (!isset($_SESSION['login'])) {
+		// reindirizzamento alla homepage in caso di login mancato
+		header("Location: index.php");
+	}
 
 	$PresenzaManager = new PresenzaManager();
 	
@@ -120,7 +119,7 @@
 							<option> </option>
 <?php
 							$GaraManager = new GaraManager();
-							$elencoGare = GaraManager::lista();
+							$elencoGare = GaraManager::listaByLocalita();
 							while ($elencoGare_row = dbms_fetch_array($elencoGare)) {
 								if ($elencoGare_row["ID"] == $idGara) {
 									print( "<option selected value='".$elencoGare_row["ID"]."'>".$elencoGare_row["LOCALITA"]." - ".$elencoGare_row["NOME"]."</option>" );
@@ -136,7 +135,6 @@
 					<td align="center">Stagione</td>
 					<td align="right">
 						<select name="stagione">
-							<option> </option>
 <?php
 							$StagioneManager = new StagioneManager();
 							$elencoStagioni = StagioneManager::lista();
@@ -172,7 +170,7 @@
 		</div>
 <?php
 $PresenzaManager = new PresenzaManager();
-$elencoPresenze = PresenzaManager::lista();
+
 ?>		
 		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 			<tr>
@@ -184,7 +182,13 @@ $elencoPresenze = PresenzaManager::lista();
 				<td align="center" colspan="2">Operazioni</td>
 			</tr>
 <?php
-		$contatore = 1;
+
+                $elencoPresenze = PresenzaManager::lista();
+		while ($elencoPresenze_row = dbms_fetch_array($elencoPresenze)) {
+			$contatore++;
+		}
+
+                $elencoPresenze = PresenzaManager::lista();
 		while ($elencoPresenze_row = dbms_fetch_array($elencoPresenze)) {
 			print "<tr>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$contatore."</td>";
@@ -195,10 +199,9 @@ $elencoPresenze = PresenzaManager::lista();
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='PresenzaView.php?operazione=modifica&idPresenza=".$elencoPresenze_row["ID"]."'>modifica</a></td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='PresenzaView.php?operazione=cancella&idPresenza=".$elencoPresenze_row["ID"]."'>cancella</a></td>";
 			print "</tr>";
-			$contatore++;
+			$contatore--;
 		}
 ?>			
 		</table>
 	</body>
 </html>
-
