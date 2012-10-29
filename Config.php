@@ -2,10 +2,10 @@
  
 //Parametri di accesso: mbasergio.altervista.org
 //server, db, utente, passwd e prefisso per le tabelle 
-$Host     = "localhost";
-$Database = "atletica_valsesia";
-$User     = "root";
-$Password = "";
+$Host     = "sql.atleticavalsesia.it";
+$Database = "atletica60358";
+$User     = "atletica60358";
+$Password = "atle17370";
 $table_prefix = "sd";
 
 

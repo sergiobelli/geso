@@ -1,11 +1,15 @@
 <?php
+
+
+require_once("Config.php");
+
 class MysqlClass
 {
     // variabili per la connessione al database
-	private $nomehost = "localhost";     
-    private $nomeuser = "root";          
-    private $password = "";
-    private $nomedb = "atletica_valsesia";
+	private $Host= "sql.atleticavalsesia.it";     
+    private $User = "atletica60358";          
+    private $Password = "atle17370";
+    private $Database = "atletica60358";
 
 
     // controllo sulle connessioni attive
@@ -16,9 +20,9 @@ class MysqlClass
     {
         if(!$this->attiva)
         {
-         if($connessione = mysql_connect($this->nomehost,$this->nomeuser,$this->password) or die (mysql_error()))
+         if($connessione = mysql_connect($this->Host,$this->User,$this->Password) or die (mysql_error()))
 		 {
-		 $selezione = mysql_select_db($this->nomedb,$connessione) or die (mysql_error());
+		 $selezione = mysql_select_db($this->Database,$connessione) or die (mysql_error());
 		 }
         }else{
          return true;

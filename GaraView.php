@@ -1,4 +1,3 @@
-
 <?php
 	require_once("Header.php");
 	require_once("GaraManager.php");
@@ -137,9 +136,9 @@
 				<tr>
 					<td align="center">Nostra</td>
 					<td align="center">
-						<input type="radio" id="nostra" name="nostra" value="S" <?php $nostra == 'S' ? 'checked' : '' ?> /> Si
+						<input type="radio" id="nostra" name="nostra" value="S" <?php $nostra == 'S' ? print 'checked="checked" '  : '' ?> /> Si
 						<br/>
-						<input type="radio" id="nostra" name="nostra" value="N" <?php $nostra != 'S' ? 'checked' : '' ?> /> No
+						<input type="radio" id="nostra" name="nostra" value="N" <?php $nostra == 'N' || $nostra == '' ? print 'checked="checked" '  : '' ?> /> No
 					</td>
 				</tr>
 				<tr>
@@ -173,7 +172,7 @@
 				<td align="center">Codice</td>
 				<td align="center">Nome</td>
 				<td align="center">Localita'</td>
-				<td align="center">Campionato</td>
+				<td align="center">Campionato</td>				
 				<td align="center">Nostra</td>
 				<td align="center">Data</td>
 				<td align="center" colspan="2">Operazioni</td>
@@ -186,7 +185,7 @@
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoGare_row["CODICE"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoGare_row["NOME"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoGare_row["LOCALITA"]."</td>";
-			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoGare_row["CAMPIONATO"]."</td>";
+			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoGare_row["CAMPIONATO"]."</td>";			
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoGare_row["NOSTRA"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoGare_row["DATA"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='GaraView.php?operazione=modifica&idGara=".$elencoGare_row["ID"]."'>modifica</a></td>";
@@ -198,4 +197,3 @@
 		</table>
 	</body>
 </html>
-

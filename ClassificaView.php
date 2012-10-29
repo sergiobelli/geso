@@ -1,7 +1,7 @@
 
 <?php
 require_once("ClassificaManager.php");
-//prova
+
 
 if (!isset($stagione)) {
 	include ("StagioneManager.php");

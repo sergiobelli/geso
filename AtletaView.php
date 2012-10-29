@@ -5,7 +5,7 @@
 	
 	global $operazione;
 	$operazione = '';
-	    xxxwww
+	
 	global $atleta;
 	
 	global $idAtleta, $cognome, $nome, $sesso, $dataNascita;

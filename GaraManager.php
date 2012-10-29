@@ -31,6 +31,7 @@ class GaraManager {
 				from 
 					gara g
 				group by g.LOCALITA, g.NOME, g.DATA
+                                order by g.DATA desc
 			");
     }
 
@@ -52,7 +53,7 @@ class GaraManager {
 				group by g.NOME, g.LOCALITA, g.DATA
 			");
     }
-	
+
 	function get ($idGara) {
         return connetti_query(
 			"
@@ -107,7 +108,7 @@ class GaraManager {
 		$data->inserisci($t,$v,$r);
 		$data->disconnetti();
 	}
-	
+
 	function modifica ($idGara, $nome, $localita, $campionato, $nostra, $dataGara) {
 	
 		include "funzioni_mysql.php";
