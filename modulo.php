@@ -1,8 +1,7 @@
-
 <?php
-	global $nome, $cognome, $sesso, $dataNascita, $luogoNascita, $indirizzoResidenza, $cittaResidenza, $provinciaResidenza, $numeroTelefono, $email, $message;
+	global $nome, $cognome, $sesso, $dataNascita, $luogoNascita, $indirizzoResidenza, $cittaResidenza, $provinciaResidenza, $numeroTelefono, $email, $codiceFidal, $message;
 	
-	function inserisci ($nome, $cognome, $sesso, $dataNascita, $luogoNascita, $indirizzoResidenza, $cittaResidenza, $provinciaResidenza, $numeroTelefono, $email) {
+	function inserisci ($nome, $cognome, $sesso, $dataNascita, $luogoNascita, $indirizzoResidenza, $cittaResidenza, $provinciaResidenza, $numeroTelefono, $email, $codiceFidal) {
 	
 		include "funzioni_mysql.php";
 		
@@ -13,10 +12,10 @@
 		$t = "iscrizioni_societa"; # nome della tabella
 		$v = array (
 			$nome, $cognome, $sesso, $dataNascita, $luogoNascita, $indirizzoResidenza, 
-			$cittaResidenza, $provinciaResidenza, $numeroTelefono, $email,date("Y-m-d h:i:s")); # valori da inserire
+			$cittaResidenza, $provinciaResidenza, $numeroTelefono, $email, $codiceFidal, date("Y-m-d h:i:s")); # valori da inserire
 		
 		$r =  "nome, cognome, sesso, data_nascita, luogo_nascita, indirizzo_residenza, 
-			comune_residenza, provincia_residenza, numero_telefono, email, data_inserimento"; # campi da popolare
+			comune_residenza, provincia_residenza, numero_telefono, email, codice_fidal, data_inserimento"; # campi da popolare
 		
 		$data = new MysqlClass();
 		$data->connetti();
@@ -36,6 +35,8 @@
 		$provinciaResidenza = $_POST['provinciaResidenza'];
 		$numeroTelefono = $_POST['numeroTelefono'];
 		$email = $_POST['email'];
+                $codiceFidal= $_POST['codiceFidal'];
+ 
 		if(!isset($nome) || $nome=="" ){
 			$message = "Attenzione, inserire il nome.";
 		} 
@@ -82,7 +83,7 @@
 			
 			//registrare su tabella
 			try {
-				inserisci($nome, $cognome, $sesso, $dataNascita, $luogoNascita, $indirizzoResidenza, $cittaResidenza, $provinciaResidenza, $numeroTelefono, $email);
+				inserisci($nome, $cognome, $sesso, $dataNascita, $luogoNascita, $indirizzoResidenza, $cittaResidenza, $provinciaResidenza, $numeroTelefono, $email, $codiceFidal);
 			} catch(Exception $e) {
 				$message =  'Message: ' .$e->getMessage();
 			}
@@ -104,7 +105,8 @@
 					"\nCitta' di residenza = ".$cittaResidenza.
 					"\nProvincia di residenza = ".$provinciaResidenza.
 					"\nNumero di telefono = ".$numeroTelefono.
-					"\nEmail = ".$email;
+					"\nEmail = ".$email.
+                                        "\nCodice Fidal = ".$codiceFidal;
 				mail("sergiobelli81@gmail.com, sergio.belli@email.it, danilo.belli@email.it, atleticavalsesia@libero.it, info@atleticavalsesia.it", $object, $mailMessage);
 			} catch(Exception $e) {
 				$message =  'Message: ' .$e->getMessage();
@@ -122,6 +124,7 @@
 						"\nProvincia di residenza = ".$provinciaResidenza.
 						"\nNumero di telefono = ".$numeroTelefono.
 						"\nEmail = ".$email.
+                                                "\nCodice Fidal = ".$codiceFidal.
 						"\r\n\r\n\r\nVerrai contattato prontamente da un dirigente della societa'. \n\nCordiali saluti.\nAtletica Valsesia";
 					mail($_POST['email'], $object, $mailMessage);
 					$message = "Ciao ".$nome.",<br />&nbsp;&nbsp;&nbsp;&nbsp;grazie per aver correttamente completato il form di iscrizione alla nostra societa'.<br />Ecco di seguito i dati da te inseriti <br />Nome = ".$nome.
@@ -133,6 +136,7 @@
 						"<br />Provincia di residenza = ".$provinciaResidenza.
 						"<br />Numero di telefono = ".$numeroTelefono.
 						"<br />Email = ".$email.
+                                                "<br />Codice Fidal = ".$codiceFidal.
 						"<br /><br /><br />Verrai contattato prontamente da un dirigente della societa'. <br /><br />Cordiali saluti.<br />Atletica Valsesia";
 				} catch(Exception $e) {
 					$message =  'Message: ' .$e->getMessage();
@@ -216,6 +220,10 @@
 					<td align="right"><input type="text" id="email" name="email" value="<?php echo $email ?>" /></td>
 				</tr>
 				<tr>
+					<td align="left">Codice Fidal</td>
+					<td align="right"><input type="text" id="email" name="codiceFidal" value="<?php echo $codiceFidal?>" /></td>
+				</tr>
+				<tr>
 					<td align="right" colspan="2">* campi obbligatori</td>
 				</tr>
 				<tr>
@@ -228,4 +236,4 @@
 		</form>
 	</body>
 </html>
-
+	

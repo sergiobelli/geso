@@ -8,13 +8,15 @@
 	
 	global $atleta;
 	
-	global $idAtleta, $cognome, $nome, $sesso, $dataNascita;
+	global $idAtleta, $cognome, $nome, $sesso, $dataNascita, $dataTesseramento, $codiceFidal;
 	$idAtleta = '';
 	$cognome = '';
 	$nome = '';
 	$sesso = '';
 	$dataNascita = '';
-	
+	$dataTesseramento = '';
+        $codiceFidal = '';
+
 	// inizializzazione della sessione
 	//session_start();
 	// se la sessione di autenticazione
@@ -36,6 +38,8 @@
 			$nome = $atleta_row["NOME"];
 			$sesso = $atleta_row["SESSO"];
 			$dataNascita = $atleta_row["DATA_NASCITA"];
+$dataTesseramento = $atleta_row["DATA_TESSERAMENTO"];
+$codiceFidal = $atleta_row["CODICE_FIDAL"];
 		}		
 	} else if (isset($_GET['operazione']) && $_GET['operazione'] == 'cancella') {
 		$operazione = 'cancella';
@@ -67,6 +71,8 @@
 			$nome = trim($_POST['nome']);
 			$sesso = trim($_POST['sesso']);
 			$dataNascita = trim($_POST['dataNascita']);
+$dataTesseramento= trim($_POST['dataTesseramento']);
+$codiceFidal= trim($_POST['codiceFidal']);
 			/*
 			$idAtleta = trim(filter_var($_POST['idAtleta'], FILTER_SANITIZE_STRING));
 			$cognome = trim(filter_var($_POST['cognome'], FILTER_SANITIZE_STRING));
@@ -76,11 +82,11 @@
 			*/
 			
 			if (isset($idAtleta) && $idAtleta != '') {				
-				AtletaManager::modifica($idAtleta, $cognome, $nome, $sesso, $dataNascita);
+				AtletaManager::modifica($idAtleta, $cognome, $nome, $sesso, $dataNascita, $dataTesseramento, $codiceFidal);
 				$idAtleta = null;
 				$operazione = null;
 			} else {
-				AtletaManager::inserisci($cognome, $nome, $sesso, $dataNascita);
+				AtletaManager::inserisci($cognome, $nome, $sesso, $dataNascita, $dataTesseramento, $codiceFidal);
 				$idAtleta = null;
 				$operazione = null;				
 			}
@@ -135,6 +141,14 @@
 					<td align="center"><input type="text" id="dataNascita" name="dataNascita" value="<?php echo $dataNascita ?>"/></td>
 				</tr>
 				<tr>
+					<td align="center">Data di Tesseramento</td>
+					<td align="center"><input type="text" id="dataTesseramento" name="dataTesseramento" value="<?php echo $dataTesseramento?>"/></td>
+				</tr>
+				<tr>
+					<td align="center">Codice Fidal</td>
+					<td align="center"><input type="text" id="codiceFidal" name="codiceFidal" value="<?php echo $codiceFidal?>"/></td>
+				</tr>
+				<tr>
 					<td align="center">&nbsp;</td>
 					<td align="right">
 						<input type="button" id="cancella" name="cancella" value="cancella" />
@@ -159,7 +173,9 @@
 				<td align="center">Cognome</td>
 				<td align="center">Nome</td>
 				<td align="center">Sesso</td>
-				<td align="center">Anno di Nascita</td>
+				<td align="center">Data di Nascita</td>
+<td align="center">Data di Tesseramento</td>
+<td align="center">Codice Fidal</td>
 				<td align="center" colspan="2">Operazioni</td>
 			</tr>
 <?php
@@ -171,6 +187,8 @@
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoAtleti_row["NOME"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["SESSO"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["DATA_NASCITA"]." &nbsp;</td>";
+print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["DATA_TESSERAMENTO"]." &nbsp;</td>";
+print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["CODICE_FIDAL"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='AtletaView.php?operazione=modifica&idAtleta=".$elencoAtleti_row["ID"]."'>modifica</a></td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='AtletaView.php?operazione=cancella&idAtleta=".$elencoAtleti_row["ID"]."'>cancella</a></td>";
 			print "</tr>";
