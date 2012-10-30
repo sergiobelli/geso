@@ -14,8 +14,14 @@ class CertificatoMedicoManager {
 				atleta.COGNOME cognome_atleta,
 				atleta.SESSO sesso_atleta,
 				DATE_FORMAT(atleta.DATA_NASCITA, '%d/%m/%Y') data_nascita_atleta,
+				atleta.email as email_atleta,
 				DATE_FORMAT(certificato_medico.data_scadenza, '%d/%m/%Y') data_scadenza,
-				certificato_medico.agonistico
+				certificato_medico.agonistico,
+				DATE_FORMAT(certificato_medico.avviso_90_gg, '%d/%m/%Y') data_avviso_90_gg,
+				DATE_FORMAT(certificato_medico.avviso_60_gg, '%d/%m/%Y') data_avviso_60_gg,
+				DATE_FORMAT(certificato_medico.avviso_30_gg, '%d/%m/%Y') data_avviso_30_gg,
+				DATE_FORMAT(certificato_medico.avviso_7_gg, '%d/%m/%Y') data_avviso_7_gg,
+				DATE_FORMAT(certificato_medico.avviso_scaduto, '%d/%m/%Y') data_avviso_scaduto
 			from 
 				certificato_medico, 
 				atleta

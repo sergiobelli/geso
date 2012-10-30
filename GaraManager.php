@@ -27,9 +27,15 @@ class GaraManager {
 					g.LOCALITA as LOCALITA,
 				    g.CAMPIONATO as CAMPIONATO,
 				    g.NOSTRA as NOSTRA,
-					DATE_FORMAT(g.DATA, '%d/%m/%Y') as DATA
+					DATE_FORMAT(g.DATA, '%d/%m/%Y') as DATA,
+					s.ANNO as STAGIONE,
+					tg.ID as ID_TIPOLOGIA_GARA,
+					tg.TIPO as TIPOLOGIA_GARA,
+					tg.PUNTEGGIO as PUNTEGGIO
 				from 
-					gara g
+					gara g, stagione s, tipologia_gara tg
+				where 	g.id_stagione = s.id
+							and g.id_tipologia_gara = tg.id
 				group by g.LOCALITA, g.NOME, g.DATA
                                 order by g.DATA desc
 			");
@@ -45,9 +51,12 @@ class GaraManager {
 					g.LOCALITA as LOCALITA,
 				    g.CAMPIONATO as CAMPIONATO,
 				    g.NOSTRA as NOSTRA,
-					DATE_FORMAT(g.DATA, '%d/%m/%Y') as DATA
+					DATE_FORMAT(g.DATA, '%d/%m/%Y') as DATA,
+					s.ANNO as STAGIONE
 				from 
-					gara g
+					gara g, stagione s
+				where g.id_stagione = s.id
+					and s.anno = (select max(anno) from stagione)
 				group by g.LOCALITA, g.NOME, g.DATA
                                 order by g.LOCALITA
 			");
@@ -63,11 +72,13 @@ class GaraManager {
 					g.LOCALITA as LOCALITA,
 				    g.CAMPIONATO as CAMPIONATO,
 				    g.NOSTRA as NOSTRA,
-					DATE_FORMAT(g.DATA, '%d/%m/%Y') as DATA
+					DATE_FORMAT(g.DATA, '%d/%m/%Y') as DATA,
+					s.ANNO as STAGIONE
 				from 
-					gara g
+					gara g, stagione s
 				where
 					g.nostra = true
+					and g.id_stagione = s.id
 				group by g.NOME, g.LOCALITA, g.DATA
 			");
     }
@@ -82,15 +93,18 @@ class GaraManager {
 					g.LOCALITA as LOCALITA,
 				    g.CAMPIONATO as CAMPIONATO,
 				    g.NOSTRA as NOSTRA,
-					DATE_FORMAT(g.DATA, '%d/%m/%Y') as DATA
+					DATE_FORMAT(g.DATA, '%d/%m/%Y') as DATA,
+					s.ANNO as STAGIONE,
+					g.ID_TIPOLOGIA_GARA as ID_TIPOLOGIA_GARA
 				from 
-					gara g
+					gara g, stagione s
 				where g.ID = '".$idGara."'
+					and g.id_stagione = s.id
 				group by g.NOME, g.LOCALITA, g.DATA
 			");
     }
 	
-	function inserisci ($nome, $localita, $campionato, $nostra, $dataGara) {
+	function inserisci ($nome, $localita, $campionato, $nostra, $dataGara, $idStagione, $idTipologiaGara) {
 	
 		include "funzioni_mysql.php";
 		
@@ -118,8 +132,8 @@ class GaraManager {
 		$codice = $a . $b . $c;		
 		
 		$t = "gara"; # nome della tabella
-		$v = array ($codice, $nome,$localita,$campionato, $nostra, $data,date("Y-m-d h:i:s"),date("Y-m-d h:i:s")); # valori da inserire
-		$r =  "codice, nome,localita,campionato,nostra,data,created,modified"; # campi da popolare
+		$v = array ($codice, $nome,$localita,$campionato, $nostra, $idStagione, $idTipologiaGara, $data,date("Y-m-d h:i:s"),date("Y-m-d h:i:s")); # valori da inserire
+		$r =  "codice, nome,localita,campionato,nostra,id_stagione,id_tipologia_gara, data,created,modified"; # campi da popolare
 		
 		$data = new MysqlClass();
 		$data->connetti();
@@ -127,7 +141,7 @@ class GaraManager {
 		$data->disconnetti();
 	}
 
-	function modifica ($idGara, $nome, $localita, $campionato, $nostra, $dataGara) {
+	function modifica ($idGara, $nome, $localita, $campionato, $nostra, $dataGara, $idStagione, $idTipologiaGara) {
 	
 		include "funzioni_mysql.php";
 		
@@ -136,8 +150,8 @@ class GaraManager {
 		$data=strftime('%Y-%m-%d',$mk);
 		
 		$tabella = "gara"; # nome della tabella
-		$valori = array ($nome,$localita,$campionato, $nostra, $data,date("Y-m-d h:i:s"),date("Y-m-d h:i:s")); # valori da inserire
-		$campi =  array ('nome','localita','campionato','nostra', 'data','created','modified'); # campi da popolare
+		$valori = array ($nome,$localita,$campionato, $nostra, $data,$idStagione, $idTipologiaGara,date("Y-m-d h:i:s"),date("Y-m-d h:i:s")); # valori da inserire
+		$campi =  array ('nome','localita','campionato','nostra', 'data','id_stagione','id_tipologia_gara','created','modified'); # campi da popolare
 		
 		$data = new MysqlClass();
 		$data->connetti();

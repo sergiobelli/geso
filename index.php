@@ -29,9 +29,9 @@
 
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 			<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
-				<tr><td align="center">Username</td><td align="center"><input type="text" id="username" name="username" /></td></tr>
-				<tr><td align="center">Password</td><td align="center"><input type="password" id="password" name="password" /></td></tr>
-				<tr><td align="center">&nbsp;</td><td align="right"><input type="submit" id="salva" name="salva"/></td></tr>
+				<tr><td class="FacetFormHeaderFont">Username</td><td align="center"><input type="text" id="username" name="username" /></td></tr>
+				<tr><td class="FacetFormHeaderFont">Password</td><td align="center"><input type="password" id="password" name="password" /></td></tr>
+				<tr><td align="center">&nbsp;</td><td align="right"><input type="submit" id="salva" name="salva" class="FacetButton"/></td></tr>
 <?php 
 			if (isset($message)) { 
 				print "<tr>"; 

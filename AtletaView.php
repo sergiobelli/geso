@@ -8,7 +8,7 @@
 	
 	global $atleta;
 	
-	global $idAtleta, $cognome, $nome, $sesso, $dataNascita, $dataTesseramento, $codiceFidal;
+	global $idAtleta, $cognome, $nome, $sesso, $dataNascita, $dataTesseramento, $codiceFidal, $comuneResidenza, $provinciaResidenza, $indirizzoResidenza, $telefono, $cellulare, $email, $taglia, $consensoTrattamentoDati;
 	$idAtleta = '';
 	$cognome = '';
 	$nome = '';
@@ -16,6 +16,14 @@
 	$dataNascita = '';
 	$dataTesseramento = '';
         $codiceFidal = '';
+	$comuneResidenza = '';
+	$provinciaResidenza = '';
+	$indirizzoResidenza = '';
+	$telefono = '';
+	$cellulare = '';
+	$email = '';
+	$taglia = '';
+	$consensoTrattamentoDati;
 
 	// inizializzazione della sessione
 	//session_start();
@@ -38,8 +46,16 @@
 			$nome = $atleta_row["NOME"];
 			$sesso = $atleta_row["SESSO"];
 			$dataNascita = $atleta_row["DATA_NASCITA"];
-$dataTesseramento = $atleta_row["DATA_TESSERAMENTO"];
-$codiceFidal = $atleta_row["CODICE_FIDAL"];
+			$dataTesseramento = $atleta_row["DATA_TESSERAMENTO"];
+			$codiceFidal = $atleta_row["CODICE_FIDAL"];
+			$comuneResidenza= $atleta_row["COMUNE_RESIDENZA"];
+			$provinciaResidenza= $atleta_row["PROVINCIA_RESIDENZA"];
+			$indirizzoResidenza= $atleta_row["INDIRIZZO_RESIDENZA"];
+			$telefono= $atleta_row["TELEFONO"];
+			$cellulare= $atleta_row["CELLULARE"];
+			$email= $atleta_row["EMAIL"];
+			$taglia= $atleta_row["TAGLIA"];
+			$consensoTrattamentoDati= $atleta_row["CONSENSO_DATI_PERSONALI"];
 		}		
 	} else if (isset($_GET['operazione']) && $_GET['operazione'] == 'cancella') {
 		$operazione = 'cancella';
@@ -71,8 +87,16 @@ $codiceFidal = $atleta_row["CODICE_FIDAL"];
 			$nome = trim($_POST['nome']);
 			$sesso = trim($_POST['sesso']);
 			$dataNascita = trim($_POST['dataNascita']);
-$dataTesseramento= trim($_POST['dataTesseramento']);
-$codiceFidal= trim($_POST['codiceFidal']);
+			$dataTesseramento= trim($_POST['dataTesseramento']);
+			$codiceFidal= trim($_POST['codiceFidal']);
+			$comuneResidenza= trim($_POST['comuneResidenza']);
+			$provinciaResidenza= trim($_POST['provinciaResidenza']);
+			$indirizzoResidenza= trim($_POST['indirizzoResidenza']);
+			$telefono= trim($_POST['telefono']);
+			$cellulare= trim($_POST['cellulare']);
+			$email= trim($_POST['email']);
+			$taglia= trim($_POST['taglia']);
+			$consensoTrattamentoDati= trim($_POST['consensoTrattamentoDati']);
 			/*
 			$idAtleta = trim(filter_var($_POST['idAtleta'], FILTER_SANITIZE_STRING));
 			$cognome = trim(filter_var($_POST['cognome'], FILTER_SANITIZE_STRING));
@@ -82,13 +106,70 @@ $codiceFidal= trim($_POST['codiceFidal']);
 			*/
 			
 			if (isset($idAtleta) && $idAtleta != '') {				
-				AtletaManager::modifica($idAtleta, $cognome, $nome, $sesso, $dataNascita, $dataTesseramento, $codiceFidal);
+				AtletaManager::modifica(
+					$idAtleta, 
+					$cognome, 
+					$nome, 
+					$sesso, 
+					$dataNascita, 
+					$dataTesseramento, 
+					$codiceFidal, 
+					$comuneResidenza, 
+					$provinciaResidenza, 
+					$indirizzoResidenza, 
+					$telefono, 
+					$cellulare, 
+					$email, 
+					$taglia, 
+					$consensoTrattamentoDati);
 				$idAtleta = null;
 				$operazione = null;
+				$cognome = null;
+				$nome = null;
+					$sesso = null;
+					$dataNascita = null;
+					$dataTesseramento = null;
+					$codiceFidal = null;
+					$comuneResidenza = null;
+					$provinciaResidenza = null;
+					$indirizzoResidenza = null;
+					$telefono = null;
+					$cellulare = null;
+					$email = null;
+					$taglia = null;
+					$consensoTrattamentoDati = null;
 			} else {
-				AtletaManager::inserisci($cognome, $nome, $sesso, $dataNascita, $dataTesseramento, $codiceFidal);
+				AtletaManager::inserisci(
+					$cognome, 
+					$nome, 
+					$sesso, 
+					$dataNascita, 
+					$dataTesseramento, 
+					$codiceFidal, 
+					$comuneResidenza, 
+					$provinciaResidenza, 
+					$indirizzoResidenza, 
+					$telefono, 
+					$cellulare, 
+					$email, 
+					$taglia, 
+					$consensoTrattamentoDati);
 				$idAtleta = null;
-				$operazione = null;				
+				$operazione = null;	
+				$cognome = null;
+				$nome = null;
+					$sesso = null;
+					$dataNascita = null;
+					$dataTesseramento = null;
+					$codiceFidal = null;
+					$comuneResidenza = null;
+					$provinciaResidenza = null;
+					$indirizzoResidenza = null;
+					$telefono = null;
+					$cellulare = null;
+					$email = null;
+					$taglia = null;
+					$consensoTrattamentoDati = null;			
 			}
 			
 		}	
@@ -123,36 +204,81 @@ $codiceFidal= trim($_POST['codiceFidal']);
 			<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 				<tr>
 					<td class="FacetFormHeaderFont">Cognome</td>
-					<td align="center">
+					<td align="right">
 						<input type="hidden" id="idAtleta" name="idAtleta" value="<?php echo $idAtleta ?>" />
 						<input type="text" id="cognome" name="cognome" value="<?php echo $cognome ?>" />
 					</td>
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">Nome</td>
-					<td align="center"><input type="text" id="nome" name="nome" value="<?php echo $nome ?>"/></td>
-				</tr>				
+					<td align="right"><input type="text" id="nome" name="nome" value="<?php echo $nome ?>"/></td>
+				</tr>	
 				<tr>
 					<td class="FacetFormHeaderFont">Sesso</td>
-					<td align="center"><input type="text" id="sesso" name="sesso" value="<?php echo $sesso ?>"/></td>
-				</tr>
+					<td class="FacetFormHeaderFont">
+						<input type="radio" id="sesso" name="sesso" value="M" <?php $sesso == 'M' ? print 'checked="checked" '  : '' ?> /> M
+						<br/>
+						<input type="radio" id="sesso" name="sesso" value="F" <?php $sesso == 'F' ? print 'checked="checked" '  : '' ?> /> F
+					</td>
+				</tr>				
+				
+				
+				
 				<tr>
 					<td class="FacetFormHeaderFont">Data di Nascita</td>
-					<td align="center"><input type="text" id="dataNascita" name="dataNascita" value="<?php echo $dataNascita ?>"/></td>
+					<td align="right"><input type="text" id="dataNascita" name="dataNascita" value="<?php echo $dataNascita ?>"/></td>
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">Data di Tesseramento</td>
-					<td align="center"><input type="text" id="dataTesseramento" name="dataTesseramento" value="<?php echo $dataTesseramento?>"/></td>
+					<td align="right"><input type="text" id="dataTesseramento" name="dataTesseramento" value="<?php echo $dataTesseramento?>"/></td>
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">Codice Fidal</td>
-					<td align="center"><input type="text" id="codiceFidal" name="codiceFidal" value="<?php echo $codiceFidal?>"/></td>
+					<td align="right"><input type="text" id="codiceFidal" name="codiceFidal" maxlength="8" size="10" value="<?php echo $codiceFidal?>"/></td>
 				</tr>
+
+				<tr>
+					<td class="FacetFormHeaderFont">Comune di residenza</td>
+					<td align="right"><input type="text" id="comuneResidenza" name="comuneResidenza" value="<?php echo ($comuneResidenza) ?>"/></td>
+				</tr>
+				<tr>
+					<td class="FacetFormHeaderFont">Provincia di residenza</td>
+					<td align="right"><input type="text" id="provinciaResidenza" name="provinciaResidenza" maxlength="2" size="3" value="<?php echo ($provinciaResidenza) ?>"/></td>
+				</tr>
+				<tr>
+					<td class="FacetFormHeaderFont">Indirizzo di residenza</td>
+					<td align="right"><input type="text" id="indirizzoResidenza" name="indirizzoResidenza" value="<?php echo ($indirizzoResidenza) ?>"/></td>
+				</tr>
+				<tr>
+					<td class="FacetFormHeaderFont">Telefono</td>
+					<td align="right"><input type="text" id="telefono" name="telefono" maxlength="10" size="11" value="<?php echo ($telefono) ?>"/></td>
+				</tr>
+				<tr>
+					<td class="FacetFormHeaderFont">Cellulare</td>
+					<td align="right"><input type="text" id="cellulare" name="cellulare" maxlength="10" size="11" value="<?php echo ($cellulare) ?>"/></td>
+				</tr>
+				<tr>
+					<td class="FacetFormHeaderFont">Email</td>
+					<td align="right"><input type="text" id="email" name="email" value="<?php echo ($email) ?>"/></td>
+				</tr>
+				<tr>
+					<td class="FacetFormHeaderFont">Taglia</td>
+					<td align="right"><input type="text" id="taglia" name="taglia" value="<?php echo ($taglia) ?>"/></td>
+				</tr>
+				<tr>
+					<td class="FacetFormHeaderFont">Consenso al trattamento dei dati sensibili</td>
+					<td class="FacetFormHeaderFont">
+						<input type="radio" id="consensoTrattamentoDati" name="consensoTrattamentoDati" value="S" <?php $consensoTrattamentoDati == 'S' ? print 'checked="checked" '  : '' ?> /> Si
+						<br/>
+						<input type="radio" id="consensoTrattamentoDati" name="consensoTrattamentoDati" value="N" <?php $consensoTrattamentoDati == 'N' || $consensoTrattamentoDati == '' ? print 'checked="checked" '  : '' ?> /> No
+					</td>
+				</tr>
+
 				<tr>
 					<td class="FacetFormHeaderFont">&nbsp;</td>
 					<td align="right">
-						<input type="button" id="cancella" name="cancella" value="cancella" />
-						<input type="submit" id="salva" name="submit" value="salva" />
+						<input class="FacetButton" type="button" id="cancella" name="cancella" value="cancella" />
+						<input class="FacetButton" type="submit" id="salva" name="submit" value="salva" />
 					</td>
 				</tr>
 			</table>
@@ -176,7 +302,13 @@ $codiceFidal= trim($_POST['codiceFidal']);
 				<td class="FacetFormHeaderFont">Data di Nascita</td>
 				<td class="FacetFormHeaderFont">Data di Tesseramento</td>
 				<td class="FacetFormHeaderFont">Codice Fidal</td>
-				<td class="FacetFormHeaderFont">Data scadenza certificato medico</td>
+				<td class="FacetFormHeaderFont">Certificato medico</td>
+				<td class="FacetFormHeaderFont">Comune di residenza</td>
+				<!--<td class="FacetFormHeaderFont">Telefono</td>-->
+				<td class="FacetFormHeaderFont">Cellulare</td>
+				<td class="FacetFormHeaderFont">Email</td>
+				<td class="FacetFormHeaderFont">Taglia</td>
+				<!--<td class="FacetFormHeaderFont">Consenso Trattamento Dati</td>-->
 				<td class="FacetFormHeaderFont" colspan="2">Operazioni</td>
 			</tr>
 <?php
@@ -203,6 +335,24 @@ $codiceFidal= trim($_POST['codiceFidal']);
 				print "<td class=\"FacetDataTD\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
 			}
 			
+			$comRes = $elencoAtleti_row["COMUNE_RESIDENZA"];
+			$provRes = $elencoAtleti_row["PROVINCIA_RESIDENZA"];
+			if ($comRes != '' && provRes != '') {
+				print "<td class=\"FacetDataTD\" align=\"center\">"
+					.$comRes
+					." ("
+					.$provRes
+					.")"
+					." &nbsp;</td>";
+			} else {
+				print "<td class=\"FacetDataTD\" align=\"center\">&nbsp;</td>";
+			}
+			
+			//print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["TELEFONO"]." &nbsp;</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["CELLULARE"]." &nbsp;</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["EMAIL"]." &nbsp;</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["TAGLIA"]." &nbsp;</td>";
+			//print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["CONSENSO_DATI_PERSONALI"]." &nbsp;</td>";
 			
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='AtletaView.php?operazione=modifica&idAtleta=".$elencoAtleti_row["ID"]."'>modifica</a></td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='AtletaView.php?operazione=cancella&idAtleta=".$elencoAtleti_row["ID"]."'>cancella</a></td>";

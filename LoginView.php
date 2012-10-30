@@ -1,4 +1,8 @@
+
 <?php
+
+require_once("LoginManager.php");
+
 	// inizializzazione della sessione
 	//session_start();
 	// se la sessione di autenticazione
@@ -10,6 +14,8 @@
 	}
 	
 	echo "1";
+	
+	$LoginManager = new LoginManager();	
 	
 	// controllo sul parametro d'invio
 	if(isset($_POST['submit']) && (trim($_POST['submit']) == "Login")) {
@@ -27,23 +33,33 @@
 			//$password = sha1($password);
 			// inclusione del file della classe
 			include "funzioni_mysql.php";
+			
 			// istanza della classe
-			$data = new MysqlClass();
+			//$data = new MysqlClass();
+			
 			// chiamata alla funzione di connessione
-			$data->connetti();
+			//$data->connetti();
+			
 			// interrogazione della tabella
-			$auth = $data->query("SELECT id FROM login WHERE username = '$username' AND password = '$password'");
+			$auth = LoginManager::autenticate($username, $password);
+			//$auth = $data->query("SELECT id FROM login WHERE username = '$username' AND password = '$password'");
+			
 			// controllo sul risultato dell'interrogazione
 			if(mysql_num_rows($auth)==0) {
 				// reindirizzamento alla homepage in caso di insuccesso
 				header("Location: LoginView.php");
-			} else {echo "x";
+			} else {
 				// chiamata alla funzione per l'estrazione dei dati
 				$res =  $data->estrai($auth);
+				
 				// creazione del valore di sessione
 				$_SESSION['login'] = $res-> id;
+				
+				LoginManager::gestioneCertificatiMedici();
+				
 				// disconnessione da MySQL
-				$data->disconnetti();
+				//$data->disconnetti();
+				
 				// reindirizzamento alla pagina di amministrazione in caso di successo
 				header("Location: AtletaView.php");
 			}

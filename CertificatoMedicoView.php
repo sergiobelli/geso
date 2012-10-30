@@ -121,17 +121,21 @@
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">Data Scadenza</td>
-					<td align="center"><input type="text" id="dataScadenza" name="dataScadenza" value="<?php echo $dataScadenza ?>"/></td>
+					<td align="right"><input type="text" id="dataScadenza" name="dataScadenza" maxlength="10" size="11" value="<?php echo $dataScadenza ?>"/></td>
 				</tr>				
 				<tr>
 					<td class="FacetFormHeaderFont">Agonistico</td>
-					<td align="center"><input type="text" id="agonistico" name="agonistico" value="<?php echo $agonistico ?>"/></td>
+					<td class="FacetFormHeaderFont">
+						<input type="radio" id="agonistico" name="agonistico" value="S" <?php $agonistico == 'S' ? print 'checked="checked" '  : '' ?> /> Si
+						<br/>
+						<input type="radio" id="agonistico" name="agonistico" value="N" <?php $agonistico == 'N' || $agonistico == '' ? print 'checked="checked" '  : '' ?> /> No
+					</td>
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">&nbsp;</td>
 					<td align="right">
-						<input type="button" id="cancella" name="cancella" value="cancella" />
-						<input type="submit" id="salva" name="submit" value="salva" />
+						<input class="FacetButton" type="button" id="cancella" name="cancella" value="cancella" />
+						<input class="FacetButton" type="submit" id="salva" name="submit" value="salva" />
 					</td>
 				</tr>
 			</table>

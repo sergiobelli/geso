@@ -21,9 +21,21 @@ if (!isset($stagione)) {
 		<div align="center">
 			Classifica "Campionato Sociale Atletica Valsesia" stagione <b><?php echo($stagione); ?></b>
 		</div>
-		<br />
 <?php
 $ClassificaManager = new ClassificaManager();
+$ultimoAggiornamento = '';
+$ultimoAggiornamentoRes = ClassificaManager::getUltimoAggiornamento($stagione);
+while ($ultimoAggiornamentoRes_row = dbms_fetch_array($ultimoAggiornamentoRes)) {
+	$ultimoAggiornamento = $ultimoAggiornamentoRes_row["ULTIMO_AGGIORNAMENTO"];
+}
+?>
+<br/>
+		<div align="center">
+			Ultimo aggiornamento : <b><?php echo($ultimoAggiornamento ); ?></b>
+		</div>
+		<br />
+<?php
+
 $presenze = ClassificaManager::lista($stagione);
 ?>		
 		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
@@ -31,7 +43,8 @@ $presenze = ClassificaManager::lista($stagione);
 				<td class="FacetFormHeaderFont">#</td>
 				<td class="FacetFormHeaderFont">Atleta</td>
 				<td class="FacetFormHeaderFont">Sesso</td>
-				<td class="FacetFormHeaderFont">Punti</td>
+				<td class="FacetFormHeaderFont">Presenze</td>
+				<td class="FacetFormHeaderFont">Punteggio</td>
 			</tr>
 <?php
 		$contatore = 1;
@@ -39,9 +52,9 @@ $presenze = ClassificaManager::lista($stagione);
 			print "<tr>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$contatore."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$presenze_row["COGNOME"]."&nbsp;".$presenze_row["NOME"]." &nbsp;</td>";
-			print "<td class=\"FacetDataTD\" align=\"left\">".$presenze_row["SESSO"]."</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".$presenze_row["SESSO"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='GareAtletaView.php?idAtleta=".$presenze_row["ID_ATLETA"]."'>".$presenze_row["PRESENZE"]."</a></td>";
-			print "<td class=\"FacetDataTD\" align=\"center\">&nbsp;</td>";    
+			print "<td class=\"FacetDataTD\" align=\"center\">".$presenze_row["PUNTEGGIO"]."</td>";
 			print "</tr>";
 			$contatore++;
 		}

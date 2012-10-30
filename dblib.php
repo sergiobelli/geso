@@ -72,12 +72,20 @@ function connetti_query($query) {
 
     global $Host,$User,$Password,$Database,$link;
 
+/*
+$Host     = "localhost";
+$Database = "atletica60358";
+$User     = "root";
+$Password = "";
+$table_prefix = "sd";
+*/
+
 $Host     = "sql.atleticavalsesia.it";
 $Database = "atletica60358";
 $User     = "atletica60358";
 $Password = "atle17370";
 $table_prefix = "sd";
-	
+
     // Connessione al database 
 
     if ( !( $link = mysql_connect( $Host, $User, $Password ) ) ) {

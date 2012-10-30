@@ -148,12 +148,12 @@
 ?>
 						</select>							
 					</td>
-				</tr>				
+				</tr>
 				<tr>
 					<td align="center">&nbsp;</td>
 					<td align="right">
-						<input type="button" id="cancella" name="cancella" value="cancella" />
-						<input type="submit" id="salva" name="submit" value="salva" />
+						<input class="FacetButton" type="button" id="cancella" name="cancella" value="cancella" />
+						<input class="FacetButton" type="submit" id="salva" name="submit" value="salva" />
 					</td>
 				</tr>
 			</table>
