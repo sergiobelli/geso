@@ -13,13 +13,11 @@ require_once("LoginManager.php");
 		header("Location: LoginView.php");
 	}
 	
-	echo "1";
-	
 	$LoginManager = new LoginManager();	
 	
 	// controllo sul parametro d'invio
 	if(isset($_POST['submit']) && (trim($_POST['submit']) == "Login")) {
-		echo "2";
+		
 		// controllo sui parametri di autenticazione inviati
 		if( !isset($_POST['username']) || $_POST['username']=="" ){
 			echo "Attenzione, inserire la username.";
@@ -27,21 +25,22 @@ require_once("LoginManager.php");
 			echo "Attenzione, inserire la password.";
 		} else {
 			// validazione dei parametri tramite filtro per le stringhe
-			echo "3";
+			
 			$username = trim(filter_var($_POST['username'], FILTER_SANITIZE_STRING));
 			$password = trim(filter_var($_POST['password'], FILTER_SANITIZE_STRING));
 			//$password = sha1($password);
+			
 			// inclusione del file della classe
 			include "funzioni_mysql.php";
 			
 			// istanza della classe
-			//$data = new MysqlClass();
+			$data = new MysqlClass();
 			
 			// chiamata alla funzione di connessione
-			//$data->connetti();
+			$data->connetti();
 			
 			// interrogazione della tabella
-			$auth = LoginManager::autenticate($username, $password);
+			$auth = $LoginManager::autenticate($username, $password);
 			//$auth = $data->query("SELECT id FROM login WHERE username = '$username' AND password = '$password'");
 			
 			// controllo sul risultato dell'interrogazione
@@ -55,16 +54,16 @@ require_once("LoginManager.php");
 				// creazione del valore di sessione
 				$_SESSION['login'] = $res-> id;
 				
-				LoginManager::gestioneCertificatiMedici();
+				$LoginManager::gestioneCertificatiMedici();
 				
 				// disconnessione da MySQL
-				//$data->disconnetti();
+				$data->disconnetti();
 				
 				// reindirizzamento alla pagina di amministrazione in caso di successo
-				header("Location: AtletaView.php");
+				header("Location: GaraView.php");
 			}
 		}
-	} else {echo "4";
+	} else {
 		// form per l'autenticazione
 ?>
 		<h1>Accesso all'amministrazione:</h1>

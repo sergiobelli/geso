@@ -81,7 +81,7 @@ class CertificatoMedicoManager {
 		
 	}
 	
-	function modifica ($idCertificatoMedico, $idAtleta, $dataScadenza, $agonistico) {
+	function modifica ($idCertificatoMedico, $idAtleta, $dataScadenza, $agonistico, $avviso) {
 	
 		include "funzioni_mysql.php";
 		
@@ -96,6 +96,25 @@ class CertificatoMedicoManager {
 		$data = new MysqlClass();
 		$data->connetti();
 		$data->modifica($tabella,$valori,$campi,$idAtleta);
+		
+		if ($avviso == 0) {
+			$valori = array ($idCertificatoMedico,date("Y-m-d h:i:s"));
+			$campi =  array ('id', 'avviso_scaduto');
+		} else if ($avviso == 7) {
+			$valori = array ($idCertificatoMedico,date("Y-m-d h:i:s"));
+			$campi =  array ('id', 'avviso_7_gg');
+		} else if ($avviso == 30) {
+			$valori = array ($idCertificatoMedico,date("Y-m-d h:i:s"));
+			$campi =  array ('id', 'avviso_30_gg');
+		} else if ($avviso == 60) {
+			$valori = array ($idCertificatoMedico,date("Y-m-d h:i:s"));
+			$campi =  array ('id', 'avviso_60_gg');
+		} else if ($avviso == 90) {
+			$valori = array ($idCertificatoMedico,date("Y-m-d h:i:s"));
+			$campi =  array ('id', 'avviso_90_gg');
+		} 
+		$data->modifica($tabella,$valori,$campi);
+		
 		$data->disconnetti();
 	}
 	

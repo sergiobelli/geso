@@ -7,9 +7,13 @@
 	if (isset($_POST['username']) && isset($_POST['password'])) {
 		if (($_POST['username'] == 'sergio.belli' && $_POST['password'] == '18ser07gio81')
                      || ($_POST['username'] == 'danilo.belli' && $_POST['password'] == 'bellid')) {
-			session_start();echo "ok";
+			session_start();
 			$_SESSION['login'] = 'autorizzato';
 			$message = null;
+			
+			require_once("LoginManager.php");
+			$LoginManager::gestioneCertificatiMedici();
+			
 			header("Location: AtletaView.php");
 		} else {
 			$message = 'Inserire utenza/password validi!';

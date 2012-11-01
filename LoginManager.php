@@ -15,7 +15,7 @@ class LoginManager {
 	function gestioneCertificatiMedici() {
 		$CertificatoMedicoManager = new CertificatoMedicoManager();
 		
-		$elencoCertificatiMedici = CertificatoMedicoManager::lista();
+		$elencoCertificatiMedici = $CertificatoMedicoManager::lista();
 		while ($elencoCertificatiMedici_row = dbms_fetch_array($elencoCertificatiMedici)) {
 			
 			$dataScadenzaCertificato = $elencoCertificatiMedici_row["data_scadenza"];
@@ -35,23 +35,78 @@ class LoginManager {
 			} else if ($diffDate <= 90 && $diffDate > 60 && $dataAvviso90gg != null) {
 
 				//mail 90gg e update db
-
+				sendMail(
+					$elencoCertificatiMedici_row["nome_atleta"], 
+					$elencoCertificatiMedici_row["cognome_atleta"], 
+					$elencoCertificatiMedici_row["email_atleta"], 
+					90);
+				$CertificatoMedicoManager::modifica(
+					$elencoCertificatiMedici_row["id_certificato_medico"], 
+					null, 
+					null, 
+					null, 
+					90);
+					
 			} else if ($diffDate <= 60 && $diffDate > 30 && $dataAvviso60gg != null) {
 			
 				//mail 60gg e update db
-				
+				sendMail(
+					$elencoCertificatiMedici_row["nome_atleta"], 
+					$elencoCertificatiMedici_row["cognome_atleta"], 
+					$elencoCertificatiMedici_row["email_atleta"], 
+					60);
+				$CertificatoMedicoManager::modifica(
+					$elencoCertificatiMedici_row["id_certificato_medico"], 
+					null, 
+					null, 
+					null, 
+					60);
+					
 			} else if ($diffDate <= 30 && $diffDate > 7 && $dataAvviso30gg != null) {
 				
 				//mail 30gg e update db
-							
+				sendMail(
+					$elencoCertificatiMedici_row["nome_atleta"], 
+					$elencoCertificatiMedici_row["cognome_atleta"], 
+					$elencoCertificatiMedici_row["email_atleta"], 
+					30);
+				$CertificatoMedicoManager::modifica(
+					$elencoCertificatiMedici_row["id_certificato_medico"], 
+					null, 
+					null, 
+					null, 
+					30);
+												
 			} else if ($diffDate <= 7 && $dataAvviso7gg != null) {
 				
 				//mail 7gg e update db
-							
+				sendMail(
+					$elencoCertificatiMedici_row["nome_atleta"], 
+					$elencoCertificatiMedici_row["cognome_atleta"], 
+					$elencoCertificatiMedici_row["email_atleta"], 
+					7);
+				$CertificatoMedicoManager::modifica(
+					$elencoCertificatiMedici_row["id_certificato_medico"], 
+					null, 
+					null, 
+					null, 
+					7);
+					
 			} else {
 
 				//scaduto e update db				
-			
+				sendMail(
+					$elencoCertificatiMedici_row["nome_atleta"], 
+					$elencoCertificatiMedici_row["cognome_atleta"], 
+					$elencoCertificatiMedici_row["email_atleta"], 
+					0);
+				$CertificatoMedicoManager::modifica(
+					$elencoCertificatiMedici_row["id_certificato_medico"], 
+					null, 
+					null, 
+					null, 
+					0);
+					
 			}
 			
 		}
@@ -73,7 +128,7 @@ class LoginManager {
 					$mailMessage = "Ciao, \nil nostro atleta ".$cognomeAtleta." ".$nomeAtleta." presenta un certificato medico scaduto.";
 				} else {
 					$object = "Scadenza certificato atleta : ' .$tipoAvviso";
-					$mailMessage = "Ciao, \nil nostro atleta ".$cognomeAtleta." ".$nomeAtleta." presenta un certificato medico che scadra' nei prossimi ".$tipoAvviso."!";
+					$mailMessage = "Ciao, \nil nostro atleta ".$cognomeAtleta." ".$nomeAtleta." presenta un certificato medico che scadra' nei prossimi ".$tipoAvviso." giorni!";
 				}
 				mail("sergiobelli81@gmail.com, sergio.belli@email.it, danilo.belli@email.it, atleticavalsesia@libero.it, info@atleticavalsesia.it", $object, $mailMessage);
 			} catch(Exception $e) {
