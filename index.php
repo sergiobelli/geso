@@ -4,14 +4,19 @@
 
 	global $username, $password, $message;
 	
+	require_once("LoginManager.php");
+	$LoginManager = new LoginManager();
 	if (isset($_POST['username']) && isset($_POST['password'])) {
-		if (($_POST['username'] == 'sergio.belli' && $_POST['password'] == '18ser07gio81')
-                     || ($_POST['username'] == 'danilo.belli' && $_POST['password'] == 'bellid')) {
+		$auth = $LoginManager::autenticate($_POST['username'],$_POST['password']);
+
+		//if (($_POST['username'] == 'sergio.belli' && $_POST['password'] == '18ser07gio81')
+        //             || ($_POST['username'] == 'danilo.belli' && $_POST['password'] == 'bellid')) {
+		if (mysql_num_rows($auth)!=0) {
 			session_start();
 			$_SESSION['login'] = 'autorizzato';
 			$message = null;
 			
-			require_once("LoginManager.php");
+			
 			$LoginManager::gestioneCertificatiMedici();
 			
 			header("Location: AtletaView.php");
