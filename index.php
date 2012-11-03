@@ -16,7 +16,6 @@
 			$_SESSION['login'] = 'autorizzato';
 			$message = null;
 			
-			
 			$LoginManager::gestioneCertificatiMedici();
 			
 			header("Location: AtletaView.php");

@@ -10,18 +10,18 @@ class CertificatoMedicoManager {
 			select 
 				certificato_medico.id as id_certificato_medico,
 				atleta.id as id_atleta,
-				atleta.NOME nome_atleta,
-				atleta.COGNOME cognome_atleta,
-				atleta.SESSO sesso_atleta,
-				DATE_FORMAT(atleta.DATA_NASCITA, '%d/%m/%Y') data_nascita_atleta,
+				atleta.NOME as nome_atleta,
+				atleta.COGNOME as cognome_atleta,
+				atleta.SESSO as sesso_atleta,
+				DATE_FORMAT(atleta.DATA_NASCITA, '%d/%m/%Y') as data_nascita_atleta,
 				atleta.email as email_atleta,
-				DATE_FORMAT(certificato_medico.data_scadenza, '%d/%m/%Y') data_scadenza,
+				DATE_FORMAT(certificato_medico.data_scadenza, '%d/%m/%Y') as data_scadenza,
 				certificato_medico.agonistico,
-				DATE_FORMAT(certificato_medico.avviso_90_gg, '%d/%m/%Y') data_avviso_90_gg,
-				DATE_FORMAT(certificato_medico.avviso_60_gg, '%d/%m/%Y') data_avviso_60_gg,
-				DATE_FORMAT(certificato_medico.avviso_30_gg, '%d/%m/%Y') data_avviso_30_gg,
-				DATE_FORMAT(certificato_medico.avviso_7_gg, '%d/%m/%Y') data_avviso_7_gg,
-				DATE_FORMAT(certificato_medico.avviso_scaduto, '%d/%m/%Y') data_avviso_scaduto
+				DATE_FORMAT(certificato_medico.avviso_90_gg, '%d/%m/%Y') as data_avviso_90_gg,
+				DATE_FORMAT(certificato_medico.avviso_60_gg, '%d/%m/%Y') as data_avviso_60_gg,
+				DATE_FORMAT(certificato_medico.avviso_30_gg, '%d/%m/%Y') as data_avviso_30_gg,
+				DATE_FORMAT(certificato_medico.avviso_7_gg, '%d/%m/%Y') as data_avviso_7_gg,
+				DATE_FORMAT(certificato_medico.avviso_scaduto, '%d/%m/%Y') as data_avviso_scaduto
 			from 
 				certificato_medico, 
 				atleta
@@ -81,7 +81,7 @@ class CertificatoMedicoManager {
 		
 	}
 	
-	function modifica ($idCertificatoMedico, $idAtleta, $dataScadenza, $agonistico, $avviso) {
+	function modifica ($idCertificatoMedico, $idAtleta, $dataScadenza, $agonistico) {
 	
 		include "funzioni_mysql.php";
 		
@@ -97,25 +97,36 @@ class CertificatoMedicoManager {
 		$data->connetti();
 		$data->modifica($tabella,$valori,$campi,$idAtleta);
 		
-		if ($avviso == 0) {
-			$valori = array ($idCertificatoMedico,date("Y-m-d h:i:s"));
-			$campi =  array ('id', 'avviso_scaduto');
-		} else if ($avviso == 7) {
-			$valori = array ($idCertificatoMedico,date("Y-m-d h:i:s"));
-			$campi =  array ('id', 'avviso_7_gg');
-		} else if ($avviso == 30) {
-			$valori = array ($idCertificatoMedico,date("Y-m-d h:i:s"));
-			$campi =  array ('id', 'avviso_30_gg');
-		} else if ($avviso == 60) {
-			$valori = array ($idCertificatoMedico,date("Y-m-d h:i:s"));
-			$campi =  array ('id', 'avviso_60_gg');
-		} else if ($avviso == 90) {
-			$valori = array ($idCertificatoMedico,date("Y-m-d h:i:s"));
-			$campi =  array ('id', 'avviso_90_gg');
-		} 
-		$data->modifica($tabella,$valori,$campi);
-		
 		$data->disconnetti();
+	}
+	
+	function modificaAvviso ($idCertificatoMedico, $avviso) {
+		if ($avviso == 0) {
+			connetti_query("
+				update certificato_medico
+				set avviso_scaduto = '".date("Y-m-d h:i:s")."'
+				where id = '".$idCertificatoMedico."' ");			
+		} else if ($avviso == 7) {
+			connetti_query("
+				update certificato_medico
+				set avviso_7_gg = '".date("Y-m-d h:i:s")."'
+				where id = '".$idCertificatoMedico."' ");	
+		} else if ($avviso == 30) {
+			connetti_query("
+				update certificato_medico
+				set avviso_30_gg = '".date("Y-m-d h:i:s")."'
+				where id = '".$idCertificatoMedico."' ");	
+		} else if ($avviso == 60) {
+			connetti_query("
+				update certificato_medico
+				set avviso_60_gg = '".date("Y-m-d h:i:s")."'
+				where id = '".$idCertificatoMedico."' ");	
+		} else if ($avviso == 90) {
+			connetti_query("
+				update certificato_medico
+				set avviso_90_gg = '".date("Y-m-d h:i:s")."'
+				where id = '".$idCertificatoMedico."' ");	
+		}
 	}
 	
 	function cancella ($idCertificatoMedico) {	
