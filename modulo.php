@@ -12,7 +12,7 @@
 		$t = "iscrizioni_societa"; # nome della tabella
 		$v = array (
 			$nome, $cognome, $sesso, $dataNascita, $luogoNascita, $indirizzoResidenza, 
-			$cittaResidenza, $provinciaResidenza, $numeroTelefono, $email, $codiceFidal, date("Y-m-d h:i:s")); # valori da inserire
+			$cittaResidenza, $provinciaResidenza, $numeroTelefono, $email, $codiceFidal, date("Y-m-d H:i:s")); # valori da inserire
 		
 		$r =  "nome, cognome, sesso, data_nascita, luogo_nascita, indirizzo_residenza, 
 			comune_residenza, provincia_residenza, numero_telefono, email, codice_fidal, data_inserimento"; # campi da popolare

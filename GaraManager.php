@@ -132,7 +132,7 @@ class GaraManager {
 		$codice = $a . $b . $c;		
 		
 		$t = "gara"; # nome della tabella
-		$v = array ($codice, $nome,$localita,$campionato, $nostra, $idStagione, $idTipologiaGara, $data,date("Y-m-d h:i:s"),date("Y-m-d h:i:s")); # valori da inserire
+		$v = array ($codice, $nome,$localita,$campionato, $nostra, $idStagione, $idTipologiaGara, $data,date("Y-m-d H:i:s"),date("Y-m-d H:i:s")); # valori da inserire
 		$r =  "codice, nome,localita,campionato,nostra,id_stagione,id_tipologia_gara, data,created,modified"; # campi da popolare
 		
 		$data = new MysqlClass();
@@ -150,7 +150,7 @@ class GaraManager {
 		$data=strftime('%Y-%m-%d',$mk);
 		
 		$tabella = "gara"; # nome della tabella
-		$valori = array ($nome,$localita,$campionato, $nostra, $data,$idStagione, $idTipologiaGara,date("Y-m-d h:i:s"),date("Y-m-d h:i:s")); # valori da inserire
+		$valori = array ($nome,$localita,$campionato, $nostra, $data,$idStagione, $idTipologiaGara,date("Y-m-d H:i:s"),date("Y-m-d H:i:s")); # valori da inserire
 		$campi =  array ('nome','localita','campionato','nostra', 'data','id_stagione','id_tipologia_gara','created','modified'); # campi da popolare
 		
 		$data = new MysqlClass();

@@ -104,8 +104,8 @@ class AtletaManager {
 			$email,
 			$taglia,
 			$consensoTrattamentoDati, 
-			date("Y-m-d h:i:s"),
-			date("Y-m-d h:i:s")
+			date("Y-m-d H:i:s"),
+			date("Y-m-d H:i:s")
 		); # valori da inserire
 		$r =  "
 			cognome,
@@ -175,7 +175,7 @@ class AtletaManager {
 			$email,					//12
 			$taglia,					//13
 			$consensoTrattamentoDati,	//14
-			date("Y-m-d h:i:s")			//15
+			date("Y-m-d H:i:s")			//15
 			); # valori da inserire
 		$campi =  array (
 			'cognome',				//1

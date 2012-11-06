@@ -104,27 +104,27 @@ class CertificatoMedicoManager {
 		if ($avviso == 0) {
 			connetti_query("
 				update certificato_medico
-				set avviso_scaduto = '".date("Y-m-d h:i:s")."'
+				set avviso_scaduto = '".date("Y-m-d H:i:s")."'
 				where id = '".$idCertificatoMedico."' ");			
 		} else if ($avviso == 7) {
 			connetti_query("
 				update certificato_medico
-				set avviso_7_gg = '".date("Y-m-d h:i:s")."'
+				set avviso_7_gg = '".date("Y-m-d H:i:s")."'
 				where id = '".$idCertificatoMedico."' ");	
 		} else if ($avviso == 30) {
 			connetti_query("
 				update certificato_medico
-				set avviso_30_gg = '".date("Y-m-d h:i:s")."'
+				set avviso_30_gg = '".date("Y-m-d H:i:s")."'
 				where id = '".$idCertificatoMedico."' ");	
 		} else if ($avviso == 60) {
 			connetti_query("
 				update certificato_medico
-				set avviso_60_gg = '".date("Y-m-d h:i:s")."'
+				set avviso_60_gg = '".date("Y-m-d H:i:s")."'
 				where id = '".$idCertificatoMedico."' ");	
 		} else if ($avviso == 90) {
 			connetti_query("
 				update certificato_medico
-				set avviso_90_gg = '".date("Y-m-d h:i:s")."'
+				set avviso_90_gg = '".date("Y-m-d H:i:s")."'
 				where id = '".$idCertificatoMedico."' ");	
 		}
 	}

@@ -89,7 +89,7 @@ class PresenzaManager {
 		include "funzioni_mysql.php";
 		
 		$t = "presenza"; # nome della tabella
-		$v = array ($idAtleta,$idGara,$idStagione,date("Y-m-d h:i:s"),date("Y-m-d h:i:s")); # valori da inserire
+		$v = array ($idAtleta,$idGara,$idStagione,date("Y-m-d H:i:s"),date("Y-m-d H:i:s")); # valori da inserire
 		$r =  "id_atleta,id_gara,id_stagione,created,modified"; # campi da popolare
 		
 		$data = new MysqlClass();
@@ -103,7 +103,7 @@ class PresenzaManager {
 		include "funzioni_mysql.php";
 		
 		$tabella = "presenza"; # nome della tabella
-		$valori = array ($idAtleta,$idGara,$idStagione,date("Y-m-d h:i:s"),date("Y-m-d h:i:s")); # valori da inserire
+		$valori = array ($idAtleta,$idGara,$idStagione,date("Y-m-d H:i:s"),date("Y-m-d H:i:s")); # valori da inserire
 		$campi =  array ('id_atleta','id_gara','id_stagione','created','modified'); # campi da popolare
 		
 		$data = new MysqlClass();

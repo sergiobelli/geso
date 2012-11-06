@@ -44,8 +44,8 @@ class PreiscrizioniManager {
 		$t = "preiscrizioni"; # nome della tabella
 		$v = array ($cognomeAtleta,$nomeAtleta,$sessoAtleta,$annoNascitaAtleta, 
 			$categoriaAtleta, $codiceFidalAtleta, $codiceFidalSocieta, $nomeSocieta, 
-			$idGara, $codiceGara, $emailAtleta, date("Y-m-d h:i:s"),
-			date("Y-m-d h:i:s")); # valori da inserire
+			$idGara, $codiceGara, $emailAtleta, date("Y-m-d H:i:s"),
+			date("Y-m-d H:i:s")); # valori da inserire
 		$r =  "cognome_atleta,nome_atleta,sesso_atleta,anno_nascita_atleta,
 			categoria_atleta, codice_fidal_atleta, codice_societa, 
 			nome_societa, id_gara, codice_gara, email_atleta, created,modified"; # campi da popolare
