@@ -11,6 +11,8 @@ class Mailer {
 			ini_set("auth_username","atleticavalsesia.it");
 			ini_set("auth_password","eivaloex");
 			
+			mail("sergiobelli81@gmail.com", "ciao", "prova");
+			
 			try {
 				if ($tipoAvviso == '0') {
 					$object = "certificato medico atleta scaduto";

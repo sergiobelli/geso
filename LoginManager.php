@@ -44,25 +44,25 @@ class LoginManager {
 				
 				//tutto ok!
 			
-			} else if ($diffDate <= 90 && $diffDate > 60 && $dataAvviso90gg != null) {
+			} else if ($diffDate <= 90 && $diffDate > 60 && $dataAvviso90gg == null) {
 
 				//mail 90gg e update db
 				$Mailer::sendMailAvviso($nomeAtleta, $cognomeAtleta, $emailAtleta, 90);
 				CertificatoMedicoManager::modificaAvviso($idCertificatoMedico, 90);
 					
-			} else if ($diffDate <= 60 && $diffDate > 30 && $dataAvviso60gg != null) {
+			} else if ($diffDate <= 60 && $diffDate > 30 && $dataAvviso60gg == null) {
 			
 				//mail 60gg e update db
 				$Mailer::sendMailAvviso($nomeAtleta, $cognomeAtleta, $emailAtleta, 60);
 				CertificatoMedicoManager::modificaAvviso($idCertificatoMedico, 60);
 					
-			} else if ($diffDate <= 30 && $diffDate > 7 && $dataAvviso30gg != null) {
+			} else if ($diffDate <= 30 && $diffDate > 7 && $dataAvviso30gg == null) {
 				
 				//mail 30gg e update db
 				$Mailer::sendMailAvviso($nomeAtleta, $cognomeAtleta, $emailAtleta, 30);
 				CertificatoMedicoManager::modificaAvviso($idCertificatoMedico, 30);
 												
-			} else if ($diffDate <= 7 && $diffDate > 0 && $dataAvviso7gg != null) {
+			} else if ($diffDate <= 7 && $diffDate > 0 && $dataAvviso7gg == null) {
 				
 				//mail 7gg e update db
 				$Mailer::sendMailAvviso($nomeAtleta, $cognomeAtleta, $emailAtleta, 7);

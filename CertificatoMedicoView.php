@@ -2,6 +2,7 @@
 	require_once("Header.php");
 	require_once("CertificatoMedicoManager.php");
 	require_once("AtletaManager.php");
+	require_once("util/DiffUtil.php");
 	
 	global $operazione;
 	$operazione = '';
@@ -166,7 +167,9 @@
 		while ($elencoCertificatiMedici_row = dbms_fetch_array($elencoCertificatiMedici)) {
 			
 			$dataScadenzaCertificato = $elencoCertificatiMedici_row["data_scadenza"];
-			$diffDate = fDateDiff(date("Y-m-d"), $dataScadenzaCertificato);
+			
+			$DiffUtil = new DiffUtil();
+			$diffDate = $DiffUtil->fDateDiff(date("Y-m-d"), $dataScadenzaCertificato);
 			
 			print "<tr>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$contatore."</td>";
@@ -176,44 +179,21 @@
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoCertificatiMedici_row["data_nascita_atleta"]." &nbsp;</td>";
 			
 			if ($diffDate >= 90) {
-				print "<td class=\"FacetDataTDGreen\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
+				print "<td class=\"FacetDataTDGreen\" align=\"center\">".$dataScadenzaCertificato." &nbsp; </font></td>";
 			} else if ($diffDate < 90 && $diffDate >= 30) {
-				print "<td class=\"FacetDataTDOrange\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
+				print "<td class=\"FacetDataTDOrange\" align=\"center\">".$dataScadenzaCertificato." &nbsp; (".$diffDate.")</font></td>";
 			} else if ($diffDate < 30) {
-				print "<td class=\"FacetDataTDRed\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
+				print "<td class=\"FacetDataTDRed\" align=\"center\">".$dataScadenzaCertificato." &nbsp; (".$diffDate.")</font></td>";
 			} else {
-				print "<td class=\"FacetDataTD\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
+				print "<td class=\"FacetDataTD\" align=\"center\">".$dataScadenzaCertificato." &nbsp; </font></td>";
 			}
 			
-			
+
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoCertificatiMedici_row["agonistico"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='CertificatoMedicoView.php?operazione=cancella&idCertificatoMedico=".$elencoCertificatiMedici_row["id_certificato_medico"]."'>cancella</a></td>";
 			print "</tr>";
 			$contatore++;
-		}
-		
-		function fDateDiff($dateFrom, $dateA) {
-		
-			if ($dateA != '') {
-				list($d, $m, $y) = explode('/', $dateA);
-				$mk=mktime(0, 0, 0, $m, $d, $y);
-				$dateTo=strftime('%Y-%m-%d',$mk);
-			} else {
-				return 100;
-			}
-			
-			if(empty($dateFrom)) $dateFrom = date('Y-m-d'); 
-			if(empty($dateTo)) $dateTo = date('Y-m-d'); 
-			
-			$a_1 = explode('-',$dateFrom); 
-			$a_2 = explode('-',$dateTo); 
-			$mktime1 = mktime(0, 0, 0, $a_1[1], $a_1[2], $a_1[0]); 
-			$mktime2 = mktime(0, 0, 0, $a_2[1], $a_2[2], $a_2[0]); 
-			$secondi = $mktime1 - $mktime2; 
-			$giorni = intval($secondi / 86400);  
-			return -($giorni);
-		}
-		
+		}		
 ?>			
 		</table>
 		
