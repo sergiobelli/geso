@@ -2,16 +2,13 @@
 
 class Mailer {
 	
-	function sendMailAvviso($nomeAtleta, $cognomeAtleta, $emailAtleta, $tipoAvviso) {
+	function sendMailAvvisoSocieta($nomeAtleta, $cognomeAtleta, $emailAtleta, $tipoAvviso) {
 		
-		//mandare mail ad atletica valsesia
 			ini_set("SMTP", "mail.atleticavalsesia.it" );
 			ini_set("sendmail_from", "info@atleticavalsesia.it");
 			ini_set("smtp_port","25");
 			ini_set("auth_username","atleticavalsesia.it");
 			ini_set("auth_password","eivaloex");
-			
-			mail("sergiobelli81@gmail.com", "ciao", "prova");
 			
 			try {
 				if ($tipoAvviso == '0') {
@@ -25,8 +22,17 @@ class Mailer {
 			} catch(Exception $e) {
 				$message =  'Message: ' .$e->getMessage();
 			}
+	}
+	
+		function sendMailAvvisoAtleta($nomeAtleta, $cognomeAtleta, $emailAtleta, $tipoAvviso) {
+		
+			ini_set("SMTP", "mail.atleticavalsesia.it" );
+			ini_set("sendmail_from", "info@atleticavalsesia.it");
+			ini_set("smtp_port","25");
+			ini_set("auth_username","atleticavalsesia.it");
+			ini_set("auth_password","eivaloex");
 			
-			//mandare mail ad utente
+			//mandare mail ad atleta
 			if (isset($emailAtleta) && $emailAtleta != '') {
 				try {
 					if ($tipoAvviso == '0') {
@@ -44,6 +50,7 @@ class Mailer {
 				}
 			}
 	}
+		
 }
 	
 ?>

@@ -5,9 +5,8 @@ require_once("clublib.php");
 
 class PresenzaManager {
 
-    function lista () {
-        return connetti_query(
-			"
+    function lista ($idStagione) {
+    	$query = "
 				select 
 					p.ID as ID,
 					a.ID as ID_ATLETA,
@@ -27,10 +26,16 @@ class PresenzaManager {
 				where 
 					p.ID_ATLETA = a.ID
 					and p.ID_GARA = g.ID
-					and p.ID_STAGIONE = s.ID
-				group by p.ID
-				order by g.DATA desc, g.NOME, a.COGNOME
-			");
+					and p.ID_STAGIONE = s.ID";
+		
+		if(isset($idStagione)) {
+			$query = $query." and s.ID = ".$idStagione;
+		}
+		
+		$query = $query." group by p.ID
+				order by g.DATA desc, g.NOME, a.COGNOME";
+				
+        return connetti_query($query);
     }
 
 	function listaAtleta ($idAtleta) {

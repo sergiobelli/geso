@@ -20,7 +20,7 @@ class ClassificaManager {
 						and p.id_gara = g.id
 						and p.id_stagione = s.id
 						and g.id_tipologia_gara = tg.id
-						and s.anno = '".$stagione."') as PUNTEGGIO
+						and s.id = ".$stagione.") as PUNTEGGIO
 				from 
 					presenza p, 
 					atleta a, 
@@ -28,7 +28,7 @@ class ClassificaManager {
 				where 
 					p.ID_ATLETA = a.ID
 					and p.ID_STAGIONE = s.ID
-					and s.ANNO = '".$stagione."'
+					and s.id = ".$stagione."
 				group by p.ID_ATLETA
 				order by PRESENZE desc
 			");
@@ -44,7 +44,7 @@ from
 	stagione
 where
 	presenza.ID_STAGIONE = stagione.ID
-	and stagione.ANNO = '".$stagione."'
+	and stagione.ID = '".$stagione."'
 			");
     }
 }

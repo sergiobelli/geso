@@ -17,9 +17,8 @@ class GaraManager {
 	} 
 
 
-    function lista () {
-        return connetti_query(
-			"
+    function lista ($idStagione) {
+		$query =	 "
 				select 
 					g.ID as ID,
 					g.CODICE as CODICE,
@@ -35,15 +34,20 @@ class GaraManager {
 				from 
 					gara g, stagione s, tipologia_gara tg
 				where 	g.id_stagione = s.id
-							and g.id_tipologia_gara = tg.id
+							and g.id_tipologia_gara = tg.id ";
+
+				if(isset($idStagione)) {
+		    		$query = $query." and s.id = ".$idStagione;
+				}			     	
+    	
+    	$query = $query."
 				group by g.LOCALITA, g.NOME, g.DATA
-                                order by g.DATA desc
-			");
+                                order by g.DATA desc";
+        return connetti_query($query);
     }
 
-    function listaByLocalita () {
-        return connetti_query(
-			"
+    function listaByLocalita ($idStagione) {
+    	$query = "
 				select 
 					g.ID as ID,
 					g.CODICE as CODICE,
@@ -55,11 +59,16 @@ class GaraManager {
 					s.ANNO as STAGIONE
 				from 
 					gara g, stagione s
-				where g.id_stagione = s.id
-					and s.anno = (select max(anno) from stagione)
-				group by g.LOCALITA, g.NOME, g.DATA
-                                order by g.LOCALITA
-			");
+				where g.id_stagione = s.id ";
+		
+		if (isset($idStagione)) {
+    		$query = $query." and s.id = ".$idStagione;		
+		}
+
+    	$query = $query." group by g.LOCALITA, g.NOME, g.DATA order by g.LOCALITA";
+    	
+      return connetti_query($query);
+      
     }
 
     function listaOrganizzate () {

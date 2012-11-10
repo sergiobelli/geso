@@ -24,7 +24,8 @@
 			
 			$LoginManager::gestioneCertificatiMedici();
 			
-			header("Location: AtletaView.php");
+			//header("Location: AtletaView.php");
+			header("Location: view/selezioneStagione.php");
 		} else {
 			
 			$logger->log("login failed by ".$_POST['username']);

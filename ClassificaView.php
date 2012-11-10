@@ -1,25 +1,30 @@
 <?php
 require_once("ClassificaManager.php");
+require_once("StagioneManager.php");
 
+$StagioneManager = new StagioneManager();
 
-if (!isset($stagione)) {
-	include ("StagioneManager.php");
-	$StagioneManager = new StagioneManager();
+if (isset($_SESSION['stagione'])) {
+	$stagione = $_SESSION['stagione'];
+} else {
 	$stagione = $StagioneManager::getUltimaStagione();
 }
+
+$descrizioneStagione = $StagioneManager::getDescrizioneStagione($stagione);
+
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 	<head>
 		<title>
-			Classifica "Campionato Sociale Atletica Valsesia" stagione <b><?php echo($stagione); ?></b>
+			Classifica "Campionato Sociale Atletica Valsesia" stagione <?php echo($descrizioneStagione); ?>
 		</title>
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 		<div align="center">
-			Classifica "Campionato Sociale Atletica Valsesia" stagione <b><?php echo($stagione); ?></b>
+			Classifica "Campionato Sociale Atletica Valsesia" stagione <b><?php echo($descrizioneStagione); ?></b>
 		</div>
 <?php
 $ClassificaManager = new ClassificaManager();

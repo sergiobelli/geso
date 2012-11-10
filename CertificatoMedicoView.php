@@ -3,6 +3,7 @@
 	require_once("CertificatoMedicoManager.php");
 	require_once("AtletaManager.php");
 	require_once("util/DiffUtil.php");
+	require_once("util/Mailer.php");
 	
 	global $operazione;
 	$operazione = '';
@@ -26,7 +27,8 @@
 	}
 	
 	$CertificatoMedicoManager = new CertificatoMedicoManager();
-	
+	$AtletaManager = new AtletaManager();
+		
 	if (isset($_GET['operazione']) && $_GET['operazione'] == 'modifica') {
 		$operazione = 'modifica';
 		$atleta = CertificatoMedicoManager::get($_GET['idCertificatoMedico']);
@@ -41,6 +43,15 @@
 		$result = CertificatoMedicoManager::cancella($_GET['idCertificatoMedico']);
 		$idCertificatoMedico = null;
 		$operazione = null;
+	} else if (isset($_GET['operazione']) && $_GET['operazione'] == 'inviaAvviso') {
+		$idAtleta = $_GET['idAtleta'];
+		$mailer = new Mailer();
+		$atleta = $AtletaManager->get($idAtleta);
+		while ($atleta_row = dbms_fetch_array($atleta)) {
+			$mailer->sendMailAvvisoAtleta($atleta_row["NOME"], $atleta_row["COGNOME"], $atleta_row["EMAIL"], 0);
+		}
+		$idCertificatoMedico = null;
+		$idAtleta = null;
 	} else {
 		$operazione = 'inserisci';
 	}
@@ -107,7 +118,6 @@
 						<select name="idAtleta">
 							<option> </option>
 <?php
-							$AtletaManager = new AtletaManager();
 							$elencoAtleti = AtletaManager::lista();
 							while ($elencoAtleti_row = dbms_fetch_array($elencoAtleti)) {
 								if ($elencoAtleti_row["ID"] == $idAtleta) {
@@ -190,7 +200,14 @@
 			
 
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoCertificatiMedici_row["agonistico"]." &nbsp;</td>";
-			print "<td class=\"FacetDataTD\" align=\"center\"><a href='CertificatoMedicoView.php?operazione=cancella&idCertificatoMedico=".$elencoCertificatiMedici_row["id_certificato_medico"]."'>cancella</a></td>";
+			$operazioni = "<td class=\"FacetDataTD\" align=\"center\">";
+			$operazioni = $operazioni."<a href='CertificatoMedicoView.php?operazione=cancella&idCertificatoMedico=".$elencoCertificatiMedici_row["id_certificato_medico"]."'>cancella</a>";
+			if ($diffDate < 30) {
+				$operazioni = 
+					$operazioni." <a href='CertificatoMedicoView.php?operazione=inviaAvviso&idAtleta=".$elencoCertificatiMedici_row["id_atleta"]."&idCertificatoMedico=".$elencoCertificatiMedici_row["id_certificato_medico"]."'>avviso</a>";
+			}
+			$operazioni = $operazioni."</td>"; 
+			print $operazioni;
 			print "</tr>";
 			$contatore++;
 		}		

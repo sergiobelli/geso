@@ -289,8 +289,7 @@
 		<br />
 		
 		<div align="center">Elenco Atleti</div>
-<?php
-		
+<?php		
 		$elencoAtleti = AtletaManager::lista();
 ?>		
 		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">

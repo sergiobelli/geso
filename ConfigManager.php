@@ -5,7 +5,7 @@ require_once("clublib.php");
 
 class ConfigManager {
 
-	$ambiente				= "locale"; //"online";
+	$ambiente				= "online"; //"locale";
 	
 	//Parametri di accesso: localhost
 	$Host_locale     		= "localhost";

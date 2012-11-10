@@ -69,8 +69,8 @@
 			echo "Attenzione, inserire la data.";
 		} elseif( !isset($_POST['campionato']) || $_POST['campionato'] =="") {
 			echo "Attenzione, inserire i campionato.";
-		} elseif( !isset($_POST['stagione']) || $_POST['stagione'] =="") {
-			echo "Attenzione, inserire la stagione.";
+		//} elseif( !isset($_POST['stagione']) || $_POST['stagione'] =="") {
+			//echo "Attenzione, inserire la stagione.";
 		} else {
 			// validazione dei parametri tramite filtro per le stringhe
 			
@@ -92,7 +92,7 @@
 			*/
 			
 			if (isset($idGara) && $idGara != '') {
-				GaraManager::modifica($idGara, $nome, $localita, $campionato, $nostra, $data, $stagione, $tipologiaGara);
+				GaraManager::modifica($idGara, $nome, $localita, $campionato, $nostra, $data, $_SESSION['stagione'], $tipologiaGara);
 				$idGara = null;
 				$operazione = null;
 				$nome = null;
@@ -103,7 +103,7 @@
 				$stagione = null;
 				$tipologiaGara = null;
 			} else {
-				GaraManager::inserisci($nome, $localita, $campionato, $nostra, $data, $stagione, $tipologiaGara);			
+				GaraManager::inserisci($nome, $localita, $campionato, $nostra, $data, $_SESSION['stagione'], $tipologiaGara);			
 				$idGara = null;
 				$operazione = null;
 				$nome = null;
@@ -174,16 +174,18 @@
 				<tr>
 					<td class="FacetFormHeaderFont">Stagione</td>
 					<td align="right">
-						<select name="stagione">
+						<select name="stagione" disabled="disabled">
 <?php
 							$StagioneManager = new StagioneManager();
 							$elencoStagioni = StagioneManager::lista();
 							while ($elencoStagioni_row = dbms_fetch_array($elencoStagioni)) {
-								if ($elencoStagioni_row["ID"] == $idStagione) {
-									print( "<option selected value='".$elencoStagioni_row["ID"]."'>".$elencoStagioni_row["ANNO"]."</option>" );
-								} else {
-									print( "<option value='".$elencoStagioni_row["ID"]."'>".$elencoStagioni_row["ANNO"]."</option>" );
-								}
+
+									if ($elencoStagioni_row["ID"] == $_SESSION['stagione']) {
+										print( "<option selected value='".$elencoStagioni_row["ID"]."'>".$elencoStagioni_row["ANNO"]."</option>" );
+									} else {
+										print( "<option value='".$elencoStagioni_row["ID"]."'>".$elencoStagioni_row["ANNO"]."</option>" );
+									}								
+								
 							}
 ?>
 						</select>							
@@ -226,7 +228,7 @@
 			Elenco Gare
 		</div>
 <?php
-		$elencoGare = GaraManager::lista();
+		$elencoGare = GaraManager::lista($_SESSION['stagione']);
 ?>		
 		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 			<tr>

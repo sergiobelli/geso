@@ -53,8 +53,8 @@
 			echo "Attenzione, inserire l'atleta.";
 		} elseif( !isset($_POST['gara']) || $_POST['gara'] =="") {
 			echo "Attenzione, inserire la gara.";
-		} elseif( !isset($_POST['stagione']) || $_POST['stagione'] =="") {
-			echo "Attenzione, inserire la stagione.";
+		//} elseif( !isset($_POST['stagione']) || $_POST['stagione'] =="") {
+		//	echo "Attenzione, inserire la stagione.";
 		} else {
 			// validazione dei parametri tramite filtro per le stringhe
 			$idPresenza = trim($_POST['idPresenza']);
@@ -70,11 +70,11 @@
 			*/
 			
 			if (isset($idPresenza) && $idPresenza != '') {
-				PresenzaManager::modifica($idPresenza, $atleta, $gara, $stagione);
+				PresenzaManager::modifica($idPresenza, $atleta, $gara, $_SESSION['stagione']);
 				$idPresenza = null;
 				$operazione = null;
 			} else {
-				PresenzaManager::inserisci($atleta, $gara, $stagione);
+				PresenzaManager::inserisci($atleta, $gara, $_SESSION['stagione']);
 				$idPresenza = null;
 				$operazione = null;
 			}
@@ -119,12 +119,23 @@
 							<option> </option>
 <?php
 							$GaraManager = new GaraManager();
-							$elencoGare = GaraManager::listaByLocalita();
+							$elencoGare = GaraManager::listaByLocalita($_SESSION['stagione']);
 							while ($elencoGare_row = dbms_fetch_array($elencoGare)) {
 								if ($elencoGare_row["ID"] == $idGara) {
-									print( "<option selected value='".$elencoGare_row["ID"]."'>".$elencoGare_row["LOCALITA"]." - ".$elencoGare_row["NOME"]."</option>" );
+									print( 
+										"<option selected value='".
+											$elencoGare_row["ID"]."'>".
+											$elencoGare_row["LOCALITA"]." - ".
+											$elencoGare_row["NOME"].
+											" (".$elencoGare_row["DATA"].")".
+										"</option>" );
 								} else {
-									print( "<option value='".$elencoGare_row["ID"]."'>".$elencoGare_row["LOCALITA"]." - ".$elencoGare_row["NOME"]."</option>" );
+									print( "<option value='".
+										$elencoGare_row["ID"]."'>".
+										$elencoGare_row["LOCALITA"]." - ".
+										$elencoGare_row["NOME"].
+										" (".$elencoGare_row["DATA"].")".
+									"</option>" );
 								}
 							}
 ?>
@@ -134,12 +145,12 @@
 				<tr>
 					<td class="FacetFormHeaderFont">Stagione</td>
 					<td align="right">
-						<select name="stagione">
+						<select name="stagione" disabled="disabled">
 <?php
 							$StagioneManager = new StagioneManager();
 							$elencoStagioni = StagioneManager::lista();
 							while ($elencoStagioni_row = dbms_fetch_array($elencoStagioni)) {
-								if ($elencoStagioni_row["ID"] == $idStagione) {
+								if ($elencoStagioni_row["ID"] == $_SESSION['stagione']) {
 									print( "<option selected value='".$elencoStagioni_row["ID"]."'>".$elencoStagioni_row["ANNO"]."</option>" );
 								} else {
 									print( "<option value='".$elencoStagioni_row["ID"]."'>".$elencoStagioni_row["ANNO"]."</option>" );
@@ -183,12 +194,12 @@ $PresenzaManager = new PresenzaManager();
 			</tr>
 <?php
 
-                $elencoPresenze = PresenzaManager::lista();
+                $elencoPresenze = PresenzaManager::lista($_SESSION['stagione']);
 		while ($elencoPresenze_row = dbms_fetch_array($elencoPresenze)) {
 			$contatore++;
 		}
 
-                $elencoPresenze = PresenzaManager::lista();
+                $elencoPresenze = PresenzaManager::lista($_SESSION['stagione']);
 		while ($elencoPresenze_row = dbms_fetch_array($elencoPresenze)) {
 			print "<tr>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$contatore."</td>";

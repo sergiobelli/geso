@@ -13,13 +13,11 @@ class LoginManager {
         return connetti_query(
 			"SELECT id FROM login WHERE username = '$username' AND password = '$password'");
     }
-
-    
     
 	function gestioneCertificatiMedici() {
 		$CertificatoMedicoManager = new CertificatoMedicoManager();
-		$Mailer = new Mailer();
 		$DiffUtil = new DiffUtil();
+		$Mailer = new Mailer();
 		
 		$elencoCertificatiMedici = $CertificatoMedicoManager::lista();
 		while ($elencoCertificatiMedici_row = dbms_fetch_array($elencoCertificatiMedici)) {
@@ -47,31 +45,36 @@ class LoginManager {
 			} else if ($diffDate <= 90 && $diffDate > 60 && $dataAvviso90gg == null) {
 
 				//mail 90gg e update db
-				$Mailer::sendMailAvviso($nomeAtleta, $cognomeAtleta, $emailAtleta, 90);
+				$Mailer->sendMailAvvisoSocieta($nomeAtleta, $cognomeAtleta, $emailAtleta, 90);
+				$Mailer->sendMailAvvisoAtleta($nomeAtleta, $cognomeAtleta, $emailAtleta, 90);
 				CertificatoMedicoManager::modificaAvviso($idCertificatoMedico, 90);
 					
 			} else if ($diffDate <= 60 && $diffDate > 30 && $dataAvviso60gg == null) {
 			
 				//mail 60gg e update db
-				$Mailer::sendMailAvviso($nomeAtleta, $cognomeAtleta, $emailAtleta, 60);
+				$Mailer->sendMailAvvisoSocieta($nomeAtleta, $cognomeAtleta, $emailAtleta, 60);
+				$Mailer->sendMailAvvisoAtleta($nomeAtleta, $cognomeAtleta, $emailAtleta, 60);
 				CertificatoMedicoManager::modificaAvviso($idCertificatoMedico, 60);
 					
 			} else if ($diffDate <= 30 && $diffDate > 7 && $dataAvviso30gg == null) {
 				
 				//mail 30gg e update db
-				$Mailer::sendMailAvviso($nomeAtleta, $cognomeAtleta, $emailAtleta, 30);
+				$Mailer->sendMailAvvisoSocieta($nomeAtleta, $cognomeAtleta, $emailAtleta, 30);
+				$Mailer->sendMailAvvisoAtleta($nomeAtleta, $cognomeAtleta, $emailAtleta, 30);
 				CertificatoMedicoManager::modificaAvviso($idCertificatoMedico, 30);
 												
 			} else if ($diffDate <= 7 && $diffDate > 0 && $dataAvviso7gg == null) {
 				
 				//mail 7gg e update db
-				$Mailer::sendMailAvviso($nomeAtleta, $cognomeAtleta, $emailAtleta, 7);
+				$Mailer->sendMailAvvisoSocieta($nomeAtleta, $cognomeAtleta, $emailAtleta, 7);
+				$Mailer->sendMailAvvisoAtleta($nomeAtleta, $cognomeAtleta, $emailAtleta, 7);
 				CertificatoMedicoManager::modificaAvviso($idCertificatoMedico, 7);
 					
 			} else if ($diffDate < 0) {
 
 				//scaduto e update db				
-				$Mailer::sendMailAvviso($nomeAtleta, $cognomeAtleta, $emailAtleta, 0);
+				$Mailer->sendMailAvvisoSocieta($nomeAtleta, $cognomeAtleta, $emailAtleta, 0);
+				$Mailer->sendMailAvvisoAtleta($nomeAtleta, $cognomeAtleta, $emailAtleta, 0);
 				CertificatoMedicoManager::modificaAvviso($idCertificatoMedico, 0);
 					
 			}
