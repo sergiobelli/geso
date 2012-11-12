@@ -71,12 +71,20 @@ class LoginManager {
 				CertificatoMedicoManager::modificaAvviso($idCertificatoMedico, 7);
 					
 			} else if ($diffDate < 0) {
-
-				//scaduto e update db				
-				$Mailer->sendMailAvvisoSocieta($nomeAtleta, $cognomeAtleta, $emailAtleta, 0);
-				$Mailer->sendMailAvvisoAtleta($nomeAtleta, $cognomeAtleta, $emailAtleta, 0);
-				CertificatoMedicoManager::modificaAvviso($idCertificatoMedico, 0);
-					
+				
+				//scaduto e update db
+				if ($dataAvvisoScaduto == null) {
+					$Mailer::sendMailAvviso($nomeAtleta, $cognomeAtleta, $emailAtleta, 0);
+					CertificatoMedicoManager::modificaAvviso($idCertificatoMedico, 0);
+				} else {
+					//scaduto e update db (solo se l'ultimo avviso e' stato inviato da piu' di una settimana)
+					$diffDateUltimoAvviso = $DiffUtil::fDateDiff(date("Y-m-d"), $dataAvvisoScaduto);
+					if ($diffDateUltimoAvviso > 7) {
+						$Mailer::sendMailAvviso($nomeAtleta, $cognomeAtleta, $emailAtleta, 0);
+						CertificatoMedicoManager::modificaAvviso($idCertificatoMedico, 0);
+					}
+				}
+				
 			}
 			
 			$dataScadenzaCertificato = null;
