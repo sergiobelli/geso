@@ -12,10 +12,10 @@ class Mailer {
 			
 			try {
 				if ($tipoAvviso == '0') {
-					$object = "certificato medico atleta scaduto";
+					$object = "Certificato medico atleta scaduto";
 					$mailMessage = "Ciao, \nil nostro atleta ".$cognomeAtleta." ".$nomeAtleta." presenta un certificato medico scaduto.";
 				} else {
-					$object = "Scadenza certificato atleta : ' .$tipoAvviso";
+					$object = "Scadenza certificato atleta : ".$tipoAvviso." giorni";
 					$mailMessage = "Ciao, \nil nostro atleta ".$cognomeAtleta." ".$nomeAtleta." presenta un certificato medico che scadra' nei prossimi ".$tipoAvviso." giorni!";
 				}
 				mail("sergiobelli81@gmail.com, sergio.belli@email.it, danilo.belli@email.it, atleticavalsesia@libero.it, info@atleticavalsesia.it", $object, $mailMessage);
