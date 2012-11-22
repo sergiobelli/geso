@@ -2,7 +2,6 @@
 	require_once("Header.php");
 	require_once("GaraManager.php");
 	require_once("StagioneManager.php");
-	require_once("TipologiaGaraManager.php");
 
 	
 	global $operazione;
@@ -10,7 +9,7 @@
 	
 	global $gara;
 	
-	global $idGara, $nome, $localita, $campionato, $data, $nostra, $idStagione, $idTipologiaGara;
+	global $idGara, $nome, $localita, $campionato, $data, $nostra, $idStagione;
 	$idGara = '';
 	$nome = '';
 	$localita = '';
@@ -19,7 +18,6 @@
 	$data = '';
 	$nostra = '';
 	$idStagione = '';
-	$idTipologiaGara = '';
 	
 	// inizializzazione della sessione
 	//session_start();
@@ -44,7 +42,6 @@
 			$nostra = $gara_row["NOSTRA"];
 			$data = $gara_row["DATA"];
 			$idStagione = $gara_row["ID_STAGIONE"];
-			$idTipologiaGara = $gara_row["ID_TIPOLOGIA_GARA"];
 		}		
 	} else if (isset($_GET['operazione']) && $_GET['operazione'] == 'cancella') {
 		$operazione = 'cancella';
@@ -81,18 +78,9 @@
 			$data = trim($_POST['data']);
 			$nostra = trim($_POST['nostra']);
 			$stagione = trim($_POST['stagione']);
-			$tipologiaGara = trim($_POST['tipologiaGara']);
-			
-			/*
-			$idGara = trim(filter_var($_POST['idGara'], FILTER_SANITIZE_STRING));
-			$nome = trim(filter_var($_POST['nome'], FILTER_SANITIZE_STRING));
-			$localita = trim(filter_var($_POST['localita'], FILTER_SANITIZE_STRING));
-			$campionato = trim(filter_var($_POST['campionato'], FILTER_SANITIZE_STRING));
-			$data = trim(filter_var($_POST['data'], FILTER_SANITIZE_STRING));
-			*/
 			
 			if (isset($idGara) && $idGara != '') {
-				GaraManager::modifica($idGara, $nome, $localita, $campionato, $nostra, $data, $_SESSION['stagione'], $tipologiaGara);
+				GaraManager::modifica($idGara, $nome, $localita, $campionato, $nostra, $data, $_SESSION['stagione']);
 				$idGara = null;
 				$operazione = null;
 				$nome = null;
@@ -101,9 +89,8 @@
 				$nostra = null;
 				$data = null;
 				$stagione = null;
-				$tipologiaGara = null;
 			} else {
-				GaraManager::inserisci($nome, $localita, $campionato, $nostra, $data, $_SESSION['stagione'], $tipologiaGara);			
+				GaraManager::inserisci($nome, $localita, $campionato, $nostra, $data, $_SESSION['stagione']);			
 				$idGara = null;
 				$operazione = null;
 				$nome = null;
@@ -112,7 +99,6 @@
 				$nostra = null;
 				$data = null;
 				$stagione = null;
-				$tipologiaGara = null;								
 			}
 					
 		}	
@@ -191,24 +177,7 @@
 						</select>							
 					</td>
 				</tr>	
-				<tr>
-					<td class="FacetFormHeaderFont">Tipologia Gara</td>
-					<td align="right">
-						<select name="tipologiaGara">
-<?php
-							$TipologiaGaraManager = new TipologiaGaraManager();
-							$elencoTipologieGare = TipologiaGaraManager::lista();
-							while ($elencoTipologieGare_row = dbms_fetch_array($elencoTipologieGare)) {
-								if ($elencoTipologieGare_row["ID"] == $idTipologiaGara) {
-									print( "<option selected value='".$elencoTipologieGare_row["ID"]."'>".$elencoTipologieGare_row["TIPO"]."</option>" );
-								} else {
-									print( "<option value='".$elencoTipologieGare_row["ID"]."'>".$elencoTipologieGare_row["TIPO"]."</option>" );
-								}
-							}
-?>
-						</select>							
-					</td>
-				</tr>							
+				
 				<tr>
 					<td class="FacetFormHeaderFont">&nbsp;</td>
 					<td align="right">
@@ -237,7 +206,6 @@
 				<td class="FacetFormHeaderFont">Nome</td>
 				<td class="FacetFormHeaderFont">Localita'</td>
 				<td class="FacetFormHeaderFont">Campionato</td>
-				<td class="FacetFormHeaderFont">Tipologia</td>				
 				<td class="FacetFormHeaderFont">Nostra</td>
 				<td class="FacetFormHeaderFont">Data</td>
 				<td class="FacetFormHeaderFont">Stagione</td>
@@ -252,7 +220,6 @@
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoGare_row["NOME"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoGare_row["LOCALITA"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoGare_row["CAMPIONATO"]."</td>";
-			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoGare_row["TIPOLOGIA_GARA"]." (".$elencoGare_row["PUNTEGGIO"]." punti)</td>";			
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoGare_row["NOSTRA"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoGare_row["DATA"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoGare_row["STAGIONE"]." &nbsp;</td>";

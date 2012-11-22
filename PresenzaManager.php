@@ -16,16 +16,21 @@ class PresenzaManager {
 					g.NOME as NOME_GARA,
 					g.LOCALITA as LOCALITA_GARA,
 					g.DATA as DATA_GARA,
+					tg.ID as ID_TIPOLOGIA_GARA,
+					tg.TIPO as TIPOLOGIA_GARA_DESCRIZIONE,
+					tg.PUNTEGGIO as TIPOLOGIA_GARA_PUNTEGGIO,
 					s.ID as ID_STAGIONE,
 					s.ANNO as ANNO
 				from 
 					presenza p,
 					atleta a,
 					gara g,
+					tipologia_gara tg,
 					stagione s
 				where 
 					p.ID_ATLETA = a.ID
 					and p.ID_GARA = g.ID
+					and p.ID_TIPOLOGIA_GARA = tg.ID
 					and p.ID_STAGIONE = s.ID";
 		
 		if(isset($idStagione)) {
@@ -74,42 +79,47 @@ class PresenzaManager {
 					g.NOME as NOME_GARA,
 					g.LOCALITA as LOCALITA_GARA,
 					g.DATA as DATA_GARA,
+					tg.ID as ID_TIPOLOGIA_GARA,
+					tg.TIPO as TIPOLOGIA_GARA_DESCRIZIONE,
+					tg.PUNTEGGIO as TIPOLOGIA_GARA_PUNTEGGIO,
 					s.ID as ID_STAGIONE,
 					s.ANNO as ANNO
 				from 
 					presenza p,
 					atleta a,
 					gara g,
+					tipologia_gara tg,
 					stagione s
 				where 
 					p.ID_ATLETA = a.ID
 					and p.ID_GARA = g.ID
+					and p.ID_TIPOLOGIA_GARA = tg.ID
 					and p.ID_STAGIONE = s.ID
 					and p.ID = '".$idPresenza."'
 			");
     }
 	
-	function inserisci ($idAtleta, $idGara, $idStagione) {
+	function inserisci ($idAtleta, $idGara, $idStagione, $idTipologiaGara) {
 	
 		include "funzioni_mysql.php";
 		
-		$t = "presenza"; # nome della tabella
-		$v = array ($idAtleta,$idGara,$idStagione,date("Y-m-d H:i:s"),date("Y-m-d H:i:s")); # valori da inserire
-		$r =  "id_atleta,id_gara,id_stagione,created,modified"; # campi da popolare
+		$tabella = "presenza";
+		$valori = array ($idAtleta, $idGara, $idStagione, date("Y-m-d H:i:s"), date("Y-m-d H:i:s"));
+		$campi = "id_atleta, id_gara, id_stagione, created, modified";
 		
 		$data = new MysqlClass();
 		$data->connetti();
-		$data->inserisci($t,$v,$r);
+		$data->inserisci($tabella,$valori,$campi);
 		$data->disconnetti();
 	}
 
-	function modifica ($idPresenza, $idAtleta, $idGara, $idStagione) {
+	function modifica ($idPresenza, $idAtleta, $idGara, $idStagione, $idTipologiaGara) {
 	
 		include "funzioni_mysql.php";
 		
 		$tabella = "presenza"; # nome della tabella
-		$valori = array ($idAtleta,$idGara,$idStagione,date("Y-m-d H:i:s"),date("Y-m-d H:i:s")); # valori da inserire
-		$campi =  array ('id_atleta','id_gara','id_stagione','created','modified'); # campi da popolare
+		$valori = array ($idAtleta,$idGara,$idTipologiaGara,$idStagione,date("Y-m-d H:i:s"),date("Y-m-d H:i:s")); # valori da inserire
+		$campi =  array ('id_atleta','id_gara','id_tipologia_gara','id_stagione','created','modified'); # campi da popolare
 		
 		$data = new MysqlClass();
 		$data->connetti();

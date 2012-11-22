@@ -14,12 +14,11 @@ class ClassificaManager {
 					a.SESSO as SESSO,
 					count(*) as PRESENZE,
 					(select 	sum(tg.punteggio)
-					from 	presenza p, gara g, stagione s, tipologia_gara tg
+					from 	presenza p, stagione s, tipologia_gara tg
 					where
 						p.id_atleta = a.ID
-						and p.id_gara = g.id
 						and p.id_stagione = s.id
-						and g.id_tipologia_gara = tg.id
+						and p.id_tipologia_gara = tg.id
 						and s.id = ".$stagione.") as PUNTEGGIO
 				from 
 					presenza p, 

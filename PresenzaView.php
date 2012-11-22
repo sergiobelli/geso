@@ -4,13 +4,14 @@
 	require_once("AtletaManager.php");
 	require_once("GaraManager.php");
 	require_once("StagioneManager.php");
-
+	require_once("TipologiaGaraManager.php");
+	
 	global $operazione;
 	$operazione = '';
 	
 	global $presenza;
 	
-	global $idPresenza, $idAtleta, $idGara, $idStagione;
+	global $idPresenza, $idAtleta, $idGara, $idStagione, $idTipologiaGara;
 	$idPresenza = '';
 	$idAtleta = '';
 	$idGara = '';
@@ -36,13 +37,13 @@
 			$idAtleta = $presenza_row["ID_ATLETA"];
 			$idGara = $presenza_row["ID_GARA"];
 			$idStagione = $presenza_row["ID_STAGIONE"];
+			$idTipologiaGara = $presenza_row["ID_TIPOLOGIA_GARA"];			
 		}
 	} else if (isset($_GET['operazione']) && $_GET['operazione'] == 'cancella') {
 		$operazione = 'cancella';
 		PresenzaManager::cancella($_GET['idPresenza']);
-						$idPresenza = null;
-				$operazione = null;
-
+		$idPresenza = null;
+		$operazione = null;
 	} else {
 		$operazione = 'inserisci';
 	}
@@ -61,22 +62,31 @@
 			$atleta = trim($_POST['atleta']);
 			$gara = trim($_POST['gara']);
 			$stagione = trim($_POST['stagione']);
-
-			/*
-			$idPresenza = trim(filter_var($_POST['idPresenza'], FILTER_SANITIZE_STRING));
-			$atleta = trim(filter_var($_POST['atleta'], FILTER_SANITIZE_STRING));
-			$gara = trim(filter_var($_POST['gara'], FILTER_SANITIZE_STRING));
-			$stagione = trim(filter_var($_POST['stagione'], FILTER_SANITIZE_STRING));
-			*/
+			$tipologiaGara = trim($_POST['tipologiaGara']);
 			
 			if (isset($idPresenza) && $idPresenza != '') {
-				PresenzaManager::modifica($idPresenza, $atleta, $gara, $_SESSION['stagione']);
+				PresenzaManager::modifica(
+					$idPresenza, 
+					$atleta, 
+					$gara,  
+					$_SESSION['stagione'],
+					$tipologiaGara);
 				$idPresenza = null;
 				$operazione = null;
+				$atleta = null;
+				$gara = null;
+				$tipologiaGara = null;
 			} else {
-				PresenzaManager::inserisci($atleta, $gara, $_SESSION['stagione']);
+				PresenzaManager::inserisci(
+					$atleta, 
+					$gara, 
+					$_SESSION['stagione'],
+					$tipologiaGara);
 				$idPresenza = null;
 				$operazione = null;
+				$atleta = null;
+				$gara = null;
+				$tipologiaGara = null;				
 			}
 		}	
 	}
@@ -143,6 +153,24 @@
 					</td>
 				</tr>
 				<tr>
+					<td class="FacetFormHeaderFont">Tipologia Gara</td>
+					<td align="right">
+						<select name="tipologiaGara">
+<?php
+							$TipologiaGaraManager = new TipologiaGaraManager();
+							$elencoTipologieGare = TipologiaGaraManager::lista();
+							while ($elencoTipologieGare_row = dbms_fetch_array($elencoTipologieGare)) {
+								if ($elencoTipologieGare_row["ID"] == $idTipologiaGara) {
+									print( "<option selected value='".$elencoTipologieGare_row["ID"]."'>".$elencoTipologieGare_row["TIPO"]."</option>" );
+								} else {
+									print( "<option value='".$elencoTipologieGare_row["ID"]."'>".$elencoTipologieGare_row["TIPO"]."</option>" );
+								}
+							}
+?>
+						</select>							
+					</td>
+				</tr>			
+				<tr>
 					<td class="FacetFormHeaderFont">Stagione</td>
 					<td align="right">
 						<select name="stagione" disabled="disabled">
@@ -188,16 +216,19 @@ $PresenzaManager = new PresenzaManager();
 				<td class="FacetFormHeaderFont">#</td>
 				<td class="FacetFormHeaderFont">Atleta</td>
 				<td class="FacetFormHeaderFont">Gara</td>
+				<td class="FacetFormHeaderFont">Tipologia gara</td>
 				<td class="FacetFormHeaderFont">Data Gara</td>
 				<td class="FacetFormHeaderFont">Stagione</td>
 				<td class="FacetFormHeaderFont" colspan="2">Operazioni</td>
 			</tr>
 <?php
 
-                $elencoPresenze = PresenzaManager::lista($_SESSION['stagione']);
+      $elencoPresenze = PresenzaManager::lista($_SESSION['stagione']);
 		while ($elencoPresenze_row = dbms_fetch_array($elencoPresenze)) {
 			$contatore++;
 		}
+		
+		//$contatore = mysql_fetch_assoc($elencoPresenze);
 
                 $elencoPresenze = PresenzaManager::lista($_SESSION['stagione']);
 		while ($elencoPresenze_row = dbms_fetch_array($elencoPresenze)) {
@@ -205,6 +236,7 @@ $PresenzaManager = new PresenzaManager();
 			print "<td class=\"FacetDataTD\" align=\"left\">".$contatore."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoPresenze_row["COGNOME_ATLETA"]."&nbsp;".$elencoPresenze_row["NOME_ATLETA"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoPresenze_row["LOCALITA_GARA"]." - ".$elencoPresenze_row["NOME_GARA"]."</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoPresenze_row["TIPOLOGIA_GARA_DESCRIZIONE"]." (".$elencoPresenze_row["TIPOLOGIA_GARA_PUNTEGGIO"]." punti)</td>";				
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoPresenze_row["DATA_GARA"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoPresenze_row["ANNO"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='PresenzaView.php?operazione=modifica&idPresenza=".$elencoPresenze_row["ID"]."'>modifica</a></td>";

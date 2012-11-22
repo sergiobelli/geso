@@ -4,7 +4,9 @@ require_once("StagioneManager.php");
 
 $StagioneManager = new StagioneManager();
 
-if (isset($_SESSION['stagione'])) {
+if (isset($_GET['idStagione'])) {
+	$stagione = $_GET['idStagione'];
+} else if (isset($_SESSION['stagione'])) {
 	$stagione = $_SESSION['stagione'];
 } else {
 	$stagione = $StagioneManager::getUltimaStagione();
@@ -58,7 +60,7 @@ $presenze = ClassificaManager::lista($stagione);
 			print "<td class=\"FacetDataTD\" align=\"left\">".$contatore."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$presenze_row["COGNOME"]."&nbsp;".$presenze_row["NOME"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$presenze_row["SESSO"]."</td>";
-			print "<td class=\"FacetDataTD\" align=\"center\"><a href='GareAtletaView.php?idAtleta=".$presenze_row["ID_ATLETA"]."'>".$presenze_row["PRESENZE"]."</a></td>";
+			print "<td class=\"FacetDataTD\" align=\"center\"><a href='GareAtletaView.php?idAtleta=".$presenze_row["ID_ATLETA"]."&idStagione=".$stagione."'>".$presenze_row["PRESENZE"]."</a></td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$presenze_row["PUNTEGGIO"]."</td>";
 			print "</tr>";
 			$contatore++;
