@@ -27,7 +27,7 @@ class GareAtletaManager {
 					p.ID_ATLETA = a.ID
 					and p.ID_GARA = g.ID
 					and p.id_tipologia_gara = tg.id
-					and p.ID_STAGIONE = s.ID					
+					and p.ID_STAGIONE = s.ID
 					and a.ID = ".$idAtleta." 
 					and s.ID = ".$idStagione." 
 				group by p.ID
