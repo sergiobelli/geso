@@ -113,7 +113,7 @@ class GaraManager {
 			");
     }
 	
-	function inserisci ($nome, $localita, $campionato, $nostra, $dataGara, $idStagione, $idTipologiaGara) {
+	function inserisci ($nome, $localita, $campionato, $nostra, $dataGara, $idStagione) {
 	
 		include "funzioni_mysql.php";
 		
@@ -141,8 +141,8 @@ class GaraManager {
 		$codice = $a . $b . $c;		
 		
 		$t = "gara"; # nome della tabella
-		$v = array ($codice, $nome,$localita,$campionato, $nostra, $idStagione, $idTipologiaGara, $data,date("Y-m-d H:i:s"),date("Y-m-d H:i:s")); # valori da inserire
-		$r =  "codice, nome,localita,campionato,nostra,id_stagione,id_tipologia_gara, data,created,modified"; # campi da popolare
+		$v = array ($codice, $nome,$localita,$campionato, $nostra, $idStagione, $data,date("Y-m-d H:i:s"),date("Y-m-d H:i:s")); # valori da inserire
+		$r =  "codice, nome,localita,campionato,nostra,id_stagione, data,created,modified"; # campi da popolare
 		
 		$data = new MysqlClass();
 		$data->connetti();
@@ -150,7 +150,7 @@ class GaraManager {
 		$data->disconnetti();
 	}
 
-	function modifica ($idGara, $nome, $localita, $campionato, $nostra, $dataGara, $idStagione, $idTipologiaGara) {
+	function modifica ($idGara, $nome, $localita, $campionato, $nostra, $dataGara, $idStagione) {
 	
 		include "funzioni_mysql.php";
 		
@@ -159,8 +159,8 @@ class GaraManager {
 		$data=strftime('%Y-%m-%d',$mk);
 		
 		$tabella = "gara"; # nome della tabella
-		$valori = array ($nome,$localita,$campionato, $nostra, $data,$idStagione, $idTipologiaGara,date("Y-m-d H:i:s"),date("Y-m-d H:i:s")); # valori da inserire
-		$campi =  array ('nome','localita','campionato','nostra', 'data','id_stagione','id_tipologia_gara','created','modified'); # campi da popolare
+		$valori = array ($nome,$localita,$campionato, $nostra, $data,$idStagione,date("Y-m-d H:i:s"),date("Y-m-d H:i:s")); # valori da inserire
+		$campi =  array ('nome','localita','campionato','nostra', 'data','id_stagione','created','modified'); # campi da popolare
 		
 		$data = new MysqlClass();
 		$data->connetti();
