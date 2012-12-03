@@ -104,8 +104,8 @@ class PresenzaManager {
 		include "funzioni_mysql.php";
 		
 		$tabella = "presenza";
-		$valori = array ($idAtleta, $idGara, $idStagione, date("Y-m-d H:i:s"), date("Y-m-d H:i:s"));
-		$campi = "id_atleta, id_gara, id_stagione, created, modified";
+		$valori = array ($idAtleta, $idGara, $idTipologiaGara, $idStagione, date("Y-m-d H:i:s"), date("Y-m-d H:i:s"));
+		$campi = "id_atleta, id_gara, id_tipologia_gara, id_stagione, created, modified";
 		
 		$data = new MysqlClass();
 		$data->connetti();
