@@ -29,7 +29,7 @@ class ClassificaManager {
 					and p.ID_STAGIONE = s.ID
 					and s.id = ".$stagione."
 				group by p.ID_ATLETA
-				order by PRESENZE desc
+				order by PUNTEGGIO desc
 			");
     }
     
