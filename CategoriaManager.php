@@ -37,19 +37,14 @@ class CategoriaManager {
 			");
     }
 	
-	function getByDataNascitaAndSesso ($dataDiNascita, $sesso) {
+	function getByDataNascitaAndSesso ($dataDiNascita, $sesso, $stagione) {
 		
-		//$dataDiNascita="20/12/1978"; 
 		list($giornon,$mesen,$annon)=explode('/',$dataDiNascita); 
-		
-		
-		//list($giornoo,$meseo,$annoo)=explode('/',date("j/n/Y"));
+
 		require_once("StagioneManager.php");
 		$StagioneManager = new StagioneManager();
-		$annoAttuale = StagioneManager::getDescrizioneStagione($_SESSION['stagione']);
-		//echo $_SESSION['stagione'];
-		 
-		 
+		$annoAttuale = StagioneManager::getDescrizioneStagione($stagione);
+
 		$eta=$annoAttuale-$annon; 
 		
 		$query =	 "

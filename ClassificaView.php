@@ -68,7 +68,7 @@ $presenze = ClassificaManager::lista($stagione);
 		$posizioneArray = 0;
 		$contatore = 1;
 		while ($presenze_row = dbms_fetch_array($presenze)) {
-			$categoria = CategoriaManager::getByDataNascitaAndSesso($presenze_row["DATA_NASCITA"],$presenze_row["SESSO"]);
+			$categoria = CategoriaManager::getByDataNascitaAndSesso($presenze_row["DATA_NASCITA"],$presenze_row["SESSO"], $stagione);
 			print "<tr>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$contatore."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$presenze_row["COGNOME"]."&nbsp;".$presenze_row["NOME"]." &nbsp;</td>";
