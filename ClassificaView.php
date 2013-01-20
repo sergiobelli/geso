@@ -64,17 +64,32 @@ $presenze = ClassificaManager::lista($stagione);
 				<td class="FacetFormHeaderFont" width="15%">Punteggio</td>
 			</tr>
 <?php
+		$presenzeArray = null;
+		$posizioneArray = 0;
 		$contatore = 1;
 		while ($presenze_row = dbms_fetch_array($presenze)) {
+			$categoria = CategoriaManager::getByDataNascitaAndSesso($presenze_row["DATA_NASCITA"],$presenze_row["SESSO"]);
 			print "<tr>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$contatore."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$presenze_row["COGNOME"]."&nbsp;".$presenze_row["NOME"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$presenze_row["SESSO"]."</td>";
-			print "<td class=\"FacetDataTD\" align=\"center\">".CategoriaManager::getByDataNascitaAndSesso($presenze_row["DATA_NASCITA"],$presenze_row["SESSO"])."</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".$categoria."</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='GareAtletaView.php?idAtleta=".$presenze_row["ID_ATLETA"]."&idStagione=".$stagione."'>".$presenze_row["PRESENZE"]."</a></td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='GareAtletaView.php?idAtleta=".$presenze_row["ID_ATLETA"]."&idStagione=".$stagione."'>".$presenze_row["PUNTEGGIO"]."</td>";
 			print "</tr>";
+			
+			$presenzeArray[$posizioneArray] = array(
+					$presenze_row["ID_ATLETA"],
+					$presenze_row["COGNOME"],
+					$presenze_row["NOME"],
+					$presenze_row["SESSO"],
+					$categoria,
+					$presenze_row["DATA_NASCITA"],
+					$presenze_row["PRESENZE"],
+					$presenze_row["PUNTEGGIO"]);
+					
 			$contatore++;
+			$posizioneArray++;
 		}
 ?>			
 		</table>
@@ -84,13 +99,15 @@ $presenze = ClassificaManager::lista($stagione);
 
 	
 	<td width="50%" align="center">
+	
 	<b>Classifiche di categoria</b>
 <?php
 	$contatoreCategorie = 1;
 	$categorie = CategoriaManager::lista();
 	while ($categorie_row = dbms_fetch_array($categorie)) {
 		$codiceCategoria = $categorie_row["codice"];
-		$presenzeCategoria = ClassificaManager::listaByCategoria($stagione, $codiceCategoria);
+		
+		$presenzeCategoria = ClassificaManager::listaByCategoria($presenzeArray, $stagione, $codiceCategoria);
 		if ( $presenzeCategoria != null && count($presenzeCategoria) >0 ) {
 ?>
 		<br/>
@@ -125,6 +142,7 @@ $presenze = ClassificaManager::lista($stagione);
 		$contatoreCategorie++;
 	}
 ?>	
-	</td></tr></table>
+	</td>	
+</tr></table>
 	</body>
 </html>
