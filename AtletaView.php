@@ -1,7 +1,7 @@
 <?php
 	require_once("Header.php");
 	require_once("AtletaManager.php");
-
+	require_once("CategoriaManager.php");
 	
 	global $operazione;
 	$operazione = '';
@@ -36,6 +36,7 @@
 	}
 	
 	$AtletaManager = new AtletaManager();
+	$CategoriaManager = new CategoriaManager();
 	
 	if (isset($_GET['operazione']) && $_GET['operazione'] == 'modifica') {
 		$operazione = 'modifica';
@@ -301,6 +302,7 @@
 				<td class="FacetFormHeaderFont">Data di Nascita</td>
 				<td class="FacetFormHeaderFont">Data di Tesseramento</td>
 				<td class="FacetFormHeaderFont">Codice Fidal</td>
+				<td class="FacetFormHeaderFont">Categoria Fidal</td>				
 				<td class="FacetFormHeaderFont">Certificato medico</td>
 				<td class="FacetFormHeaderFont">Comune di residenza</td>
 				<!--<td class="FacetFormHeaderFont">Telefono</td>-->
@@ -312,18 +314,23 @@
 			</tr>
 <?php
 		$contatore = 1;
+		
+		
 		while ($elencoAtleti_row = dbms_fetch_array($elencoAtleti)) {
 		
 			$dataScadenzaCertificato = $elencoAtleti_row["DATA_SCADENZA_CERTIFICATO_MEDICO"];
+			$sessoAtleta = $elencoAtleti_row["SESSO"];
+			$dataNascitaAtleta = $elencoAtleti_row["DATA_NASCITA"];
 			$diffDate = fDateDiff(date("Y-m-d"), $dataScadenzaCertificato);
 			print "<tr>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$contatore."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoAtleti_row["COGNOME"]."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoAtleti_row["NOME"]."</td>";
-			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["SESSO"]."</td>";
-			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["DATA_NASCITA"]." &nbsp;</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".$sessoAtleta."</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".$dataNascitaAtleta." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["DATA_TESSERAMENTO"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["CODICE_FIDAL"]." &nbsp;</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".CategoriaManager::getByDataNascitaAndSesso($dataNascitaAtleta,$sessoAtleta)."</td>";
 			if ($diffDate >= 90) {
 				print "<td class=\"FacetDataTDGreen\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
 			} else if ($diffDate < 90 && $diffDate >= 30) {

@@ -1,8 +1,10 @@
 <?php
 require_once("ClassificaManager.php");
 require_once("StagioneManager.php");
+require_once("CategoriaManager.php");
 
 $StagioneManager = new StagioneManager();
+$CategoriaManager = new CategoriaManager();
 
 if (isset($_GET['idStagione'])) {
 	$stagione = $_GET['idStagione'];
@@ -45,27 +47,84 @@ while ($ultimoAggiornamentoRes_row = dbms_fetch_array($ultimoAggiornamentoRes)) 
 
 $presenze = ClassificaManager::lista($stagione);
 ?>		
-		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
+	<table align="center">
+		<tr valign="top">
+		
+		
+		
+		<td width="50%" align="center">
+		<b>Classifica generale</b>
+		<table border="0" cellpadding="3" cellspacing="1"  class="FacetFormTABLE" align="center">
 			<tr>
-				<td class="FacetFormHeaderFont">#</td>
-				<td class="FacetFormHeaderFont">Atleta</td>
-				<td class="FacetFormHeaderFont">Sesso</td>
-				<td class="FacetFormHeaderFont">Presenze</td>
-				<td class="FacetFormHeaderFont">Punteggio</td>
+				<td class="FacetFormHeaderFont" width="10%">#</td>
+				<td class="FacetFormHeaderFont" width="40%">Atleta</td>
+				<td class="FacetFormHeaderFont" width="10%">Sesso</td>
+				<td class="FacetFormHeaderFont" width="10%">Categoria</td>				
+				<td class="FacetFormHeaderFont" width="15%">Presenze</td>
+				<td class="FacetFormHeaderFont" width="15%">Punteggio</td>
 			</tr>
 <?php
 		$contatore = 1;
 		while ($presenze_row = dbms_fetch_array($presenze)) {
 			print "<tr>";
-			print "<td class=\"FacetDataTD\" align=\"left\">".$contatore."</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".$contatore."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$presenze_row["COGNOME"]."&nbsp;".$presenze_row["NOME"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$presenze_row["SESSO"]."</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".CategoriaManager::getByDataNascitaAndSesso($presenze_row["DATA_NASCITA"],$presenze_row["SESSO"])."</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='GareAtletaView.php?idAtleta=".$presenze_row["ID_ATLETA"]."&idStagione=".$stagione."'>".$presenze_row["PRESENZE"]."</a></td>";
-			print "<td class=\"FacetDataTD\" align=\"center\">".$presenze_row["PUNTEGGIO"]."</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\"><a href='GareAtletaView.php?idAtleta=".$presenze_row["ID_ATLETA"]."&idStagione=".$stagione."'>".$presenze_row["PUNTEGGIO"]."</td>";
 			print "</tr>";
 			$contatore++;
 		}
 ?>			
 		</table>
+	</td>
+	
+	<td>&nbsp;</td>
+
+	
+	<td width="50%" align="center">
+	<b>Classifiche di categoria</b>
+<?php
+	$contatoreCategorie = 1;
+	$categorie = CategoriaManager::lista();
+	while ($categorie_row = dbms_fetch_array($categorie)) {
+		$codiceCategoria = $categorie_row["codice"];
+		$presenzeCategoria = ClassificaManager::listaByCategoria($stagione, $codiceCategoria);
+		if ( $presenzeCategoria != null && count($presenzeCategoria) >0 ) {
+?>
+		<br/>
+		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
+			<tr>
+				<td class="FacetFormHeaderFont" width="10%">#</td>
+				<td class="FacetFormHeaderFont" width="40%">Atleta</td>
+				<td class="FacetFormHeaderFont" width="10%">Sesso</td>
+				<td class="FacetFormHeaderFont" width="10%">Categoria</td>				
+				<td class="FacetFormHeaderFont" width="15%">Presenze</td>
+				<td class="FacetFormHeaderFont" width="15%">Punteggio</td>
+			</tr>	
+<?php	
+			$contatoreAtleta = 1;
+			for($pos=0;$pos<count($presenzeCategoria);$pos++) {
+?>
+			<tr>
+				<td class="FacetDataTD" align="center"><? echo $contatoreAtleta; ?></td>
+				<td class="FacetDataTD" align="left"><? echo $presenzeCategoria[$pos][1]." ".$presenzeCategoria[$pos][2]; ?></td>
+				<td class="FacetDataTD" align="center"><? echo $presenzeCategoria[$pos][3]; ?></td>
+				<td class="FacetDataTD" align="center"><? echo $presenzeCategoria[$pos][4]; ?></td>				
+				<td class="FacetDataTD" align="center"><? echo $presenzeCategoria[$pos][6]; ?></td>
+				<td class="FacetDataTD" align="center"><? echo $presenzeCategoria[$pos][7]; ?></td>
+			</tr>	
+<?php			
+				$contatoreAtleta++;
+			}
+?>
+		</table>
+<?php			
+		}
+		$contatoreCategorie++;
+	}
+?>	
+	</td></tr></table>
 	</body>
 </html>

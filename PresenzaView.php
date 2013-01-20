@@ -161,9 +161,15 @@
 							$elencoTipologieGare = TipologiaGaraManager::lista();
 							while ($elencoTipologieGare_row = dbms_fetch_array($elencoTipologieGare)) {
 								if ($elencoTipologieGare_row["ID"] == $idTipologiaGara) {
-									print( "<option selected value='".$elencoTipologieGare_row["ID"]."'>".$elencoTipologieGare_row["TIPO"]."</option>" );
+									print( "<option selected value='".$elencoTipologieGare_row["ID"]."'>"
+											.$elencoTipologieGare_row["TIPO"]. " - ("
+											.$elencoTipologieGare_row["PUNTEGGIO"]." punti)".
+										"</option>" );
 								} else {
-									print( "<option value='".$elencoTipologieGare_row["ID"]."'>".$elencoTipologieGare_row["TIPO"]."</option>" );
+									print( "<option value='".$elencoTipologieGare_row["ID"]."'>"
+											.$elencoTipologieGare_row["TIPO"]. " - ("
+											.$elencoTipologieGare_row["PUNTEGGIO"]." punti)".
+										"</option>" );
 								}
 							}
 ?>

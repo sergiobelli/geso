@@ -6,6 +6,7 @@ $idAtleta = $_GET['idAtleta'];
 $idStagione = $_GET['idStagione'];
 ?>
 
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 	<head>
@@ -69,4 +70,3 @@ $nGare = 0;
 		</table>
 	</body>
 </html>
-

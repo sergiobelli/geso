@@ -12,7 +12,7 @@ class LoginManager {
         return connetti_query(
 			"SELECT id FROM login WHERE username = '$username' AND password = '$password'");
     }
-    
+     
 	function gestioneCertificatiMedici() {
 		$CertificatoMedicoManager = new CertificatoMedicoManager();
 		$DiffUtil = new DiffUtil();
