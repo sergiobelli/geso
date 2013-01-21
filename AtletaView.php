@@ -58,15 +58,15 @@
 			$taglia= $atleta_row["TAGLIA"];
 			$consensoTrattamentoDati= $atleta_row["CONSENSO_DATI_PERSONALI"];
 		}		
-	} else if (isset($_GET['operazione']) && $_GET['operazione'] == 'cancella') {
-		$operazione = 'cancella';
-		$result = AtletaManager::cancella($_GET['idAtleta']);
-		if ($result == '-1') {
-			$message = "Ci sono presenze legate all'atleta che si sta cancellando, provvedere prima a rimuovere tali informazioni!";
-		} else {
+	} else if (isset($_GET['operazione']) && $_GET['operazione'] == 'ritira') {
+		$operazione = 'ritira';
+		$result = AtletaManager::ritira($_GET['idAtleta']);
+		//if ($result == '-1') {
+		//	$message = "Ci sono presenze legate all'atleta che si sta cancellando, provvedere prima a rimuovere tali informazioni!";
+		//} else {
 			$idAtleta = null;
 			$operazione = null;
-		}
+		//}
 	} else {
 		$operazione = 'inserisci';
 	}
@@ -361,7 +361,7 @@
 			//print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["CONSENSO_DATI_PERSONALI"]." &nbsp;</td>";
 			
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='AtletaView.php?operazione=modifica&idAtleta=".$elencoAtleti_row["ID"]."'>modifica</a></td>";
-			print "<td class=\"FacetDataTD\" align=\"center\"><a href='AtletaView.php?operazione=cancella&idAtleta=".$elencoAtleti_row["ID"]."'>cancella</a></td>";
+			print "<td class=\"FacetDataTD\" align=\"center\"><a href='AtletaView.php?operazione=ritira&idAtleta=".$elencoAtleti_row["ID"]."'>ritira</a></td>";
 			print "</tr>";
 			$contatore++;
 		}
