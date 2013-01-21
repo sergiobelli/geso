@@ -25,9 +25,42 @@ class AtletaManager {
 					 atleta.CELLULARE as CELLULARE,
 					 atleta.EMAIL as EMAIL,
 					 atleta.TAGLIA as TAGLIA,
-					 atleta.CONSENSO_DATI_PERSONALI as CONSENSO_DATI_PERSONALI
+					 atleta.CONSENSO_DATI_PERSONALI as CONSENSO_DATI_PERSONALI,
+					 atleta.EX_ATLETA as EX_ATLETA
 				from 
 					atleta
+				where atleta.EX_ATLETA is null or atleta.EX_ATLETA = 'N'
+				group by 
+					atleta.COGNOME, atleta.NOME
+			");
+    }
+	
+	function listaEx () {
+        return connetti_query(
+			"
+				select 
+					atleta.ID as ID,
+					atleta.COGNOME as COGNOME, 
+					atleta.NOME as NOME, 
+					atleta.SESSO as SESSO,
+					DATE_FORMAT(atleta.DATA_NASCITA, '%d/%m/%Y') as DATA_NASCITA,
+					DATE_FORMAT(atleta.DATA_TESSERAMENTO, '%d/%m/%Y') as DATA_TESSERAMENTO,
+					atleta.CODICE_FIDAL as CODICE_FIDAL,
+					DATE_FORMAT((select certificato_medico.data_scadenza 
+					 from certificato_medico 
+					 where certificato_medico.id_atleta = atleta.id), '%d/%m/%Y') as DATA_SCADENZA_CERTIFICATO_MEDICO,
+					 atleta.COMUNE_RESIDENZA as COMUNE_RESIDENZA,
+					 atleta.PROVINCIA_RESIDENZA as PROVINCIA_RESIDENZA,
+					 atleta.INDIRIZZO_RESIDENZA as INDIRIZZO_RESIDENZA,
+					 atleta.TELEFONO as TELEFONO,
+					 atleta.CELLULARE as CELLULARE,
+					 atleta.EMAIL as EMAIL,
+					 atleta.TAGLIA as TAGLIA,
+					 atleta.CONSENSO_DATI_PERSONALI as CONSENSO_DATI_PERSONALI,
+					 atleta.EX_ATLETA as EX_ATLETA
+				from 
+					atleta
+				where atleta.EX_ATLETA = 'S'
 				group by 
 					atleta.COGNOME, atleta.NOME
 			");
@@ -54,7 +87,8 @@ class AtletaManager {
 					 atleta.CELLULARE as CELLULARE,
 					 atleta.EMAIL as EMAIL,
 					 atleta.TAGLIA as TAGLIA,
-					 atleta.CONSENSO_DATI_PERSONALI as CONSENSO_DATI_PERSONALI
+					 atleta.CONSENSO_DATI_PERSONALI as CONSENSO_DATI_PERSONALI,
+					 atleta.EX_ATLETA as EX_ATLETA
 				from 
 					atleta atleta
 				where atleta.ID = '".$idAtleta."'
@@ -103,7 +137,7 @@ class AtletaManager {
 			$cellulare,
 			$email,
 			$taglia,
-			$consensoTrattamentoDati, 
+			$consensoTrattamentoDati,
 			date("Y-m-d H:i:s"),
 			date("Y-m-d H:i:s")
 		); # valori da inserire
@@ -199,6 +233,36 @@ class AtletaManager {
 		$data->connetti();
 		$data->modifica($tabella,$valori,$campi,$idAtleta);
 		$data->disconnetti();
+	}
+	
+	function ritira ($idAtleta) {
+	
+		include "funzioni_mysql.php";
+		
+		$tabella = "atleta"; # nome della tabella
+		$valori = array ('S', date("Y-m-d H:i:s")); # valori da inserire
+		$campi =  array ('ex_atleta', 'modified'); # campi da popolare
+		
+		$data = new MysqlClass();
+		$data->connetti();
+		$data->modifica($tabella,$valori,$campi,$idAtleta);
+		$data->disconnetti();
+		
+	}
+	
+	function ripristina ($idAtleta) {
+	
+		include "funzioni_mysql.php";
+		
+		$tabella = "atleta"; # nome della tabella
+		$valori = array ('N', date("Y-m-d H:i:s")); # valori da inserire
+		$campi =  array ('ex_atleta', 'modified'); # campi da popolare
+		
+		$data = new MysqlClass();
+		$data->connetti();
+		$data->modifica($tabella,$valori,$campi,$idAtleta);
+		$data->disconnetti();
+		
 	}
 	
 	function cancella ($idAtleta) {
