@@ -27,6 +27,7 @@ class CertificatoMedicoManager {
 				atleta
 			where
 				certificato_medico.id_atleta = atleta.id
+				and (atleta.EX_ATLETA is null or atleta.EX_ATLETA = 'N')
 			order by
 				certificato_medico.data_scadenza
 			");

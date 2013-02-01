@@ -189,13 +189,13 @@
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoCertificatiMedici_row["data_nascita_atleta"]." &nbsp;</td>";
 			
 			if ($diffDate >= 90) {
-				print "<td class=\"FacetDataTDGreen\" align=\"center\">".$dataScadenzaCertificato." &nbsp; </font></td>";
+				print "<td class=\"FacetDataTDGreen\" align=\"center\">".$dataScadenzaCertificato." &nbsp; (".$diffDate.")</font></td>";
 			} else if ($diffDate < 90 && $diffDate >= 30) {
 				print "<td class=\"FacetDataTDOrange\" align=\"center\">".$dataScadenzaCertificato." &nbsp; (".$diffDate.")</font></td>";
 			} else if ($diffDate < 30) {
 				print "<td class=\"FacetDataTDRed\" align=\"center\">".$dataScadenzaCertificato." &nbsp; (".$diffDate.")</font></td>";
 			} else {
-				print "<td class=\"FacetDataTD\" align=\"center\">".$dataScadenzaCertificato." &nbsp; </font></td>";
+				print "<td class=\"FacetDataTD\" align=\"center\">".$dataScadenzaCertificato." &nbsp; (".$diffDate.")</font></td>";
 			}
 			
 
