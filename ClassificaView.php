@@ -2,6 +2,7 @@
 require_once("ClassificaManager.php");
 require_once("StagioneManager.php");
 require_once("CategoriaManager.php");
+require_once("AccessiManager.php");
 
 $StagioneManager = new StagioneManager();
 $CategoriaManager = new CategoriaManager();
@@ -16,6 +17,24 @@ if (isset($_GET['idStagione'])) {
 
 $descrizioneStagione = $StagioneManager::getDescrizioneStagione($stagione);
 
+$AccessiManager = new AccessiManager();
+if (isset($_SESSION['username'])) {
+	AccessiManager::inserisci(
+		$_SESSION['username'], 
+		$_SERVER['REMOTE_ADDR'], 
+		'xxx', 
+		$_SERVER['REQUEST_URI'], 
+		'ACCESSO');
+} else {
+	AccessiManager::inserisci(
+		'guest', 
+		$_SERVER['REMOTE_ADDR'], 
+		'xxx', 
+		$_SERVER['REQUEST_URI'], 
+		'ACCESSO');	
+}
+
+			
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -68,7 +87,7 @@ $presenze = ClassificaManager::lista($stagione);
 		$posizioneArray = 0;
 		$contatore = 1;
 		while ($presenze_row = dbms_fetch_array($presenze)) {
-			$categoria = CategoriaManager::getByDataNascitaAndSesso($presenze_row["DATA_NASCITA"],$presenze_row["SESSO"], $stagione);
+			$categoria = CategoriaManager::getByDataNascitaAndSesso($presenze_row["DATA_NASCITA"],$presenze_row["SESSO"], $descrizioneStagione);
 			print "<tr>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$contatore."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$presenze_row["COGNOME"]."&nbsp;".$presenze_row["NOME"]." &nbsp;</td>";

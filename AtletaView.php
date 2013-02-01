@@ -2,20 +2,24 @@
 	require_once("Header.php");
 	require_once("AtletaManager.php");
 	require_once("CategoriaManager.php");
-	
+	require_once("util/DiffUtil.php");
+		
 	global $operazione;
 	$operazione = '';
 	
 	global $atleta;
 	
-	global $idAtleta, $cognome, $nome, $sesso, $dataNascita, $dataTesseramento, $codiceFidal, $comuneResidenza, $provinciaResidenza, $indirizzoResidenza, $telefono, $cellulare, $email, $taglia, $consensoTrattamentoDati;
+	global $idAtleta, $cognome, $nome, $sesso, $dataNascita, 
+		$dataTesseramento, $codiceFidal, $comuneResidenza, $provinciaResidenza, 
+		$indirizzoResidenza, $telefono, $cellulare, $email, $taglia, $consensoTrattamentoDati;
+		
 	$idAtleta = '';
 	$cognome = '';
 	$nome = '';
 	$sesso = '';
 	$dataNascita = '';
 	$dataTesseramento = '';
-        $codiceFidal = '';
+   $codiceFidal = '';
 	$comuneResidenza = '';
 	$provinciaResidenza = '';
 	$indirizzoResidenza = '';
@@ -221,10 +225,7 @@
 						<br/>
 						<input type="radio" id="sesso" name="sesso" value="F" <?php $sesso == 'F' ? print 'checked="checked" '  : '' ?> /> F
 					</td>
-				</tr>				
-				
-				
-				
+				</tr
 				<tr>
 					<td class="FacetFormHeaderFont">Data di Nascita</td>
 					<td align="right"><input type="text" id="dataNascita" name="dataNascita" value="<?php echo $dataNascita ?>"/></td>
@@ -309,19 +310,25 @@
 				<td class="FacetFormHeaderFont">Cellulare</td>
 				<td class="FacetFormHeaderFont">Email</td>
 				<td class="FacetFormHeaderFont">Taglia</td>
-				<!--<td class="FacetFormHeaderFont">Consenso Trattamento Dati</td>-->
+				<td class="FacetFormHeaderFont">C.T.D.S.</td>
 				<td class="FacetFormHeaderFont" colspan="2">Operazioni</td>
 			</tr>
 <?php
 		$contatore = 1;
 		
+		require_once("StagioneManager.php");
+		$StagioneManager = new StagioneManager();
+		$annoAttuale = StagioneManager::getDescrizioneStagione($_SESSION['stagione']);
+		$DiffUtil = new DiffUtil();
 		
 		while ($elencoAtleti_row = dbms_fetch_array($elencoAtleti)) {
 		
 			$dataScadenzaCertificato = $elencoAtleti_row["DATA_SCADENZA_CERTIFICATO_MEDICO"];
 			$sessoAtleta = $elencoAtleti_row["SESSO"];
 			$dataNascitaAtleta = $elencoAtleti_row["DATA_NASCITA"];
-			$diffDate = fDateDiff(date("Y-m-d"), $dataScadenzaCertificato);
+			
+			$diffDate = $DiffUtil->fDateDiff(date("Y-m-d"), $dataScadenzaCertificato);
+			
 			print "<tr>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$contatore."</td>";
 			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoAtleti_row["COGNOME"]."</td>";
@@ -330,7 +337,7 @@
 			print "<td class=\"FacetDataTD\" align=\"center\">".$dataNascitaAtleta." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["DATA_TESSERAMENTO"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["CODICE_FIDAL"]." &nbsp;</td>";
-			print "<td class=\"FacetDataTD\" align=\"center\">".CategoriaManager::getByDataNascitaAndSesso($dataNascitaAtleta,$sessoAtleta, $_SESSION['stagione'])."</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".CategoriaManager::getByDataNascitaAndSesso($dataNascitaAtleta, $sessoAtleta, $annoAttuale)."</td>";
 			if ($diffDate >= 90) {
 				print "<td class=\"FacetDataTDGreen\" align=\"center\">".$dataScadenzaCertificato." &nbsp;</font></td>";
 			} else if ($diffDate < 90 && $diffDate >= 30) {
@@ -358,35 +365,14 @@
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["CELLULARE"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["EMAIL"]." &nbsp;</td>";
 			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["TAGLIA"]." &nbsp;</td>";
-			//print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["CONSENSO_DATI_PERSONALI"]." &nbsp;</td>";
+			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoAtleti_row["CONSENSO_DATI_PERSONALI"]." &nbsp;</td>";
 			
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='AtletaView.php?operazione=modifica&idAtleta=".$elencoAtleti_row["ID"]."'>modifica</a></td>";
 			print "<td class=\"FacetDataTD\" align=\"center\"><a href='AtletaView.php?operazione=ritira&idAtleta=".$elencoAtleti_row["ID"]."'>ritira</a></td>";
 			print "</tr>";
 			$contatore++;
 		}
-		
-		function fDateDiff($dateFrom, $dateA) {
-		
-			if ($dateA != '') {
-				list($d, $m, $y) = explode('/', $dateA);
-				$mk=mktime(0, 0, 0, $m, $d, $y);
-				$dateTo=strftime('%Y-%m-%d',$mk);
-			} else {
-				return 100;
-			}
-			
-			if(empty($dateFrom)) $dateFrom = date('Y-m-d'); 
-			if(empty($dateTo)) $dateTo = date('Y-m-d'); 
-			
-			$a_1 = explode('-',$dateFrom); 
-			$a_2 = explode('-',$dateTo); 
-			$mktime1 = mktime(0, 0, 0, $a_1[1], $a_1[2], $a_1[0]); 
-			$mktime2 = mktime(0, 0, 0, $a_2[1], $a_2[2], $a_2[0]); 
-			$secondi = $mktime1 - $mktime2; 
-			$giorni = intval($secondi / 86400);  
-			return -($giorni);
-		}
+
 ?>			
 		</table>
 		

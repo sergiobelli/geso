@@ -1,6 +1,7 @@
 <?php
 	
 	require_once("../StagioneManager.php");
+	require_once("../CategoriaManager.php");
 	
 	// inizializzazione della sessione
 	//session_start();
@@ -17,7 +18,33 @@
 			&& isset($_POST['stagione'])
 			) {
 		
-		$_SESSION['stagione'] = $_POST['stagione'];
+		
+			$_SESSION['stagione'] = $_POST['stagione'];
+
+			$elencoCategorie = null;
+			
+			$CategoriaManager = new CategoriaManager();
+			$elencoCategorieDb = CategoriaManager::lista();
+			
+			$contatore = 0;
+			
+			while ($elencoCategorieDb_row = dbms_fetch_array($elencoCategorieDb)) {
+				
+				$elencoCategorie[$contatore] = array(
+					$elencoCategorieDb_row["id"],
+					$elencoCategorieDb_row["codice"],
+					$elencoCategorieDb_row["sesso"],
+					$elencoCategorieDb_row["descrizione"],
+					$elencoCategorieDb_row["da"],
+					$elencoCategorieDb_row["a"]);
+					
+				$contatore++;
+			
+			}
+			
+			$_SESSION['categorie'] = $elencoCategorie;
+
+
 		header("Location: ../AtletaView.php");
 		
 	}
