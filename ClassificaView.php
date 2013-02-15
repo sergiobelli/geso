@@ -22,16 +22,16 @@ if (isset($_SESSION['username'])) {
 	AccessiManager::inserisci(
 		$_SESSION['username'], 
 		$_SERVER['REMOTE_ADDR'], 
-		'xxx', 
+		gethostbyaddr($_SERVER['REMOTE_ADDR']), 
 		$_SERVER['REQUEST_URI'], 
-		'ACCESSO');
+		'VISITA');
 } else {
 	AccessiManager::inserisci(
 		'guest', 
 		$_SERVER['REMOTE_ADDR'], 
-		'xxx', 
+		gethostbyaddr($_SERVER['REMOTE_ADDR']), 
 		$_SERVER['REQUEST_URI'], 
-		'ACCESSO');	
+		'VISITA');	
 }
 
 			
