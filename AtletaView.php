@@ -102,13 +102,6 @@
 			$email= trim($_POST['email']);
 			$taglia= trim($_POST['taglia']);
 			$consensoTrattamentoDati= trim($_POST['consensoTrattamentoDati']);
-			/*
-			$idAtleta = trim(filter_var($_POST['idAtleta'], FILTER_SANITIZE_STRING));
-			$cognome = trim(filter_var($_POST['cognome'], FILTER_SANITIZE_STRING));
-			$nome = trim(filter_var($_POST['nome'], FILTER_SANITIZE_STRING));
-			$sesso = trim(filter_var($_POST['sesso'], FILTER_SANITIZE_STRING));
-			$dataNascita = trim(filter_var($_POST['dataNascita'], FILTER_SANITIZE_STRING));
-			*/
 			
 			if (isset($idAtleta) && $idAtleta != '') {				
 				AtletaManager::modifica(
@@ -185,7 +178,110 @@
 
 <html>
 	<head>
-		<title>Atleti</title><link rel="stylesheet" type="text/css" href="stylesheet.css">
+		<title>Atleti</title>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+
+      <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
+      <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+      <script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
+      <script type="text/javascript" src="js/jquery-ui-i18n.js"></script>
+      <script type="text/javascript" src="js/jquery.form.js"></script>
+      <script type="text/javascript" src="js/jquery.validate.js"></script>
+      
+      <script type="text/javascript">
+          $(function() {
+               $.datepicker.setDefaults($.datepicker.regional['it']);
+               $( "#dataNascita" ).datepicker();
+          });
+          $(function() {
+               $.datepicker.setDefaults($.datepicker.regional['it']);
+               $( "#dataTesseramento" ).datepicker();
+          });
+
+            $(function(){
+              
+                $("#modulo_atleta").validate({
+                    rules: {
+                        cognome:{ minlength:2, required: true },
+                        nome:{ minlength:2, required: true },
+                        sesso:{ required: true },
+                        dataNascita:{ required: true, date: true },
+                        dataTesseramento:{ date: true },
+                        codiceFidal: { minlength:8 },
+                        email: "email"
+                    },
+                    messages:{                    	
+                        cognome:{ 
+                        	minlength:"Il cognome deve essere lungo almeno 2 caratteri",
+                        	required: "Il cognome e' obbligatorio!" 
+                        },
+                        nome:{ 
+                        	minlength:"Il nome deve essere lungo almeno 2 caratteri",
+                        	required: "Il nome e' obbligatorio!" 
+                        },
+                        sesso:{ required: "Il sesso e' obbligatorio!" },
+                        dataNascita:{ 
+                        	required: "La data di nascita e' obbligatoria!",
+                        	date: "Il formato della data di nascita non e' valido!" 
+                        },
+                        dataTesseramento:{ 
+                        	date: "Il formato della data di tesseramento non e' valido!" 
+                        },
+                        codiceFidal: { minlength:"Il codice fidal deve essere lungo almeno 8 caratteri!" },
+                        email: "Non hai inserito una e-mail valida!" 
+                    },
+                    
+                    submitHandler: function(form) { 
+                        alert('I dati sono stati inseriti correttamente');
+                        form.submit();
+                    },
+
+                    invalidHandler: function() { 
+                        alert('I dati inseriti non sono corretti, ricontrollali....');
+                    }	
+
+                })
+                
+            })
+
+				$(function() {
+                var arrReg = new Array();
+                $.ajax({
+                    type: "GET",
+                    url: "controller/provincie.xml",
+                    dataType: "xml",
+                    success: parseXml,
+                    complete: attivaAutocomplete
+                });
+
+                function parseXml(xml){
+                    $(xml).find("provincia").each(function()
+                    {
+                        arrReg.push($(this).attr("sigla"));
+                    });
+                }
+
+                function attivaAutocomplete() {
+                    $("#provinciaResidenza").autocomplete({
+                        source: arrReg
+                    }
+                );
+                }
+            });
+                      
+          
+        </script>
+
+        <style>
+            input.error {
+                border-color: red;           
+            }
+            label.error {
+            	color: white;
+                font-weight:bold;
+            }
+        </style>
+                		
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 	
@@ -205,7 +301,7 @@
 		</div>
 		
 		<div align="center">Inserimento/Modifica Atleti</div>
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+		<form id="modulo_atleta" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 			<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 				<tr>
 					<td class="FacetFormHeaderFont">Cognome</td>
@@ -222,7 +318,6 @@
 					<td class="FacetFormHeaderFont">Sesso</td>
 					<td class="FacetFormHeaderFont">
 						<input type="radio" id="sesso" name="sesso" value="M" <?php $sesso == 'M' ? print 'checked="checked" '  : '' ?> /> M
-						<br/>
 						<input type="radio" id="sesso" name="sesso" value="F" <?php $sesso == 'F' ? print 'checked="checked" '  : '' ?> /> F
 					</td>
 				</tr
@@ -271,7 +366,6 @@
 					<td class="FacetFormHeaderFont">Consenso al trattamento dei dati sensibili</td>
 					<td class="FacetFormHeaderFont">
 						<input type="radio" id="consensoTrattamentoDati" name="consensoTrattamentoDati" value="S" <?php $consensoTrattamentoDati == 'S' ? print 'checked="checked" '  : '' ?> /> Si
-						<br/>
 						<input type="radio" id="consensoTrattamentoDati" name="consensoTrattamentoDati" value="N" <?php $consensoTrattamentoDati == 'N' || $consensoTrattamentoDati == '' ? print 'checked="checked" '  : '' ?> /> No
 					</td>
 				</tr>
