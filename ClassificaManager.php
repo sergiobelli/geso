@@ -1,5 +1,7 @@
 <?php
 
+
+
 require_once("dblib.php");
 require_once("clublib.php");
 require_once("CategoriaManager.php");
@@ -31,7 +33,7 @@ class ClassificaManager {
 					and p.ID_STAGIONE = s.ID
 					and s.id = ".$stagione."
 				group by p.ID_ATLETA
-				order by PUNTEGGIO desc
+				order by PUNTEGGIO desc, PRESENZE
 			");
     }
 

@@ -29,7 +29,7 @@
 			AccessiManager::inserisci(
 				$_POST['username'], 
 				$_SERVER['REMOTE_ADDR'], 
-				'n.d.', 
+				gethostbyaddr($_SERVER['REMOTE_ADDR']), 
 				$_SERVER['REQUEST_URI'], 
 				'LOGIN->DONE');
 			
@@ -43,7 +43,7 @@
 			AccessiManager::inserisci(
 				$_POST['username'], 
 				$_SERVER['REMOTE_ADDR'], 
-				'n.d.',
+				gethostbyaddr($_SERVER['REMOTE_ADDR']),
 				$_SERVER['REQUEST_URI'], 
 				'LOGIN->FAILED');
 
