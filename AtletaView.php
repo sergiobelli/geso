@@ -187,17 +187,23 @@
       <script type="text/javascript" src="js/jquery-ui-i18n.js"></script>
       <script type="text/javascript" src="js/jquery.form.js"></script>
       <script type="text/javascript" src="js/jquery.validate.js"></script>
+	  
       
-      <script type="text/javascript">
-          $(function() {
-               $.datepicker.setDefaults($.datepicker.regional['it']);
-               $( "#dataNascita" ).datepicker();
-          });
-          $(function() {
-               $.datepicker.setDefaults($.datepicker.regional['it']);
-               $( "#dataTesseramento" ).datepicker();
-          });
+		<script type="text/javascript">
+			
+			//datepicker -> dataNascita
+			$(function() {
+			   $.datepicker.setDefaults($.datepicker.regional['it']);
+			   $( "#dataNascita" ).datepicker();
+			});
+			
+			//datepicker -> dataTesseramento
+			$(function() {
+			   $.datepicker.setDefaults($.datepicker.regional['it']);
+			   $( "#dataTesseramento" ).datepicker();
+			});
 
+			//validazione form
             $(function(){
               
                 $("#modulo_atleta").validate({
@@ -238,21 +244,20 @@
 
                     invalidHandler: function() { 
                         alert('I dati inseriti non sono corretti, ricontrollali....');
-                    }	
-
+                    }
                 })
-                
             })
-
-				$(function() {
-                var arrReg = new Array();
-                $.ajax({
-                    type: "GET",
-                    url: "controller/provincie.xml",
-                    dataType: "xml",
-                    success: parseXml,
-                    complete: attivaAutocomplete
-                });
+			
+			//autocompletamento -> provinciaResidenza
+			$(function() {
+				var arrReg = new Array();
+				$.ajax({
+					type: "GET",
+					url: "controller/provincie.xml",
+					dataType: "xml",
+					success: parseXml,
+					complete: attivaAutocomplete
+				});
 
                 function parseXml(xml){
                     $(xml).find("provincia").each(function()
@@ -264,11 +269,9 @@
                 function attivaAutocomplete() {
                     $("#provinciaResidenza").autocomplete({
                         source: arrReg
-                    }
-                );
+                    });
                 }
             });
-                      
           
         </script>
 
@@ -444,7 +447,7 @@
 			
 			$comRes = $elencoAtleti_row["COMUNE_RESIDENZA"];
 			$provRes = $elencoAtleti_row["PROVINCIA_RESIDENZA"];
-			if ($comRes != '' && provRes != '') {
+			if ($comRes != '' && $provRes != '') {
 				print "<td class=\"FacetDataTD\" align=\"center\">"
 					.$comRes
 					." ("
