@@ -181,9 +181,7 @@
 		<title>Atleti</title>
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
 
-      	<!--<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.20.custom.css" rel="stylesheet" />-->
-		<link type="text/css" href="css/redmond/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
-
+      <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
       <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
       <script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
       <script type="text/javascript" src="js/jquery-ui-i18n.js"></script>
@@ -192,44 +190,16 @@
 	  
 		<script type="text/javascript">
 			
-			$(function(){
-				$( "#salva" ).button();
-			});
-			$(function(){
-				$( "#cancella" ).button();
-			});
-			
-			$(function(){
-				$( "#sesso" ).buttonset();
-			});
-			$(function(){
-				$( "#consensoTrattamentoDati" ).buttonset();
-			});
-			
 			//datepicker -> dataNascita
 			$(function() {
 			   $.datepicker.setDefaults($.datepicker.regional['it']);
-				$( "#dataNascita" ).datepicker({
-					showOn: "button",
-					buttonImage: "images/calendar.gif",
-					buttonImageOnly: true,
-					changeMonth: true,
-					changeYear: true,
-					yearRange: "1900:2100"
-				});
+			   $( "#dataNascita" ).datepicker();
 			});
 			
 			//datepicker -> dataTesseramento
 			$(function() {
 			   $.datepicker.setDefaults($.datepicker.regional['it']);
-               $( "#dataTesseramento" ).datepicker({
-					showOn: "button",
-					buttonImage: "images/calendar.gif",
-					buttonImageOnly: true,
-					changeMonth: true,
-					changeYear: true,
-					yearRange: "1999:2100"
-				});
+			   $( "#dataTesseramento" ).datepicker();
 			});
 
 			//validazione form
@@ -279,7 +249,7 @@
 			
 			//autocompletamento -> provinciaResidenza
 			$(function() {
-                var arrProvincie = new Array();
+				var arrReg = new Array();
 				$.ajax({
 					type: "GET",
 					url: "controller/provincie.xml",
@@ -291,15 +261,14 @@
                 function parseXml(xml){
                     $(xml).find("provincia").each(function()
                     {
-                        arrProvincie.push($(this).attr("sigla"));
+                        arrReg.push($(this).attr("sigla"));
                     });
                 }
 
                 function attivaAutocomplete() {
                     $("#provinciaResidenza").autocomplete({
-                        source: arrProvincie
-                    }
-                );
+                        source: arrReg
+                    });
                 }
             });
           
@@ -350,10 +319,8 @@
 				<tr>
 					<td class="FacetFormHeaderFont">Sesso</td>
 					<td class="FacetFormHeaderFont">
-						<div id="sesso" align="right">
-							<input type="radio" id="sessoM" name="sesso" value="M" <?php $sesso == 'M' ? print 'checked="checked" '  : '' ?> /><label for="sessoM">M</label>
-							<input type="radio" id="sessoF" name="sesso" value="F" <?php $sesso == 'F' ? print 'checked="checked" '  : '' ?> /><label for="sessoF">F</label>
-						</div>	
+						<input type="radio" id="sesso" name="sesso" value="M" <?php $sesso == 'M' ? print 'checked="checked" '  : '' ?> /> M
+						<input type="radio" id="sesso" name="sesso" value="F" <?php $sesso == 'F' ? print 'checked="checked" '  : '' ?> /> F
 					</td>
 				</tr
 				<tr>
@@ -400,10 +367,8 @@
 				<tr>
 					<td class="FacetFormHeaderFont">Consenso al trattamento dei dati sensibili</td>
 					<td class="FacetFormHeaderFont">
-						<div id="consensoTrattamentoDati" align="right">
-							<input type="radio" id="consensoTrattamentoDatiSI" name="consensoTrattamentoDati" value="S" <?php $consensoTrattamentoDati == 'S' ? print 'checked="checked" '  : '' ?> /><label for="consensoTrattamentoDatiSI">Si</label>
-							<input type="radio" id="consensoTrattamentoDatiNO" name="consensoTrattamentoDati" value="N" <?php $consensoTrattamentoDati == 'N' || $consensoTrattamentoDati == '' ? print 'checked="checked" '  : '' ?> /><label for="consensoTrattamentoDatiNO">No</label>
-						</div>	
+						<input type="radio" id="consensoTrattamentoDati" name="consensoTrattamentoDati" value="S" <?php $consensoTrattamentoDati == 'S' ? print 'checked="checked" '  : '' ?> /> Si
+						<input type="radio" id="consensoTrattamentoDati" name="consensoTrattamentoDati" value="N" <?php $consensoTrattamentoDati == 'N' || $consensoTrattamentoDati == '' ? print 'checked="checked" '  : '' ?> /> No
 					</td>
 				</tr>
 

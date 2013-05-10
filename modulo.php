@@ -37,6 +37,10 @@
 		$email = $_POST['email'];
                 $codiceFidal= $_POST['codiceFidal'];
  
+		/*
+		
+		CONTROLLI IMPLEMENTATI MEDIANTE JQUERY
+		
 		if(!isset($nome) || $nome=="" ){
 			$message = "Attenzione, inserire il nome.";
 		} 
@@ -72,15 +76,16 @@
 		elseif( !isset($numeroTelefono) || $numeroTelefono =="") {
 			$message = "Attenzione, inserire il numero di telefono.";
 		} 
-		
-		/*
 		elseif( !isset($email) || $email =="") {
 			$message = "Attenzione, inserire l'email.";
 		} 
-		*/
+		
 		
 		else {
 			
+		CONTROLLI IMPLEMENTATI MEDIANTE JQUERY
+		*/
+		
 			//registrare su tabella
 			try {
 				inserisci($nome, $cognome, $sesso, $dataNascita, $luogoNascita, $indirizzoResidenza, $cittaResidenza, $provinciaResidenza, $numeroTelefono, $email, $codiceFidal);
@@ -142,17 +147,185 @@
 					$message =  'Message: ' .$e->getMessage();
 				}
 			}
-		}
+		//}CONTROLLI IMPLEMENTATI MEDIANTE JQUERY
 	}
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 	<head>
-		<title>Modulo di richiesta iscrizione</title><link rel="stylesheet" type="text/css" href="stylesheet.css">
+		<title>Modulo di richiesta iscrizione</title>
+
+		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+		<!--<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.20.custom.css" rel="stylesheet" />-->
+		<link type="text/css" href="css/redmond/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-i18n.js"></script>
+		<script type="text/javascript" src="js/jquery.form.js"></script>
+		<script type="text/javascript" src="js/jquery.validate.js"></script>
+		
+		<script type="text/javascript">
+			
+			//datepicker -> dataNascita
+			$(function() {
+				$.datepicker.setDefaults($.datepicker.regional['it']);
+				$( "#dataNascita" ).datepicker({
+					showOn: "button",
+					buttonImage: "images/calendar.gif",
+					buttonImageOnly: true,
+					changeMonth: true,
+					changeYear: true,
+					yearRange: "1900:2100"
+				});
+			});
+
+			//validazione form
+			$(function(){
+			  
+				$("#modulo").validate({
+					rules: {
+						cognome:{ minlength:2, required: true },
+						nome:{ minlength:2, required: true },
+						sesso:{ required: true },
+						dataNascita:{ required: true, date: true },
+						luogoNascita:{ minlength:2, required: true },
+						indirizzoResidenza:{ minlength:2, required: true },
+						cittaResidenza:{ minlength:2, required: true },
+						provinciaResidenza:{ minlength:2, required: true },
+						numeroTelefono:{ minlength:2, required: true, digits: true },
+						email: "email",
+						codiceFidal: { minlength:8 }
+					},
+					
+					messages:{                    	
+						cognome:{ 
+							minlength:	"Il cognome deve essere lungo almeno 2 caratteri",
+							required: 	"Il cognome e' obbligatorio!" 
+						},
+						nome:{ 
+							minlength:	"Il nome deve essere lungo almeno 2 caratteri",
+							required: 	"Il nome e' obbligatorio!" 
+						},
+						sesso:{ 
+							required: 	"Il sesso e' obbligatorio!" 
+						},
+						dataNascita:{ 
+							required: 	"La data di nascita e' obbligatoria!",
+							date: 		"Il formato della data di nascita non e' valido!" 
+						},
+						luogoNascita:{ 
+							minlength:	"Il luogo di nascita deve essere lungo almeno 2 caratteri",
+							required: 	"Il luogo di nascita e' obbligatorio!" 
+						},
+						indirizzoResidenza:{ 
+							minlength:	"L'indirizzo di residenza deve essere lungo almeno 2 caratteri", 
+							required: 	"L'indirizzo di residenza e' obbligatorio!"  
+						},
+						cittaResidenza:{ 
+							minlength:	"La citta' di residenza deve essere lunga almeno 2 caratteri",  
+							required: 	"La citta' di residenza e' obbligatoria!"  
+						},
+						provinciaResidenza:{
+							minlength:	"La provincia di residenza deve essere lunga almeno 2 caratteri", 
+							required: 	"La provincia di residenza e' obbligatoria!"  
+						},
+						numeroTelefono:{ 
+							minlength:	"Il numero di telefono deve essere lungo almeno 2 caratteri", 
+							required: 	"Il numero di telefono e' obbligatorio!",
+							digits:		"Il numero di telefono deve contenere solo cifre!"					
+						},
+						codiceFidal: { 
+							minlength:	"Il codice fidal deve essere lungo almeno 8 caratteri!" 
+						},
+						email: 			"Non hai inserito una e-mail valida!" 
+					},
+					
+					submitHandler: function(form) { 
+						$( "#dialogOk" ).dialog("open");
+						form.submit();
+					},
+
+					invalidHandler: function() { 
+						$( "#dialogKo" ).dialog("open");
+					}	
+
+				})
+			});
+			
+			//autocompletamento -> provinciaResidenza
+			$(function() {
+                var arrProvincie = new Array();
+                $.ajax({
+                    type: "GET",
+                    url: "controller/provincie.xml",
+                    dataType: "xml",
+                    success: parseXml,
+                    complete: attivaAutocomplete
+                });
+
+                function parseXml(xml){
+                    $(xml).find("provincia").each(function()
+                    {
+                        arrProvincie.push($(this).attr("sigla"));
+                    });
+                }
+
+                function attivaAutocomplete() {
+                    $("#provinciaResidenza").autocomplete({
+                        source: arrProvincie
+                    }
+                );
+                }
+            });
+			
+			$(function(){
+				$( "#invia" ).button();
+			});
+			
+			$(function(){
+				$( "#sesso" ).buttonset();
+			});
+			
+			$(function(){
+				$( "#dialogOk" ).dialog( { 
+					autoOpen:false, 
+					modal:true,
+					buttons: {
+						Ok: function() {
+							$(this).dialog("close");
+						}
+					}
+				} );
+			});
+			
+			$(function(){
+				$( "#dialogKo" ).dialog( { 
+					title:"Attenzione!", 
+					autoOpen:false, 
+					modal:true,
+					buttons: {
+						Ok: function() {
+							$(this).dialog("close");
+						}
+					}
+				});
+			});
+			
+		</script>
+		
+		<style>
+            input.error { border-color: red; }
+            label.error { color: #000000; font-weight:bold; }
+        </style>
+		
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 
+		<div id="dialogOk" align="center">I dati sono stati inseriti correttamente...</div>
+		<div id="dialogKo" align="center">I dati inseriti non sono corretti, ricontrollali....</div>
+		
 		<div align="center">
 <?php 
 			if (isset($message)) { 
@@ -169,59 +342,61 @@
 		</div>
 		
 		<div align="center">Modulo di richiesta iscrizione</div>
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+		<form id="modulo" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 			<table border="0" cellpadding="3" cellspacing="1" align="center">
 				<tr>
-					<td align="left">Nome * </td>
+					<td align="left"><label for="nome">Nome * </label></td>
 					<td align="right">
 						<input type="text" id="nome" name="nome" value="<?php echo $nome ?>" />
 					</td>
 				</tr>
 				<tr>
-					<td align="left">Cognome * </td>
+					<td align="left"><label for="cognome">Cognome * </label></td>
 					<td align="right">
 						<input type="text" id="cognome" name="cognome" value="<?php echo $cognome ?>" />
 					</td>
 				</tr>
 				<tr>
-					<td align="left">Sesso (M/F) * </td>
+					<td align="left"><label for="sesso">Sesso (M/F) * </label></td>
 					<td align="right">
-						M <input type="radio" id="sesso" name="sesso" value="M" />
-						&nbsp;&nbsp;
-						F <input type="radio" id="sesso" name="sesso" value="F" />
+						<div id="sesso" align="right">
+							<input type="radio" id="sessoM" name="sesso" value="M" /><label for="sessoM">M</label>
+
+							<input type="radio" id="sessoF" name="sesso" value="F" /><label for="sessoF">F</label>
+						</div>
 					</td>
 				</tr>
 				<tr>
-					<td align="left">Data di nascita (dd/mm/yyyy) * </td>
+					<td align="left"><label for="dataNascita">Data di nascita (dd/mm/yyyy) * </label></td>
 					<td align="right"><input type="text" id="dataNascita" maxlength="10" size="12" name="dataNascita" value="<?php echo $dataNascita ?>" /></td>
 				</tr>
 				<tr>
-					<td align="left">Luogo di nascita * </td>
+					<td align="left"><label for="luogoNascita">Luogo di nascita * </label></td>
 					<td align="right"><input type="text" id="luogoNascita" name="luogoNascita" value="<?php echo $luogoNascita ?>" /></td>
 				</tr>
 				<tr>
-					<td align="left">Indirizzo di residenza * </td>
+					<td align="left"><label for="indirizzoResidenza">Indirizzo di residenza * </label></td>
 					<td align="right"><input type="text" id="indirizzoResidenza" name="indirizzoResidenza" value="<?php echo $indirizzoResidenza ?>" /></td>
 				</tr>
 				<tr>
-					<td align="left">Citta' di residenza * </td>
+					<td align="left"><label for="cittaResidenza">Citta' di residenza * </label></td>
 					<td align="right"><input type="text" id="cittaResidenza" name="cittaResidenza" value="<?php echo $cittaResidenza ?>" /></td>
 				</tr>
 				<tr>
-					<td align="left">Provincia di residenza * </td>
+					<td align="left"><label for="provinciaResidenza">Provincia di residenza * </label></td>
 					<td align="right"><input type="text" id="provinciaResidenza" maxlength="2" size="3" name="provinciaResidenza" value="<?php echo $provinciaResidenza ?>" /></td>
 				</tr>
 				<tr>
-					<td align="left">Numero di telefono * </td>
+					<td align="left"><label for="numeroTelefono">Numero di telefono * </label></td>
 					<td align="right"><input type="text" id="numeroTelefono" name="numeroTelefono" value="<?php echo $numeroTelefono ?>" /></td>
 				</tr>
 				<tr>
-					<td align="left">Email</td>
+					<td align="left"><label for="email">Email</label></td>
 					<td align="right"><input type="text" id="email" name="email" value="<?php echo $email ?>" /></td>
 				</tr>
 				<tr>
-					<td align="left">Codice Fidal</td>
-					<td align="right"><input type="text" id="email" name="codiceFidal" value="<?php echo $codiceFidal?>" /></td>
+					<td align="left"><label for="codiceFidal">Codice Fidal</label></td>
+					<td align="right"><input type="text" id="codiceFidal" name="codiceFidal" value="<?php echo $codiceFidal?>" /></td>
 				</tr>
 				<tr>
 					<td align="right" colspan="2">* campi obbligatori</td>
