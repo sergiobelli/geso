@@ -90,6 +90,95 @@
 <html>
 	<head>
 		<title>Certificati Medici</title><link rel="stylesheet" type="text/css" href="stylesheet.css">
+		
+		<link type="text/css" href="css/redmond/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
+		
+		<style>
+            input.error {
+                border-color: red;           
+            }
+            label.error {
+            	color: white;
+                font-weight:bold;
+            }
+        </style>
+		
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-i18n.js"></script>
+		<script type="text/javascript" src="js/jquery.form.js"></script>
+		<script type="text/javascript" src="js/jquery.validate.js"></script>
+		
+		<script type="text/javascript">
+
+			$(function(){
+				$( "#salva" ).button();
+			});
+			$(function(){
+				$( "#cancella" ).button();
+			});
+			
+			$(function(){
+				$( "#agonistico" ).buttonset();
+			});
+			
+			//datepicker -> dataScadenza
+			$(function() {
+               $.datepicker.setDefaults($.datepicker.regional['it']);
+               $( "#dataScadenza" ).datepicker({
+					showOn: "button",
+					buttonImage: "images/calendar.gif",
+					buttonImageOnly: true,
+					changeMonth: true,
+					changeYear: true,
+					yearRange: "1999:2100"
+				});
+			});
+			
+			$(function() {
+		
+                $( "#atleta" ).autocomplete({
+                    source: "controller/elencoAtletiEffettivi.php",
+					select: function(event, ui){
+                        $("#idAtleta").val(ui.item.idAtleta);
+                    }
+                });
+            });
+			//validazione form
+            $(function(){
+              
+                $("#modulo_certificato").validate({
+                    rules: {
+                        atleta:{ required: true },
+                        dataScadenza:{ required: true, date: true },
+                        agonistico: { required: true }
+                    },
+                    messages:{                    	
+						atleta:{ 
+                        	required: "Specificare l'atleta!" 
+                        },
+                        dataScadenza:{ 
+                        	required: "La data scadenza e' obbligatoria!",
+                        	date: "Il formato della data scadenza non e' valido!" 
+                        },
+                        agonistico:{ 
+                        	required: "Specificare se il certificato e' di tipo agonistico o meno!" 
+                        }
+                    },
+                    
+                    submitHandler: function(form) { 
+                        //alert('I dati sono stati inseriti correttamente');
+                        form.submit();
+                    },
+
+                    invalidHandler: function() { 
+                        $( "#dialogKo" ).dialog("open");
+                    }	
+
+                })
+            })
+		</script>
+	
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 	
@@ -109,15 +198,20 @@
 		</div>
 		
 		<div align="center">Inserimento/Modifica Certificazioni Mediche Atleti</div>
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+		<form id="modulo_certificato" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 			<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 				<tr>
 					<td class="FacetFormHeaderFont">Atleta</td>
 					<td align="right">
 						
+						<input type="text" id="atleta" name="atleta" />
+						<input type="hidden" id="idAtleta" name="idAtleta" />
+						
+						<!--
 						<select name="idAtleta">
 							<option> </option>
 <?php
+							/*
 							$elencoAtleti = AtletaManager::lista();
 							while ($elencoAtleti_row = dbms_fetch_array($elencoAtleti)) {
 								if ($elencoAtleti_row["ID"] == $idAtleta) {
@@ -126,8 +220,10 @@
 									print( "<option value='".$elencoAtleti_row["ID"]."'>".$elencoAtleti_row["COGNOME"]." ".$elencoAtleti_row["NOME"]."</option>" );
 								}
 							}
+							*/
 ?>
 						</select>
+						-->
 					</td>
 				</tr>
 				<tr>
@@ -137,8 +233,10 @@
 				<tr>
 					<td class="FacetFormHeaderFont">Agonistico</td>
 					<td class="FacetFormHeaderFont">
-						<input type="radio" id="agonistico" name="agonistico" value="S" <?php $agonistico == 'S' ? print 'checked="checked" '  : '' ?> /> Si
-						<br/>
+						<div id="agonistico" align="right">
+							<input type="radio" id="agonisticoSI" name="agonistico" value="S" <?php $agonistico == 'S' ? print 'checked="checked" '  : '' ?> /><label for="agonisticoSI">Si</label>
+							<input type="radio" id="agonisticoNO" name="agonistico" value="N" <?php $agonistico == 'N' || $agonistico == '' ? print 'checked="checked" '  : '' ?> /><label for="agonisticoNO">No</label>
+						</div>
 						<input type="radio" id="agonistico" name="agonistico" value="N" <?php $agonistico == 'N' || $agonistico == '' ? print 'checked="checked" '  : '' ?> /> No
 					</td>
 				</tr>

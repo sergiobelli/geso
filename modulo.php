@@ -165,6 +165,8 @@
 		<script type="text/javascript" src="js/jquery-ui-i18n.js"></script>
 		<script type="text/javascript" src="js/jquery.form.js"></script>
 		<script type="text/javascript" src="js/jquery.validate.js"></script>
+		<script type="text/javascript" src="js/jquery.validationEngine-it.js"></script>
+		<script type="text/javascript" src="js/jquery.ui.datepicker-it.js"></script>
 		
 		<script type="text/javascript">
 			
@@ -201,8 +203,8 @@
 					
 					messages:{                    	
 						cognome:{ 
-							minlength:	"Il cognome deve essere lungo almeno 2 caratteri",
-							required: 	"Il cognome e' obbligatorio!" 
+							//minlength:	"Il cognome deve essere lungo almeno 2 caratteri",
+							//required: 	"Il cognome e' obbligatorio!" 
 						},
 						nome:{ 
 							minlength:	"Il nome deve essere lungo almeno 2 caratteri",
