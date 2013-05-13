@@ -237,7 +237,11 @@
               
                 $("#modulo_atleta").validate({
                     rules: {
-                        cognome:{ minlength:2, required: true },
+                        cognome:{ 
+							minlength:2, 
+							required: true, 
+							//remote: { url:"controller/checkEsistenzaAtleta.php" }
+							},
                         nome:{ minlength:2, required: true },
                         sesso:{ required: true },
                         dataNascita:{ required: true, date: true },
@@ -267,12 +271,12 @@
                     },
                     
                     submitHandler: function(form) { 
-                        alert('I dati sono stati inseriti correttamente');
+                        //alert('I dati sono stati inseriti correttamente');
                         form.submit();
                     },
 
                     invalidHandler: function() { 
-                        alert('I dati inseriti non sono corretti, ricontrollali....');
+                        $( "#dialogKo" ).dialog("open");
                     }
                 })
             })
@@ -303,6 +307,18 @@
                 }
             });
           
+			$(function(){
+				$( "#dialogKo" ).dialog( { 
+					title:"Attenzione!", 
+					autoOpen:false, 
+					modal:true,
+					buttons: {
+						Ok: function() {
+							$(this).dialog("close");
+						}
+					}
+				});
+			});
         </script>
 
         <style>
@@ -318,6 +334,8 @@
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 	
+		<div id="dialogKo" align="center">I dati inseriti non sono corretti, ricontrollali....</div>
+		
 		<div align="center">
 <?php 
 			if (isset($message)) { 
