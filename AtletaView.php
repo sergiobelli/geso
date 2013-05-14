@@ -239,8 +239,7 @@
                     rules: {
                         cognome:{ 
 							minlength:2, 
-							required: true, 
-							//remote: { url:"controller/checkEsistenzaAtleta.php" }
+							required: true 
 							},
                         nome:{ minlength:2, required: true },
                         sesso:{ required: true },
@@ -335,7 +334,7 @@
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 	
-		<div id="dialogKo" align="center" />
+		<div id="dialogKo" align="center"></div>
 		
 		<div align="center">
 <?php 

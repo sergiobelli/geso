@@ -228,6 +228,7 @@ $PresenzaManager = new PresenzaManager();
 				<td class="FacetFormHeaderFont" colspan="2">Operazioni</td>
 			</tr>
 <?php
+	  $contatore = 0;
 
       $elencoPresenze = PresenzaManager::lista($_SESSION['stagione']);
 		while ($elencoPresenze_row = dbms_fetch_array($elencoPresenze)) {

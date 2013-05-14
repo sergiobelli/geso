@@ -108,10 +108,107 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 	<head>
-		<title>Gare</title><link rel="stylesheet" type="text/css" href="stylesheet.css">
+		<title>Gare</title>
+		
+		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+		<link type="text/css" href="css/redmond/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-i18n.js"></script>
+		<script type="text/javascript" src="js/jquery.form.js"></script>
+		<script type="text/javascript" src="js/jquery.validate.js"></script>
+		<script type="text/javascript" src="js/jquery.ui.datepicker-it.js"></script>
+		
+		<style>
+            input.error {
+                border-color: red;           
+            }
+            label.error {
+            	color: white;
+                font-weight:bold;
+            }
+        </style>
+		
+		<script type="text/javascript">
+
+			$(function(){
+				$( "#salva" ).button();
+			});
+			$(function(){
+				$( "#cancella" ).button();
+			});
+			
+			$(function(){
+				$( "#nostra" ).buttonset();
+			});
+			
+			//datepicker -> data
+			$(function() {
+               $.datepicker.setDefaults($.datepicker.regional['it']);
+               $( "#data" ).datepicker({
+					showOn: "button",
+					buttonImage: "images/calendar.gif",
+					buttonImageOnly: true,
+					changeMonth: true,
+					changeYear: true,
+					yearRange: "1999:2100"
+				});
+			});
+			
+			//validazione form
+            $(function(){
+              
+                $("#modulo_gara").validate({
+                    rules: {
+                        nome:{ required: true },
+						localita:{ required: true },
+						campionato:{ required: true },
+                        data:{ required: true, date: true },
+                        nostra: { required: true }
+                    },
+                    messages:{                    	
+						nome:{ required: "Specificare il nome della gara!" },
+						localita:{ required: "Specificare la localita della gara!" },
+						campionato:{ required: "Specificare il campionato!" },
+                        data:{ 
+                        	required: "La data e' obbligatoria!",
+                        	date: "Il formato della data non e' valido!" 
+                        },
+                        nostra:{ required: "Specificare se la gara e' organizzata da noi o meno!" }
+                    },
+                    
+                    submitHandler: function(form) { 
+                        //alert('I dati sono stati inseriti correttamente');
+                        form.submit();
+                    },
+
+                    invalidHandler: function() { 
+                        $( "#dialogKo" ).dialog("open");
+                    }	
+
+                })
+            })
+			
+			$(function(){
+				$( "#dialogKo" ).html("I dati inseriti non sono corretti, ricontrollali...."),
+				$( "#dialogKo" ).dialog( { 
+					title:"Attenzione!", 
+					autoOpen:false, 
+					modal:true,
+					buttons: {
+						Ok: function() {
+							$(this).dialog("close");
+						}
+					}
+				});
+			});
+		</script>
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 
+		<div id="dialogKo" align="center"></div>
+		
 		<div align="center">
 <?php 
 			if (isset($message)) { 
@@ -128,7 +225,7 @@
 		</div>
 		
 		<div align="center">Inserimento/Modifica Gara</div>
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+		<form id="modulo_gara" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 			<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 				<tr>
 					<td class="FacetFormHeaderFont">Nome</td>
@@ -148,14 +245,15 @@
 				<tr>
 					<td class="FacetFormHeaderFont">Nostra</td>
 					<td class="FacetFormHeaderFont">
-						<input type="radio" id="nostra" name="nostra" value="S" <?php $nostra == 'S' ? print 'checked="checked" '  : '' ?> /> Si
-						<br/>
-						<input type="radio" id="nostra" name="nostra" value="N" <?php $nostra == 'N' || $nostra == '' ? print 'checked="checked" '  : '' ?> /> No
+						<div id="nostra" align="right">
+							<input type="radio" id="nostraSI" name="nostra" value="S" <?php $nostra == 'S' ? print 'checked="checked" '  : '' ?> /><label for="nostraSI">Si</label>
+							<input type="radio" id="nostraNO" name="nostra" value="N" <?php $nostra == 'N' || $nostra == '' ? print 'checked="checked" '  : '' ?> /><label for="nostraNO">No</label>
+						</div>
 					</td>
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">Data</td>
-					<td align="center"><input type="text" id="data" name="data" value="<?php echo $data ?>" /></td>
+					<td align="center"><input type="text" id="data" name="data" size="12" maxlength="10" value="<?php echo $data ?>" /></td>
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">Stagione</td>
