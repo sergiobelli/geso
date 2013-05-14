@@ -237,7 +237,6 @@
 							<input type="radio" id="agonisticoSI" name="agonistico" value="S" <?php $agonistico == 'S' ? print 'checked="checked" '  : '' ?> /><label for="agonisticoSI">Si</label>
 							<input type="radio" id="agonisticoNO" name="agonistico" value="N" <?php $agonistico == 'N' || $agonistico == '' ? print 'checked="checked" '  : '' ?> /><label for="agonisticoNO">No</label>
 						</div>
-						<input type="radio" id="agonistico" name="agonistico" value="N" <?php $agonistico == 'N' || $agonistico == '' ? print 'checked="checked" '  : '' ?> /> No
 					</td>
 				</tr>
 				<tr>

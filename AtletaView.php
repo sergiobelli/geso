@@ -308,6 +308,7 @@
             });
           
 			$(function(){
+				$( "#dialogKo" ).html("I dati inseriti non sono corretti, ricontrollali...."),
 				$( "#dialogKo" ).dialog( { 
 					title:"Attenzione!", 
 					autoOpen:false, 
@@ -334,7 +335,7 @@
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 	
-		<div id="dialogKo" align="center">I dati inseriti non sono corretti, ricontrollali....</div>
+		<div id="dialogKo" align="center" />
 		
 		<div align="center">
 <?php 
