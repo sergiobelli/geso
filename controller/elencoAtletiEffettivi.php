@@ -1,17 +1,25 @@
 <?php
 
-$dbhost = 'localhost';
-$dbuser = 'root';
-$dbname = 'atletica_valsesia';
-$dbpass = '';
+
+
+//$dbhost = 'localhost';
+//$dbuser = 'root';
+//$dbname = 'atletica60358';
+//$dbpass = '';
+
+require_once("../ConfigManager.php");
+$ConfigManager = new ConfigManager();
+$dbhost = $ConfigManager->getHost ();
+$dbuser = $ConfigManager->getUser ();
+$dbname = $ConfigManager->getDatabase ();
+$dbpass = $ConfigManager->getPassword ();
+
+$conn = null;
 try {
 $conn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
-} catch(PDOException $e) {
-echo $e->getMessage();
-}
 $cmd = 'SELECT id, cognome, nome FROM atleta WHERE cognome LIKE :cognome or nome like :nome and (ex_atleta is null or ex_atleta = \'N\') ';
 
-$term = $_GET['term'] . "%";
+	$term = "%" . $_GET['term'] . "%";
 
 $result = $conn->prepare($cmd);
 $result->bindValue(":cognome", $term);
@@ -29,5 +37,12 @@ $row_array = array();
     
 }
 $conn = NULL;
+	
 echo json_encode($return_arr);
+	
+} catch(PDOException $e) {
+	echo $e->getMessage();
+}
+
+
 ?>

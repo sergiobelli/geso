@@ -2,7 +2,7 @@
 
 $dbhost = 'localhost';
 $dbuser = 'root';
-$dbname = 'atletica_valsesia';
+$dbname = 'atletica60358';
 $dbpass = '';
 try {
     $conn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);

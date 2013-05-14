@@ -1,6 +1,36 @@
 <?php
+	
+	require_once("StagioneManager.php");
+	require_once("AccessiManager.php");
+
 	global $nome, $cognome, $sesso, $dataNascita, $luogoNascita, $indirizzoResidenza, $cittaResidenza, $provinciaResidenza, $numeroTelefono, $email, $codiceFidal, $message;
 	
+	$StagioneManager = new StagioneManager();
+	if (isset($_GET['idStagione'])) {
+		$stagione = $_GET['idStagione'];
+	} else if (isset($_SESSION['stagione'])) {
+		$stagione = $_SESSION['stagione'];
+	} else {
+		$stagione = $StagioneManager::getUltimaStagione();
+	}
+	$descrizioneStagione = $StagioneManager::getDescrizioneStagione($stagione);
+	$AccessiManager = new AccessiManager();
+	if (isset($_SESSION['username'])) {
+		AccessiManager::inserisci(
+			$_SESSION['username'], 
+			$_SERVER['REMOTE_ADDR'], 
+			gethostbyaddr($_SERVER['REMOTE_ADDR']), 
+			$_SERVER['REQUEST_URI'], 
+			'VISITA');
+	} else {
+		AccessiManager::inserisci(
+			'guest', 
+			$_SERVER['REMOTE_ADDR'], 
+			gethostbyaddr($_SERVER['REMOTE_ADDR']), 
+			$_SERVER['REQUEST_URI'], 
+			'VISITA');	
+	}
+
 	function inserisci ($nome, $cognome, $sesso, $dataNascita, $luogoNascita, $indirizzoResidenza, $cittaResidenza, $provinciaResidenza, $numeroTelefono, $email, $codiceFidal) {
 	
 		include "funzioni_mysql.php";

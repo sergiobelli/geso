@@ -1,64 +1,72 @@
 <?php
 
-require_once("dblib.php");
-require_once("clublib.php");
+//require_once("dblib.php");
+//require_once("clublib.php");
 
 class ConfigManager {
 
-	$ambiente				= "online"; //"locale";
+	public $ambiente;
+	public $Host_locale, $Database_locale, $User_locale, $Password_locale, $table_prefix_locale;
+	public $Host, $Database, $User, $Password, $table_prefix;
+	
+	public function __construct() {
+	
+		$this->ambiente				= "locale"; //"online";
 	
 	//Parametri di accesso: localhost
-	$Host_locale     		= "localhost";
-	$Database_locale 		= "atletica60358";
-	$User_locale     		= "root";
-	$Password_locale 		= "";
-	$table_prefix_locale 	= "sd";
+		$this->Host_locale     		= "localhost";
+		$this->Database_locale 		= "atletica60358";
+		$this->User_locale     		= "root";
+		$this->Password_locale 		= "";
+		$this->table_prefix_locale 	= "sd";
 	
 	
 	//Parametri di accesso: atleticavalsesia.it
-	$Host     				= "sql.atleticavalsesia.it";
-	$Database 				= "atletica60358";
-	$User     				= "atletica60358";
-	$Password 				= "atle17370";
-	$table_prefix 			= "sd";
+		$this->Host     				= "sql.atleticavalsesia.it";
+		$this->Database 				= "atletica60358";
+		$this->User     				= "atletica60358";
+		$this->Password 				= "atle17370";
+		$this->table_prefix 			= "sd";
 	
+	}
+		
 	function getHost () {
-		if ($ambiente == "online") {
-			return $Host;
+		if ($this->ambiente == "online") {
+			return $this->Host;
 		} else {
-			return $Host_locale;
+			return $this->Host_locale;
 		}
 	}
 
 	function getDatabase () {
-		if ($ambiente == "online") {
-			return $Database;
+		if ($this->ambiente == "online") {
+			return $this->Database;
 		} else {
-			return $Database_locale;
+			return $this->Database_locale;
 		}
 	}
 	
 	function getUser () {
-		if ($ambiente == "online") {
-			return $User;
+		if ($this->ambiente == "online") {
+			return $this->User;
 		} else {
-			return $User_locale;
+			return $this->User_locale;
 		}
 	}
 	
 	function getPassword () {
-		if ($ambiente == "online") {
-			return $Password;
+		if ($this->ambiente == "online") {
+			return $this->Password;
 		} else {
-			return $Password_locale;
+			return $this->Password_locale;
 		}
 	}
 	
 	function getTablePrefix () {
-		if ($ambiente == "online") {
-			return $table_prefix;
+		if ($this->ambiente == "online") {
+			return $this->table_prefix;
 		} else {
-			return $table_prefix_locale;
+			return $this->table_prefix_locale;
 		}
 	}
 }
