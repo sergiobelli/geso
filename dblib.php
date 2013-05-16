@@ -3,7 +3,7 @@
 require_once("Config.php");
 
 //require_once ("util/Log.php");
-
+require_once("ConfigManager.php");
 
 
 function sendMail($changeType, $change) {
@@ -72,19 +72,11 @@ function connetti_query($query) {
 
     global $Host,$User,$Password,$Database,$link;
 
-/*
-$Host     = "localhost";
-$Database = "atletica60358";
-$User     = "root";
-$Password = "";
-$table_prefix = "sd";
-*/
-
-$Host     = "sql.atleticavalsesia.it";
-$Database = "atletica60358";
-$User     = "atletica60358";
-$Password = "atle17370";
-$table_prefix = "sd";
+$ConfigManager = new ConfigManager();
+$Host = $ConfigManager->getHost ();
+$User = $ConfigManager->getUser ();
+$Database = $ConfigManager->getDatabase ();
+$Password = $ConfigManager->getPassword ();
 
     // Connessione al database 
 

@@ -2,22 +2,24 @@
 
 require_once("dblib.php");
 require_once("Config.php");
+require_once("ConfigManager.php");
 
 class MysqlClass
 {
     // variabili per la connessione al database
-    
-    /*
-	private $Host= "localhost";     
-    private $User = "root";          
-    private $Password = "";
-    private $Database = "atletica60358";
-    */
+	public $Host, $Database, $User, $Password, $table_prefix;
 	
-	private $Host= "sql.atleticavalsesia.it";     
-    private $User = "atletica60358";          
-    private $Password = "atle17370";
-    private $Database = "atletica60358";
+	public function __construct() {
+	
+		$ConfigManager = new ConfigManager();
+		$this->Host = $ConfigManager->getHost ();
+		$this->User = $ConfigManager->getUser ();
+		$this->Database = $ConfigManager->getDatabase ();
+		$this->Password = $ConfigManager->getPassword ();
+	
+	}
+	
+    
     
 
     // controllo sulle connessioni attive
