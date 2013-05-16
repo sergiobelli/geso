@@ -110,7 +110,7 @@
 	<head>
 		<title>Gare</title>
 		
-		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 		<link type="text/css" href="css/redmond/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
 		
 		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>

@@ -89,8 +89,9 @@
 
 <html>
 	<head>
-		<title>Certificati Medici</title><link rel="stylesheet" type="text/css" href="stylesheet.css">
+		<title>Certificati Medici</title>
 		
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 		<link type="text/css" href="css/redmond/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
 		
 		<style>

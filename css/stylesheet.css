@@ -1,0 +1,178 @@
+/* Facet CCSTheme*/
+BODY, TABLE, TH, TR, TD, UL, OL, LI, P, FONT, A, BLOCKQUOTE, LABEL  {
+	font-family : Tahoma, Verdana, Arial, Helvetica;
+	font-size : 13px;
+	color : #4586bc;
+}
+
+A:active {
+
+
+}
+
+A:visited {
+
+
+
+}
+
+A:hover {
+	color : #008000;
+	
+}
+
+.FacetPageBODY  {
+
+	bgcolor: #FFFFFF; 
+	color: #000000; 
+	link: #4586bc;
+	alink: #000000; 
+	vlink: #4586bc; 
+	text: #000000;
+}
+
+.FacetFormTABLE  {
+	border : solid 1px #4586bc;
+	color: #FFFFFF; 
+	background-color : #4586bc;
+}
+
+.FacetFormHeaderFont  {
+	color : #FFFFFF;
+	font-size : 12px;
+	font-weight : bold;
+	text-align: center;
+}
+
+.FacetFieldCaptionTD  {
+	background-color : #EBE9E5;
+	color : #726C5D;
+	font-size : 13px;
+}
+
+.FacetDataTD  {
+	background-color : #FFFFFF;
+	color : #000000;
+	font-size : 13px;
+	top : middle;
+}
+
+.FacetDataTDRed {
+	background-color : #FFFFFF;
+	color : #FF0000;
+	font-size : 15px;
+	top : middle;
+}
+
+.FacetDataTDOrange {
+	background-color : #FFFFFF;
+	color : #ff9c00;
+	font-size : 14px;
+	top : middle;
+}
+
+.FacetDataTDGreen {
+	background-color : #FFFFFF;
+	color : #008000;
+	font-size : 13px;
+	top : middle;
+}
+
+.FacetColumnTD  {
+	color : #4586bc;
+	background-color : #E5E1D7;
+	font-size : 13px;
+}
+
+.FacetAltDataTD  {
+	background-color : #F6F6F6;
+	color : #000000;
+	font-size : 13px;
+}
+
+.FacetSeparatorTD  {
+	background-color : #C2BEB4;
+	height : 1px;
+}
+
+.FacetFooterTD  {
+	background-color : #EBE9E5;
+	color : #726C5D;
+	font-size : 13px;
+}
+
+a.FacetSorterLink:link,a.FacetSorterLink:visited  {
+	color : #4586bc;
+	font-size : 13px;
+	text-decoration : underline;
+}
+
+a.FacetSorterLink:hover,a.FacetSorterLink:active  {
+	color : #000000;
+	font-size : 13px;
+	text-decoration : none;
+}
+
+a.FacetDataLink:link,a.FacetDataLink:visited  {
+	color : #4586bc;
+	font-size : 13px;
+	text-decoration : underline;
+}
+
+a.FacetDataLink:hover,a.FacetDataLink:active  {
+	color : #000000;
+	font-size : 13px;
+	text-decoration : none;
+}
+
+a.FacetNavigatorLink:link,a.FacetNavigatorLink:visited  {
+	color : #4586bc;
+	text-decoration : underline;
+}
+
+a.FacetNavigatorLink:hover,a.FacetNavigatorLink:active  {
+	color : #000000;
+	text-decoration : none;
+}
+
+.FacetButton  {
+	border-left : 1px solid #000000;
+	border-right : 1px solid #000000;
+	border-top : 1px solid #000000;
+	border-bottom : 1px solid #000000;
+	background-color : #FFFFFF;
+	font-size : 13px;
+	font-family : Tahoma, Verdana, Arial, Helvetica;
+}
+
+.FacetInput  {
+	border-bottom : 1px solid #000000;
+	border-left : 1px solid #000000;
+	border-right : 1px solid #000000;
+	border-top : 1px solid #000000;
+	background-color : #FFFFFF;
+	font-size : 13px;
+	font-family : Tahoma, Verdana, Arial, Helvetica;
+}
+
+.FacetTextarea  {
+	border-bottom : 1px solid #000000;
+	border-left : 1px solid #000000;
+	border-right : 1px solid #000000;
+	border-top : 1px solid #000000;
+	background-color : #FFFFFF;
+	font-size : 13px;
+	font-family : Tahoma, Verdana, Arial, Helvetica;
+}
+
+.FacetSelect  {
+	font-size : 13px;
+	font-family : Tahoma, Verdana, Arial, Helvetica;
+	background-color : #EBE9E5;
+}
+
+.FacetSmall  {
+	font-size : 10px;
+	font-family : Tahoma, Verdana, Arial, Helvetica;;
+}
+

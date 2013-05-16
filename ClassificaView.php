@@ -43,7 +43,7 @@ if (isset($_SESSION['username'])) {
 		<title>
 			Classifica "Campionato Sociale Atletica Valsesia" stagione <?php echo($descrizioneStagione); ?>
 		</title>
-		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 		<div align="center">
