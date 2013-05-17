@@ -179,16 +179,12 @@
 <html>
 	<head>
 		<title>Atleti</title>
-		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 
-      	<!--<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.20.custom.css" rel="stylesheet" />-->
-		<link type="text/css" href="css/redmond/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
 
-      <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-      <script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
-      <script type="text/javascript" src="js/jquery-ui-i18n.js"></script>
-      <script type="text/javascript" src="js/jquery.form.js"></script>
-      <script type="text/javascript" src="js/jquery.validate.js"></script>
+		
+      
+      
+
 	  
 		<script type="text/javascript">
 			
