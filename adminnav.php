@@ -1,5 +1,5 @@
 
-<div align="right" class="version">v_1_7_1_20130202</div>
+<div align="right" class="version">v_1_8_0_20130526</div>
 
 <div align="center">
 	<a href="AtletaView.php">Atleti</a> 									| 

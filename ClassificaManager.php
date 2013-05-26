@@ -1,7 +1,5 @@
 <?php
 
-
-
 require_once("dblib.php");
 require_once("clublib.php");
 require_once("CategoriaManager.php");

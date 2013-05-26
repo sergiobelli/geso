@@ -180,11 +180,6 @@
 	<head>
 		<title>Atleti</title>
 
-
-		
-      
-      
-
 	  
 		<script type="text/javascript">
 			
@@ -244,6 +239,7 @@
                         codiceFidal: { minlength:8 },
                         email: "email"
                     },
+
                     messages:{                    	
                         cognome:{ 
                         	minlength:"Il cognome deve essere lungo almeno 2 caratteri",
@@ -372,11 +368,11 @@
 				</tr
 				<tr>
 					<td class="FacetFormHeaderFont">Data di Nascita</td>
-					<td align="right"><input type="text" id="dataNascita" name="dataNascita" value="<?php echo $dataNascita ?>"/></td>
+					<td align="right"><input type="text" id="dataNascita" name="dataNascita" size="12" value="<?php echo $dataNascita ?>"/></td>
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">Data di Tesseramento</td>
-					<td align="right"><input type="text" id="dataTesseramento" name="dataTesseramento" value="<?php echo $dataTesseramento?>"/></td>
+					<td align="right"><input type="text" id="dataTesseramento" name="dataTesseramento" size="12" value="<?php echo $dataTesseramento?>"/></td>
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">Codice Fidal</td>

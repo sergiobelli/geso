@@ -138,6 +138,7 @@
                         dataScadenza:{ required: true, date: true },
                         agonistico: { required: true }
                     },
+                    
                     messages:{                    	
 						atleta:{ 
                         	required: "Specificare l'atleta!" 
@@ -161,6 +162,7 @@
                     }	
 
                 })
+                
             })
 			
 			$(function(){
@@ -178,7 +180,12 @@
 			});
 			
 		</script>
-	
+
+        <style>
+            input.error { border-color: red; }
+            label.error { color: white; font-weight:bold; }
+        </style>
+        
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 	

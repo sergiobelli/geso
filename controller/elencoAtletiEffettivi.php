@@ -1,12 +1,5 @@
 <?php
 
-
-
-//$dbhost = 'localhost';
-//$dbuser = 'root';
-//$dbname = 'atletica60358';
-//$dbpass = '';
-
 require_once("../ConfigManager.php");
 $ConfigManager = new ConfigManager();
 $dbhost = $ConfigManager->getHost ();
@@ -17,7 +10,7 @@ $dbpass = $ConfigManager->getPassword ();
 $conn = null;
 try {
 $conn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
-$cmd = 'SELECT id, cognome, nome FROM atleta WHERE cognome LIKE :cognome or nome like :nome and (ex_atleta is null or ex_atleta = \'N\') ';
+$cmd = 'SELECT id, cognome, nome FROM atleta WHERE (cognome LIKE :cognome or nome like :nome) and (ex_atleta is null or ex_atleta = \'N\') ';
 
 	$term = "%" . $_GET['term'] . "%";
 
