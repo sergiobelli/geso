@@ -110,25 +110,7 @@
 	<head>
 		<title>Gare</title>
 		
-		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-		<link type="text/css" href="css/redmond/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
-		
-		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-		<script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
-		<script type="text/javascript" src="js/jquery-ui-i18n.js"></script>
-		<script type="text/javascript" src="js/jquery.form.js"></script>
-		<script type="text/javascript" src="js/jquery.validate.js"></script>
 		<script type="text/javascript" src="js/jquery.ui.datepicker-it.js"></script>
-		
-		<style>
-            input.error {
-                border-color: red;           
-            }
-            label.error {
-            	color: white;
-                font-weight:bold;
-            }
-        </style>
 		
 		<script type="text/javascript">
 
@@ -231,16 +213,16 @@
 					<td class="FacetFormHeaderFont">Nome</td>
 					<td align="center">
 						<input type="hidden" id="idGara" name="idGara" value="<?php echo $idGara ?>" />
-						<input type="text" id="nome" name="nome" value="<?php echo $nome ?>" />
+						<input type="text" id="nome" name="nome" size="50" value="<?php echo $nome ?>" />
 					</td>
 				</tr>				
 				<tr>
 					<td class="FacetFormHeaderFont">Localita'</td>
-					<td align="center"><input type="text" id="localita" name="localita" value="<?php echo $localita ?>" /></td>
+					<td align="center"><input type="text" id="localita" name="localita" size="50" value="<?php echo $localita ?>" /></td>
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">Campionato</td>
-					<td align="center"><input type="text" id="campionato" name="campionato" value="<?php echo $campionato ?>" /></td>
+					<td align="center"><input type="text" id="campionato" name="campionato" size="50" value="<?php echo $campionato ?>" /></td>
 				</tr>			
 				<tr>
 					<td class="FacetFormHeaderFont">Nostra</td>
@@ -253,7 +235,7 @@
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">Data</td>
-					<td align="center"><input type="text" id="data" name="data" size="12" maxlength="10" value="<?php echo $data ?>" /></td>
+					<td align="right"><input type="text" id="data" name="data" size="12" maxlength="10" value="<?php echo $data ?>" /></td>
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">Stagione</td>

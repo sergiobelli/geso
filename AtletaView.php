@@ -180,6 +180,7 @@
 	<head>
 		<title>Atleti</title>
 
+		<script type="text/javascript" src="js/jquery.ui.datepicker-it.js"></script>
 	  
 		<script type="text/javascript">
 			

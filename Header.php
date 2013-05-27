@@ -17,9 +17,11 @@
 	<script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
 	<script type="text/javascript" src="js/jquery-ui-i18n.js"></script>
     <script type="text/javascript" src="js/jquery.form.js"></script>
-    <script type="text/javascript" src="js/jquery.validate.js"></script>
-	
+    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="js/jquery.validationEngine-it.js"></script>
+
 </head>
+	
 <body class="FacetPageBODY">
 
 <br/>

@@ -92,6 +92,7 @@
 	
 		<title>Certificati Medici</title>
 		
+		<script type="text/javascript" src="js/jquery.ui.datepicker-it.js"></script>
 		<script type="text/javascript">
 
 			$(function(){
@@ -207,7 +208,7 @@
 				<tr>
 					<td class="FacetFormHeaderFont">Atleta</td>
 					<td align="right">
-						<input type="text" id="atleta" name="atleta" />
+						<input type="text" id="atleta" name="atleta" size="50" />
 						<input type="hidden" id="idAtleta" name="idAtleta" />
 					</td>
 				</tr>

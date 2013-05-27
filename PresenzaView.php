@@ -96,13 +96,13 @@
 <html>
 	<head>
 		<title>Presenze</title>
-		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 		
 		<script type="text/javascript">
 		
 			$(function(){
 				$( "#salva" ).button();
 			});
+			
 			$(function(){
 				$( "#cancella" ).button();
 			});
