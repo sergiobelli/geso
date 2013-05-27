@@ -1,5 +1,10 @@
+<?php
+require_once("ConfigManager.php");
+$ConfigManager = new ConfigManager();
+$versione = $ConfigManager->getVersione();
+?>
 
-<div align="right" class="version">v_1_8_0_20130526</div>
+<div align="right" class="version"><?php echo $versione ?></div>
 
 <div align="center">
 	<a href="AtletaView.php">Atleti</a> 									| 

@@ -6,12 +6,14 @@
 class ConfigManager {
 
 	public $ambiente;
+	public $versione;
 	public $Host_locale, $Database_locale, $User_locale, $Password_locale, $table_prefix_locale;
 	public $Host, $Database, $User, $Password, $table_prefix;
 	
 	public function __construct() {
 	
 		$this->ambiente				= "locale"; //"online";
+		$this->versione				= "v_1_8_0_20130526";
 	
 	//Parametri di accesso: localhost
 		$this->Host_locale     		= "localhost";
@@ -68,5 +70,9 @@ class ConfigManager {
 		} else {
 			return $this->table_prefix_locale;
 		}
+	}
+	
+	function getVersione () {
+		return $this->versione;
 	}
 }

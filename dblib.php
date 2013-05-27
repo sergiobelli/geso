@@ -1,6 +1,6 @@
 <?php
 
-require_once("Config.php");
+//require_once("Config.php");
 
 //require_once ("util/Log.php");
 require_once("ConfigManager.php");

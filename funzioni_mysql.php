@@ -1,7 +1,7 @@
 <?php
 
 require_once("dblib.php");
-require_once("Config.php");
+//require_once("Config.php");
 require_once("ConfigManager.php");
 
 class MysqlClass

@@ -10,7 +10,10 @@ $dbpass = $ConfigManager->getPassword ();
 $conn = null;
 try {
 $conn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
-$cmd = 'SELECT id, cognome, nome FROM atleta WHERE (cognome LIKE :cognome or nome like :nome) and (ex_atleta is null or ex_atleta = \'N\') ';
+	$cmd = 'SELECT id, cognome, nome 
+		FROM atleta 
+		WHERE (cognome LIKE :cognome or nome like :nome) 
+			and (ex_atleta is null or ex_atleta = \'N\') ';
 
 	$term = "%" . $_GET['term'] . "%";
 
@@ -22,13 +25,18 @@ $return_arr = array();
 $row_array = array();
 
  while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        $row_array['value'] = $row['nome'] . " " . $row['cognome'];
-        $row_array['label'] = $row['nome'] . " " . $row['cognome'];
+		
+		$nome = utf8_encode($row['nome']);
+		$cognome = utf8_encode($row['cognome']);
+		
+		$row_array['value'] = $nome . " " . $cognome;
+		$row_array['label'] = $nome . " " . $cognome;
+		
 		$row_array['idAtleta'] = $row['id'];
 		
         array_push($return_arr,$row_array);
+	}
     
-}
 $conn = NULL;
 	
 echo json_encode($return_arr);

@@ -54,7 +54,21 @@
 
 <html>
 	<head>
-		<title>Selezione stagione</title><link rel="stylesheet" type="text/css" href="../stylesheet.css">
+		<title>Selezione stagione</title>
+		
+		<link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
+		<link type="text/css" href="../css/redmond/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-ui-1.8.20.custom.min.js"></script>
+		
+		<script type="text/javascript">
+			
+			$(function(){
+				$( "#seleziona" ).button();
+			});
+		</script>
+		
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 		

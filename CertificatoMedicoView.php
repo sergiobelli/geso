@@ -181,11 +181,6 @@
 			
 		</script>
 
-        <style>
-            input.error { border-color: red; }
-            label.error { color: white; font-weight:bold; }
-        </style>
-        
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 	
@@ -212,27 +207,8 @@
 				<tr>
 					<td class="FacetFormHeaderFont">Atleta</td>
 					<td align="right">
-						
 						<input type="text" id="atleta" name="atleta" />
 						<input type="hidden" id="idAtleta" name="idAtleta" />
-						
-						<!--
-						<select name="idAtleta">
-							<option> </option>
-<?php
-							/*
-							$elencoAtleti = AtletaManager::lista();
-							while ($elencoAtleti_row = dbms_fetch_array($elencoAtleti)) {
-								if ($elencoAtleti_row["ID"] == $idAtleta) {
-									print( "<option selected value='".$elencoAtleti_row["ID"]."'>".$elencoAtleti_row["COGNOME"]." ".$elencoAtleti_row["NOME"]."</option>" );
-								} else {
-									print( "<option value='".$elencoAtleti_row["ID"]."'>".$elencoAtleti_row["COGNOME"]." ".$elencoAtleti_row["NOME"]."</option>" );
-								}
-							}
-							*/
-?>
-						</select>
-						-->
 					</td>
 				</tr>
 				<tr>

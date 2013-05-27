@@ -97,6 +97,48 @@
 	<head>
 		<title>Presenze</title>
 		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+		
+		<script type="text/javascript">
+		
+			$(function(){
+				$( "#salva" ).button();
+			});
+			$(function(){
+				$( "#cancella" ).button();
+			});
+			
+			$(function() {
+                $( "#atleta" ).autocomplete({
+                    source: "controller/elencoAtletiEffettivi.php",
+					select: function(event, ui){
+                        $("#idAtleta").val(ui.item.idAtleta);
+                    },
+					minLength: 2
+                });
+            });
+
+			$(function() {
+                $( "#gara" ).autocomplete({
+                    source: "controller/elencoGareStagione.php",
+					select: function(event, ui){
+                        $("#idGara").val(ui.item.idGara);
+                    },
+					minLength: 2
+                });
+            });
+			
+			$(function() {
+                $( "#tipologiaGara" ).autocomplete({
+                    source: "controller/elencoTipologieGare.php",
+					select: function(event, ui){
+                        $("#idTipologiaGara").val(ui.item.idGara);
+                    },
+					minLength: 2
+                });
+            });
+		</script>
+		
+		
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 	
@@ -106,59 +148,26 @@
 				<tr>
 					<td class="FacetFormHeaderFont">Atleta</td>
 					<td align="right">
-						<input type="hidden" id="idPresenza" name="idPresenza" value="<?php echo $idPresenza ?>" />
-						<select name="atleta">
-							<option> </option>
-<?php
-							$AtletaManager = new AtletaManager();
-							$elencoAtleti = AtletaManager::lista();
-							while ($elencoAtleti_row = dbms_fetch_array($elencoAtleti)) {
-								if ($elencoAtleti_row["ID"] == $idAtleta) {
-									print( "<option selected value='".$elencoAtleti_row["ID"]."'>".$elencoAtleti_row["COGNOME"]." ".$elencoAtleti_row["NOME"]."</option>" );
-								} else {
-									print( "<option value='".$elencoAtleti_row["ID"]."'>".$elencoAtleti_row["COGNOME"]." ".$elencoAtleti_row["NOME"]."</option>" );
-								}								
-							}
-?>
-						</select>						
+						<input type="text" id="atleta" name="atleta" size="80" />
+						<input type="hidden" id="idAtleta" name="idAtleta" />
 					</td>
 				</tr>				
 				<tr>
 					<td class="FacetFormHeaderFont">Gara</td>
 					<td align="right">
-						<select name="gara">
-							<option> </option>
-<?php
-							$GaraManager = new GaraManager();
-							$elencoGare = GaraManager::listaByLocalita($_SESSION['stagione']);
-							while ($elencoGare_row = dbms_fetch_array($elencoGare)) {
-								if ($elencoGare_row["ID"] == $idGara) {
-									print( 
-										"<option selected value='".
-											$elencoGare_row["ID"]."'>".
-											$elencoGare_row["LOCALITA"]." - ".
-											$elencoGare_row["NOME"].
-											" (".$elencoGare_row["DATA"].")".
-										"</option>" );
-								} else {
-									print( "<option value='".
-										$elencoGare_row["ID"]."'>".
-										$elencoGare_row["LOCALITA"]." - ".
-										$elencoGare_row["NOME"].
-										" (".$elencoGare_row["DATA"].")".
-									"</option>" );
-								}
-							}
-?>
-						</select>						
+						<input type="text" id="gara" name="gara" size="80" />
+						<input type="hidden" id="idGara" name="idGara" />
 					</td>
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">Tipologia Gara</td>
 					<td align="right">
-						<select name="tipologiaGara">
+						<input type="text" id="tipologiaGara" name="tipologiaGara" size="80" />
+						<input type="hidden" id="idTipologiaGara" name="idTipologiaGara" />
+						
+						<!--<select name="tipologiaGara">
 <?php
-							$TipologiaGaraManager = new TipologiaGaraManager();
+							/*$TipologiaGaraManager = new TipologiaGaraManager();
 							$elencoTipologieGare = TipologiaGaraManager::lista();
 							while ($elencoTipologieGare_row = dbms_fetch_array($elencoTipologieGare)) {
 								if ($elencoTipologieGare_row["ID"] == $idTipologiaGara) {
@@ -172,9 +181,9 @@
 											.$elencoTipologieGare_row["PUNTEGGIO"]." punti)".
 										"</option>" );
 								}
-							}
+							}*/
 ?>
-						</select>							
+						</select>	-->						
 					</td>
 				</tr>			
 				<tr>
