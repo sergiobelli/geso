@@ -59,10 +59,10 @@
 		} else {
 			// validazione dei parametri tramite filtro per le stringhe
 			$idPresenza = trim($_POST['idPresenza']);
-			$atleta = trim($_POST['atleta']);
-			$gara = trim($_POST['gara']);
+			$atleta = trim($_POST['idAtleta']);
+			$gara = trim($_POST['idGara']);
 			$stagione = trim($_POST['stagione']);
-			$tipologiaGara = trim($_POST['tipologiaGara']);
+			$tipologiaGara = trim($_POST['idTipologiaGara']);
 			
 			if (isset($idPresenza) && $idPresenza != '') {
 				PresenzaManager::modifica(
@@ -131,7 +131,7 @@
                 $( "#tipologiaGara" ).autocomplete({
                     source: "controller/elencoTipologieGare.php",
 					select: function(event, ui){
-                        $("#idTipologiaGara").val(ui.item.idGara);
+                        $("#idTipologiaGara").val(ui.item.idTipologiaGara);
                     },
 					minLength: 2
                 });
