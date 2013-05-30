@@ -11,11 +11,24 @@
 	
 	global $presenza;
 	
-	global $idPresenza, $idAtleta, $idGara, $idStagione, $idTipologiaGara;
+	global $idPresenza, $idAtleta, $idGara, $idStagione, 
+		$idTipologiaGara, $posizioneAssoluta, $totaleAssoluti, 
+		$posizioneCategoria, $totaleCategoria;
 	$idPresenza = '';
+	
 	$idAtleta = '';
+	$descrizioneAtleta = '';
+	
 	$idGara = '';
+	$descrizioneGara = '';
 	$idStagione = '';
+		
+	$descrizioneTipologiaGara = '';
+	
+	/*$posizioneAssoluta = '';
+	$totaleAssoluti = '';
+	$posizioneCategoria = '';
+	$totaleCategoria = '';*/
 		
 	// inizializzazione della sessione
 	//session_start();
@@ -34,10 +47,25 @@
 		$presenza = PresenzaManager::get($_GET['idPresenza']);
 		while ($presenza_row = dbms_fetch_array($presenza)) {
 			$idPresenza = $presenza_row["ID"];
+			
 			$idAtleta = $presenza_row["ID_ATLETA"];
+			$descrizioneAtleta = $presenza_row["COGNOME_ATLETA"] . " " . $presenza_row["NOME_ATLETA"];
+			
 			$idGara = $presenza_row["ID_GARA"];
+			$descrizioneGara = $presenza_row["LOCALITA_GARA"] 
+				. " - " . $presenza_row["NOME_GARA"] 
+				. " (". $presenza_row["DATA_GARA"] . ")";
+			
 			$idStagione = $presenza_row["ID_STAGIONE"];
+			
 			$idTipologiaGara = $presenza_row["ID_TIPOLOGIA_GARA"];			
+			$descrizioneTipologiaGara = $presenza_row["TIPOLOGIA_GARA_DESCRIZIONE"] 
+				. " (" . $presenza_row["TIPOLOGIA_GARA_PUNTEGGIO"] . " punti)";
+			
+			/*$posizioneAssoluta = $presenza_row["POSIZIONE_ASSOLUTA"];
+			$totaleAssoluti = $presenza_row["TOTALE_ASSOLUTI"];
+			$posizioneCategoria = $presenza_row["POSIZIONE_CATEGORIA"];
+			$totaleCategoria = $presenza_row["TOTALE_CATEGORIA"];*/
 		}
 	} else if (isset($_GET['operazione']) && $_GET['operazione'] == 'cancella') {
 		$operazione = 'cancella';
@@ -148,44 +176,44 @@
 				<tr>
 					<td class="FacetFormHeaderFont">Atleta</td>
 					<td align="right">
-						<input type="text" id="atleta" name="atleta" size="80" />
-						<input type="hidden" id="idAtleta" name="idAtleta" />
+						<input type="text" id="atleta" name="atleta" size="80" value="<?php echo $descrizioneAtleta ?>" />
+						<input type="hidden" id="idAtleta" name="idAtleta" value="<?php echo $idAtleta ?>" />
 					</td>
 				</tr>				
 				<tr>
 					<td class="FacetFormHeaderFont">Gara</td>
 					<td align="right">
-						<input type="text" id="gara" name="gara" size="80" />
-						<input type="hidden" id="idGara" name="idGara" />
+						<input type="text" id="gara" name="gara" size="80" value="<?php echo $descrizioneGara ?>" />
+						<input type="hidden" id="idGara" name="idGara" value="<?php echo $idGara ?>" />
 					</td>
 				</tr>
 				<tr>
 					<td class="FacetFormHeaderFont">Tipologia Gara</td>
 					<td align="right">
-						<input type="text" id="tipologiaGara" name="tipologiaGara" size="80" />
-						<input type="hidden" id="idTipologiaGara" name="idTipologiaGara" />
+						<input type="text" id="tipologiaGara" name="tipologiaGara" size="80" value="<?php echo $descrizioneTipologiaGara ?>" />
+						<input type="hidden" id="idTipologiaGara" name="idTipologiaGara" value="<?php echo $idTipologiaGara ?>" />
+					</td>
+				</tr>
 						
-						<!--<select name="tipologiaGara">
-<?php
-							/*$TipologiaGaraManager = new TipologiaGaraManager();
-							$elencoTipologieGare = TipologiaGaraManager::lista();
-							while ($elencoTipologieGare_row = dbms_fetch_array($elencoTipologieGare)) {
-								if ($elencoTipologieGare_row["ID"] == $idTipologiaGara) {
-									print( "<option selected value='".$elencoTipologieGare_row["ID"]."'>"
-											.$elencoTipologieGare_row["TIPO"]. " - ("
-											.$elencoTipologieGare_row["PUNTEGGIO"]." punti)".
-										"</option>" );
-								} else {
-									print( "<option value='".$elencoTipologieGare_row["ID"]."'>"
-											.$elencoTipologieGare_row["TIPO"]. " - ("
-											.$elencoTipologieGare_row["PUNTEGGIO"]." punti)".
-										"</option>" );
-								}
-							}*/
-?>
-						</select>	-->						
+				<!--
+				<tr>
+					<td class="FacetFormHeaderFont">Posizione assoluta</td>
+					<td align="right">
+						<input type="text" id="posizioneAssoluta" name="posizioneAssoluta" size="5" />
+						<font class="FacetFormHeaderFont">/</font>
+						<input type="text" id="totaleAssoluti" name="totaleAssoluti" size="5" />			
+					</td>
+				</tr>
+				<tr>
+					<td class="FacetFormHeaderFont">Posizione di categoria</td>
+					<td align="right">
+						<input type="text" id="posizioneCategoria" name="posizioneCategoria" size="5" />
+						<font class="FacetFormHeaderFont">/</font>
+						<input type="text" id="totaleCategoria" name="totaleCategoria" size="5" />			
 					</td>
 				</tr>			
+				-->
+				
 				<tr>
 					<td class="FacetFormHeaderFont">Stagione</td>
 					<td align="right">

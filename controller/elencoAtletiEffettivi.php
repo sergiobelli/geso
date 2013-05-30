@@ -13,7 +13,8 @@ $conn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
 	$cmd = 'SELECT id, cognome, nome 
 		FROM atleta 
 		WHERE (cognome LIKE :cognome or nome like :nome) 
-			and (ex_atleta is null or ex_atleta = \'N\') ';
+			and (ex_atleta is null or ex_atleta = \'N\') 
+		order by cognome, nome';
 
 	$term = "%" . $_GET['term'] . "%";
 
@@ -29,8 +30,8 @@ $row_array = array();
 		$nome = utf8_encode($row['nome']);
 		$cognome = utf8_encode($row['cognome']);
 		
-		$row_array['value'] = $nome . " " . $cognome;
-		$row_array['label'] = $nome . " " . $cognome;
+		$row_array['value'] = $cognome . " " . $nome;
+		$row_array['label'] = $cognome . " " . $nome;
 		
 		$row_array['idAtleta'] = $row['id'];
 		
