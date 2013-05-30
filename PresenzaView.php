@@ -133,6 +133,11 @@
 			
 			$(function(){
 				$( "#cancella" ).button();
+				$( "#cancella" ).click( 
+					function() { 
+						$('#modulo_presenza')[0].reset();
+					} 
+				);
 			});
 			
 			$(function() {
@@ -171,7 +176,7 @@
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 	
 		<div align="center">Inserimento/Modifica Presenza</div>
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+		<form id="modulo_presenza" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 			<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 				<tr>
 					<td class="FacetFormHeaderFont">Atleta</td>

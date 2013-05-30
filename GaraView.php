@@ -117,8 +117,14 @@
 			$(function(){
 				$( "#salva" ).button();
 			});
+			
 			$(function(){
 				$( "#cancella" ).button();
+				$( "#cancella" ).click( 
+					function() { 
+						$('#modulo_gara')[0].reset();
+					} 
+				);
 			});
 			
 			$(function(){

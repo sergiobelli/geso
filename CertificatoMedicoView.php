@@ -98,8 +98,14 @@
 			$(function(){
 				$( "#salva" ).button();
 			});
+			
 			$(function(){
 				$( "#cancella" ).button();
+				$( "#cancella" ).click( 
+					function() { 
+						$('#modulo_certificato')[0].reset();
+					} 
+				);
 			});
 			
 			$(function(){

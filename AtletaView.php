@@ -187,8 +187,14 @@
 			$(function(){
 				$( "#salva" ).button();
 			});
+			
 			$(function(){
 				$( "#cancella" ).button();
+				$( "#cancella" ).click( 
+					function() { 
+						$('#modulo_atleta')[0].reset();
+					} 
+				);
 			});
 			
 			$(function(){
