@@ -14,6 +14,7 @@
 	global $idPresenza, $idAtleta, $idGara, $idStagione, 
 		$idTipologiaGara, $posizioneAssoluta, $totaleAssoluti, 
 		$posizioneCategoria, $totaleCategoria;
+		
 	$idPresenza = '';
 	
 	$idAtleta = '';
@@ -133,6 +134,13 @@
 		    $(function(){
                 caricaTabella();
 				
+				$("#salva").click(function(){               
+                    $("#modulo_presenza").ajaxSubmit({                     
+                        success: caricaTabella,
+                        clearForm: true                      
+                    })
+                })
+				
 				function caricaTabella(){
 					$.getJSON(
 						"controller/elencoPresenze.php",
@@ -234,9 +242,10 @@
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 	
 		<div align="center">Inserimento/Modifica Presenza</div>
-		<form id="modulo_presenza" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+		<form id="modulo_presenza" action="controller/salvaPresenza.php">
 			
 			<input type="hidden" id="idStagioneSessione" name="idStagioneSessione" value="<?php echo $idStagioneSessione ?>" />
+			<input type="hidden" id="idPresenza" name="idPresenza" value="<?php echo $idPresenza ?>" />
 			
 			<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 				<tr>
@@ -307,7 +316,7 @@
 					<td align="center">&nbsp;</td>
 					<td align="right">
 						<input class="FacetButton" type="button" id="cancella" name="cancella" value="cancella" />
-						<input class="FacetButton" type="submit" id="salva" name="submit" value="salva" />
+						<input class="FacetButton" type="button" id="salva" name="submit" value="salva" />
 					</td>
 				</tr>
 			</table>

@@ -11,6 +11,8 @@ $conn = null;
 try {
 	$conn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
 
+	$idStagione = $_GET['idStagione'];
+	
 	$cmd = "
 		select 
 			p.ID as ID,
