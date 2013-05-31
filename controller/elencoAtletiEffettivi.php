@@ -10,7 +10,7 @@ $dbpass = $ConfigManager->getPassword ();
 $conn = null;
 try {
 $conn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
-	$cmd = 'SELECT id, cognome, nome 
+	$cmd = 'SELECT id, cognome, nome, sesso
 		FROM atleta 
 		WHERE (cognome LIKE :cognome or nome like :nome) 
 			and (ex_atleta is null or ex_atleta = \'N\') 
@@ -34,6 +34,7 @@ $row_array = array();
 		$row_array['label'] = $cognome . " " . $nome;
 		
 		$row_array['idAtleta'] = $row['id'];
+		$row_array['sessoAtleta'] = $row['sesso'];
 		
         array_push($return_arr,$row_array);
 	}
