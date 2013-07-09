@@ -1,9 +1,19 @@
 <?php
+
+// inizializzazione della sessione
+session_start();
+
 require_once("ConfigManager.php");
+require_once("StagioneManager.php");
+
 $ConfigManager = new ConfigManager();
+$ambiente = $ConfigManager->getAmbiente();
 $versione = $ConfigManager->getVersione();
 $utenza = $_SESSION['username'];
-$stagione = $_SESSION['stagione'];
+
+$StagioneManager = new StagioneManager();
+$stagione = $StagioneManager->getDescrizioneStagione($_SESSION['idStagioneSessione']);
+
 ?>
 <title>.: GESO - Gestione Societ&agrave; - Atletica Valsesia :.</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -34,6 +44,7 @@ $stagione = $_SESSION['stagione'];
 <div align="right" class="version">
 	<table>
 		<tr><td>versione    : </td><td><?php echo $versione; ?></td></tr>
+		<tr><td>ambiente    : </td><td><?php echo $ambiente; ?></td></tr>
 		<tr><td>utenza      : </td><td><?php echo $utenza; ?></td></tr>
 		<tr><td>stagione    : </td><td><?php echo $stagione; ?></td></tr>
 	</table>

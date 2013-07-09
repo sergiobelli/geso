@@ -80,7 +80,7 @@
 			$stagione = trim($_POST['stagione']);
 			
 			if (isset($idGara) && $idGara != '') {
-				GaraManager::modifica($idGara, $nome, $localita, $campionato, $nostra, $data, $_SESSION['stagione']);
+				GaraManager::modifica($idGara, $nome, $localita, $campionato, $nostra, $data, $_SESSION['idStagioneSessione']);
 				$idGara = null;
 				$operazione = null;
 				$nome = null;
@@ -90,7 +90,7 @@
 				$data = null;
 				$stagione = null;
 			} else {
-				GaraManager::inserisci($nome, $localita, $campionato, $nostra, $data, $_SESSION['stagione']);			
+				GaraManager::inserisci($nome, $localita, $campionato, $nostra, $data, $_SESSION['idStagioneSessione']);			
 				$idGara = null;
 				$operazione = null;
 				$nome = null;
@@ -252,7 +252,7 @@
 							$elencoStagioni = StagioneManager::lista();
 							while ($elencoStagioni_row = dbms_fetch_array($elencoStagioni)) {
 
-									if ($elencoStagioni_row["ID"] == $_SESSION['stagione']) {
+									if ($elencoStagioni_row["ID"] == $_SESSION['idStagioneSessione']) {
 										print( "<option selected value='".$elencoStagioni_row["ID"]."'>".$elencoStagioni_row["ANNO"]."</option>" );
 									} else {
 										print( "<option value='".$elencoStagioni_row["ID"]."'>".$elencoStagioni_row["ANNO"]."</option>" );
@@ -283,7 +283,8 @@
 			Elenco Gare
 		</div>
 <?php
-		$elencoGare = GaraManager::lista($_SESSION['stagione']);
+
+		$elencoGare = GaraManager::lista($_SESSION['idStagioneSessione']);
 ?>		
 		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 			<tr>

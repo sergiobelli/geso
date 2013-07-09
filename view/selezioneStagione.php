@@ -1,10 +1,19 @@
 <?php
 	
+// inizializzazione della sessione
+session_start();
+	
 	require_once("../StagioneManager.php");
 	require_once("../CategoriaManager.php");
 	
-	// inizializzazione della sessione
-	//session_start();
+
+$ConfigManager = new ConfigManager();
+$versione = $ConfigManager->getVersione();
+$utenza   = $_SESSION['username'];
+$ambiente = $ConfigManager->getAmbiente();
+$stagione = "n.d.";
+
+	
 	// se la sessione di autenticazione
 	// è già impostata non sarà necessario effettuare il login
 	// e il browser verrà reindirizzato alla pagina di scrittura dei post
@@ -19,7 +28,7 @@
 			) {
 		
 		
-			$_SESSION['stagione'] = $_POST['stagione'];
+		$_SESSION['idStagioneSessione'] = $_POST['stagione'];
 
 			$elencoCategorie = null;
 			
@@ -72,6 +81,15 @@
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 		
+<div align="right" class="version">
+	<table>
+		<tr><td>versione    : </td><td><?php echo $versione; ?></td></tr>
+		<tr><td>ambiente    : </td><td><?php echo $ambiente; ?></td></tr>
+		<tr><td>utenza      : </td><td><?php echo $utenza; ?></td></tr>
+		<tr><td>stagione    : </td><td><?php echo $stagione; ?></td></tr>
+	</table>
+</div>
+
 		<div align="center">Selezione stagione</div>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 			<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">

@@ -3,24 +3,25 @@
 <?php
 	require_once("LoginManager.php");
 	require_once("AccessiManager.php");
-	//require_once("util/Log.php");
+	require_once("ConfigManager.php");
 	
 	global $username, $password, $message;
 
-	//$conf = array('mode' => 0600, 'timeFormat' => '%X %x');
-   //$logger = &Log::singleton('file', 'logs/login.log', 'geso', $conf);
-		
+	$ConfigManager = new ConfigManager();
+	$versione = $ConfigManager->getVersione();
+	$ambiente = $ConfigManager->getAmbiente();
+	$utenza = "n.d.";
+	$stagione = "n.d.";
+	
 	$LoginManager = new LoginManager();
 	$AccessiManager = new AccessiManager();
 				
 	if (isset($_POST['username']) && isset($_POST['password'])) {
 		
-		//$logger->log("login done by ".$_POST['username']);
 		$auth = $LoginManager->autenticate($_POST['username'],$_POST['password']);
 		
 		if (mysql_num_rows($auth)!=0) {
 			
-			//$logger->log("login done by ".$_POST['username']);
 			session_start();
 			$_SESSION['login'] = 'autorizzato';
 			$_SESSION['username'] = $_POST['username'];
@@ -39,7 +40,6 @@
 			header("Location: view/selezioneStagione.php");
 		} else {
 			
-			//$logger->log("login failed by ".$_POST['username']);
 			AccessiManager::inserisci(
 				$_POST['username'], 
 				$_SERVER['REMOTE_ADDR'], 
@@ -73,6 +73,17 @@
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 		
 <br/>
+
+
+<div align="right" class="version">
+	<table>
+		<tr><td>versione    : </td><td><?php echo $versione; ?></td></tr>
+		<tr><td>ambiente    : </td><td><?php echo $ambiente; ?></td></tr>
+		<tr><td>utenza      : </td><td><?php echo $utenza; ?></td></tr>
+		<tr><td>stagione    : </td><td><?php echo $stagione; ?></td></tr>
+	</table>
+</div>
+
 <div align="center"><b>Gestione Societ&agrave; - Atletica Valsesia</b></div>
 <br/>
 
@@ -88,7 +99,7 @@
 				</tr>
 				<tr>
 					<td align="center">&nbsp;</td>
-					<td align="right"><input type="submit" id="salva" name="salva" class="FacetButton"/></td>
+					<td align="right"><input type="submit" id="salva" name="salva" value="login" class="FacetButton"/></td>
 				</tr>
 <?php 
 			if (isset($message)) { 

@@ -8,8 +8,8 @@
 	$StagioneManager = new StagioneManager();
 	if (isset($_GET['idStagione'])) {
 		$stagione = $_GET['idStagione'];
-	} else if (isset($_SESSION['stagione'])) {
-		$stagione = $_SESSION['stagione'];
+	} else if (isset($_SESSION['idStagioneSessione'])) {
+		$stagione = $_SESSION['idStagioneSessione'];
 	} else {
 		$stagione = $StagioneManager::getUltimaStagione();
 	}

@@ -14,21 +14,26 @@
 	global $idPresenza, $idAtleta, $idGara, $idStagione, 
 		$idTipologiaGara, $posizioneAssoluta, $totaleAssoluti, 
 		$posizioneCategoria, $totaleCategoria;
+		
 	$idPresenza = '';
 	
 	$idAtleta = '';
+	$sessoAtleta = '';
 	$descrizioneAtleta = '';
 	
 	$idGara = '';
 	$descrizioneGara = '';
 	$idStagione = '';
 		
+$idStagioneSessione = $_SESSION['idStagioneSessione'];
+	
 	$descrizioneTipologiaGara = '';
 	
-	/*$posizioneAssoluta = '';
+	$posizioneAssoluta = '';
+	$posizioneAssolutaFemminile = '';
 	$totaleAssoluti = '';
 	$posizioneCategoria = '';
-	$totaleCategoria = '';*/
+	$totaleCategoria = '';
 		
 	// inizializzazione della sessione
 	//session_start();
@@ -62,10 +67,10 @@
 			$descrizioneTipologiaGara = $presenza_row["TIPOLOGIA_GARA_DESCRIZIONE"] 
 				. " (" . $presenza_row["TIPOLOGIA_GARA_PUNTEGGIO"] . " punti)";
 			
-			/*$posizioneAssoluta = $presenza_row["POSIZIONE_ASSOLUTA"];
+			$posizioneAssoluta = $presenza_row["POSIZIONE_ASSOLUTA"];
 			$totaleAssoluti = $presenza_row["TOTALE_ASSOLUTI"];
 			$posizioneCategoria = $presenza_row["POSIZIONE_CATEGORIA"];
-			$totaleCategoria = $presenza_row["TOTALE_CATEGORIA"];*/
+			$totaleCategoria = $presenza_row["TOTALE_CATEGORIA"];
 		}
 	} else if (isset($_GET['operazione']) && $_GET['operazione'] == 'cancella') {
 		$operazione = 'cancella';
@@ -97,7 +102,7 @@
 					$idPresenza, 
 					$atleta, 
 					$gara,  
-					$_SESSION['stagione'],
+					$_SESSION['idStagioneSessione'],
 					$tipologiaGara);
 				$idPresenza = null;
 				$operazione = null;
@@ -108,7 +113,7 @@
 				PresenzaManager::inserisci(
 					$atleta, 
 					$gara, 
-					$_SESSION['stagione'],
+					$_SESSION['idStagioneSessione'],
 					$tipologiaGara);
 				$idPresenza = null;
 				$operazione = null;
@@ -128,6 +133,113 @@
 		<script type="text/javascript">
 		
 			$(function(){
+                caricaTabella();
+				
+				$("#salva").click(function(){
+                    $("#modulo_presenza").ajaxSubmit({
+						
+						//validazione form
+						beforeSubmit: function() {
+							$("#modulo_presenza").validate({
+								rules: {
+									atleta:{ required: true },
+									gara:{ required: true },
+									tipologiaGara:{ required: true },
+									stagione: { required: true }
+								},
+								messages:{                    	
+									atleta:{ required: "Specificare l'atleta!" },
+									gara:{ required: "Specificare la gara!" },
+									tipologiaGara:{ required: "Specificare la tipologia di gara!" },
+									stagione:{ required: "Specificare la stagione!" }
+								},
+								
+								submitHandler: function(form) { 
+									form.submit();
+								},
+
+								invalidHandler: function() { 
+									$( "#dialogKo" ).dialog("open");
+								}	
+
+							});
+							return $('#modulo_presenza').valid();
+						},
+						
+                        success: caricaTabella,
+                        clearForm: false
+						
+                    })
+                })
+				
+				function caricaTabella(){
+				
+					pulisciForm(),
+				
+					$.getJSON(
+						"controller/elencoPresenze.php",
+						{idStagione:$("#idStagioneSessione").val()},
+						function(data){
+						
+							var contatore = '0';
+							$.each(data, function(i, data){ contatore++; });
+							
+							var tabella = 
+								"<table border='0' cellpadding='3' cellspacing='1' class='FacetFormTABLE' align='center'>" + 
+								"	<tr> " + 
+								"		<td class='FacetFormHeaderFont'>#</td> " + 
+								"		<td class='FacetFormHeaderFont'>Atleta</td> " + 
+								"		<td class='FacetFormHeaderFont'>Gara</td> " + 
+								"		<td class='FacetFormHeaderFont'>Tipologia gara</td> " + 
+								"		<td class='FacetFormHeaderFont'>Data Gara</td> " + 
+								"		<td class='FacetFormHeaderFont'>Stagione</td> " + 
+								"		<td class='FacetFormHeaderFont' colspan='2'>Operazioni</td> " + 
+								"	</tr> ";
+								
+							$.each(data, function(i, data){
+								var riga = 	
+									"<tr>" +
+									"	<td class=\"FacetDataTD\" align=\"left\">"+contatore+"</td>" +
+									"	<td class=\"FacetDataTD\" align=\"left\">"+data.cognomeAtleta+"&nbsp;"+data.nomeAtleta+" &nbsp;</td>" +
+									"	<td class=\"FacetDataTD\" align=\"left\">"+data.localitaGara+" - "+data.nomeGara+"</td>" +
+									"	<td class=\"FacetDataTD\" align=\"center\">"+data.tipologiaGaraDescrizione+" ("+data.tipologiaGaraPunteggio+" punti)</td>" +			
+									"	<td class=\"FacetDataTD\" align=\"left\">"+data.dataGara+"</td>" +
+									"	<td class=\"FacetDataTD\" align=\"center\">"+data.anno+" &nbsp;</td>" +
+									"	<td class=\"FacetDataTD\" align=\"center\"><a href='PresenzaView.php?operazione=modifica&idPresenza="+data.id+"'>modifica</a></td>" +
+									"	<td class=\"FacetDataTD\" align=\"center\"><a href='PresenzaView.php?operazione=cancella&idPresenza="+data.id+"'>cancella</a></td>";
+									"</tr>";
+								contatore--;
+								tabella = tabella + riga;
+							});
+							
+							tabella = tabella + "</table>";
+							
+							$("#elencoPresenze").html("");
+							
+							$(tabella).appendTo("#elencoPresenze");
+						}
+					);
+				};
+				
+				function pulisciForm() {
+					$("#idPresenza").val("");
+					$("#atleta").val("");
+					$("#idAtleta").val("");
+					$("#sessoAtleta").val("");
+					$("#gara").val("");
+					$("#idGara").val("");
+					$("#tipologiaGara").val("");
+					$("#idTipologiaGara").val("");
+					$("#posizioneAssoluta").val("");
+					$("#totaleAssoluti").val("");
+					$("#posizioneAssolutaFemminile").val("");
+					$("#posizioneCategoria").val("");
+					$("#totaleCategoria").val("");
+				}
+				
+			});
+
+			$(function(){
 				$( "#salva" ).button();
 			});
 			
@@ -145,6 +257,14 @@
                     source: "controller/elencoAtletiEffettivi.php",
 					select: function(event, ui){
                         $("#idAtleta").val(ui.item.idAtleta);
+						$("#sessoAtleta").val(ui.item.sessoAtleta);
+						if ($("#sessoAtleta").val() == 'F') {
+							$('#rigaPosizioneAssolutaFemminile').css('display', 'block');
+							$('#rigaPosizioneAssolutaFemminile').css('align', 'right');
+						} else {
+							$('#rigaPosizioneAssolutaFemminile').css('display', 'none');
+							$('#rigaPosizioneAssolutaFemminile').css('align', 'right');
+						}
                     },
 					minLength: 2
                 });
@@ -169,6 +289,7 @@
 					minLength: 2
                 });
             });
+			
 		</script>
 		
 		
@@ -176,13 +297,18 @@
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 	
 		<div align="center">Inserimento/Modifica Presenza</div>
-		<form id="modulo_presenza" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+		<form id="modulo_presenza" action="controller/salvaPresenza.php">
+			
+			<input type="hidden" id="idStagioneSessione" name="idStagioneSessione" value="<?php echo $idStagioneSessione ?>" />
+			<input type="hidden" id="idPresenza" name="idPresenza" value="<?php echo $idPresenza ?>" />
+			
 			<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
 				<tr>
 					<td class="FacetFormHeaderFont">Atleta</td>
 					<td align="right">
 						<input type="text" id="atleta" name="atleta" size="80" value="<?php echo $descrizioneAtleta ?>" />
 						<input type="hidden" id="idAtleta" name="idAtleta" value="<?php echo $idAtleta ?>" />
+						<input type="hidden" id="sessoAtleta" name="sessoAtleta" value="<?php echo $sessoAtleta ?>" />
 					</td>
 				</tr>				
 				<tr>
@@ -200,7 +326,6 @@
 					</td>
 				</tr>
 						
-				<!--
 				<tr>
 					<td class="FacetFormHeaderFont">Posizione assoluta</td>
 					<td align="right">
@@ -209,6 +334,12 @@
 						<input type="text" id="totaleAssoluti" name="totaleAssoluti" size="5" />			
 					</td>
 				</tr>
+				<tr id="rigaPosizioneAssolutaFemminile" style="display: none" >
+					<td class="FacetFormHeaderFont">Posizione assoluta femminile</td>
+					<td align="right">
+						<input type="text" id="posizioneAssolutaFemminile" name="posizioneAssolutaFemminile" size="5" />
+					</td>
+				</tr>				
 				<tr>
 					<td class="FacetFormHeaderFont">Posizione di categoria</td>
 					<td align="right">
@@ -217,7 +348,6 @@
 						<input type="text" id="totaleCategoria" name="totaleCategoria" size="5" />			
 					</td>
 				</tr>			
-				-->
 				
 				<tr>
 					<td class="FacetFormHeaderFont">Stagione</td>
@@ -227,7 +357,7 @@
 							$StagioneManager = new StagioneManager();
 							$elencoStagioni = StagioneManager::lista();
 							while ($elencoStagioni_row = dbms_fetch_array($elencoStagioni)) {
-								if ($elencoStagioni_row["ID"] == $_SESSION['stagione']) {
+								if ($elencoStagioni_row["ID"] == $_SESSION['idStagioneSessione']) {
 									print( "<option selected value='".$elencoStagioni_row["ID"]."'>".$elencoStagioni_row["ANNO"]."</option>" );
 								} else {
 									print( "<option value='".$elencoStagioni_row["ID"]."'>".$elencoStagioni_row["ANNO"]."</option>" );
@@ -241,7 +371,7 @@
 					<td align="center">&nbsp;</td>
 					<td align="right">
 						<input class="FacetButton" type="button" id="cancella" name="cancella" value="cancella" />
-						<input class="FacetButton" type="submit" id="salva" name="submit" value="salva" />
+						<input class="FacetButton" type="button" id="salva" name="submit" value="salva" />
 					</td>
 				</tr>
 			</table>
@@ -253,48 +383,8 @@
 		
 	
 	
-		<div align="center">
-			Elenco Presenze
-		</div>
-<?php
-$PresenzaManager = new PresenzaManager();
+		<div align="center">Elenco Presenze</div>
+		<div id="elencoPresenze"></div>
 
-?>		
-		<table border="0" cellpadding="3" cellspacing="1" class="FacetFormTABLE" align="center">
-			<tr>
-				<td class="FacetFormHeaderFont">#</td>
-				<td class="FacetFormHeaderFont">Atleta</td>
-				<td class="FacetFormHeaderFont">Gara</td>
-				<td class="FacetFormHeaderFont">Tipologia gara</td>
-				<td class="FacetFormHeaderFont">Data Gara</td>
-				<td class="FacetFormHeaderFont">Stagione</td>
-				<td class="FacetFormHeaderFont" colspan="2">Operazioni</td>
-			</tr>
-<?php
-	  $contatore = 0;
-
-      $elencoPresenze = PresenzaManager::lista($_SESSION['stagione']);
-		while ($elencoPresenze_row = dbms_fetch_array($elencoPresenze)) {
-			$contatore++;
-		}
-		
-		//$contatore = mysql_fetch_assoc($elencoPresenze);
-
-                $elencoPresenze = PresenzaManager::lista($_SESSION['stagione']);
-		while ($elencoPresenze_row = dbms_fetch_array($elencoPresenze)) {
-			print "<tr>";
-			print "<td class=\"FacetDataTD\" align=\"left\">".$contatore."</td>";
-			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoPresenze_row["COGNOME_ATLETA"]."&nbsp;".$elencoPresenze_row["NOME_ATLETA"]." &nbsp;</td>";
-			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoPresenze_row["LOCALITA_GARA"]." - ".$elencoPresenze_row["NOME_GARA"]."</td>";
-			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoPresenze_row["TIPOLOGIA_GARA_DESCRIZIONE"]." (".$elencoPresenze_row["TIPOLOGIA_GARA_PUNTEGGIO"]." punti)</td>";				
-			print "<td class=\"FacetDataTD\" align=\"left\">".$elencoPresenze_row["DATA_GARA"]."</td>";
-			print "<td class=\"FacetDataTD\" align=\"center\">".$elencoPresenze_row["ANNO"]." &nbsp;</td>";
-			print "<td class=\"FacetDataTD\" align=\"center\"><a href='PresenzaView.php?operazione=modifica&idPresenza=".$elencoPresenze_row["ID"]."'>modifica</a></td>";
-			print "<td class=\"FacetDataTD\" align=\"center\"><a href='PresenzaView.php?operazione=cancella&idPresenza=".$elencoPresenze_row["ID"]."'>cancella</a></td>";
-			print "</tr>";
-			$contatore--;
-		}
-?>			
-		</table>
 	</body>
 </html>

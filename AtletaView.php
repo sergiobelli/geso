@@ -466,7 +466,7 @@
 		
 		require_once("StagioneManager.php");
 		$StagioneManager = new StagioneManager();
-		$annoAttuale = StagioneManager::getDescrizioneStagione($_SESSION['stagione']);
+		$annoAttuale = StagioneManager::getDescrizioneStagione($_SESSION['idStagioneSessione']);
 		$DiffUtil = new DiffUtil();
 		
 		while ($elencoAtleti_row = dbms_fetch_array($elencoAtleti)) {

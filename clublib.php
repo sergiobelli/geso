@@ -1,6 +1,8 @@
 <?php
 global $PHP_SELF;
-session_start();
+//session_start();
+
+
 
 //session_register("session");
 

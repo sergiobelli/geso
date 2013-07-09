@@ -24,7 +24,8 @@
 	$idGara = '';
 	$descrizioneGara = '';
 	$idStagione = '';
-	$idStagioneSessione = $_SESSION['stagione'];
+	
+$idStagioneSessione = $_SESSION['idStagioneSessione'];
 	
 	$descrizioneTipologiaGara = '';
 	

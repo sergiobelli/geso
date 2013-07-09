@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once("../ConfigManager.php");
 $ConfigManager = new ConfigManager();
 $dbhost = $ConfigManager->getHost ();
@@ -14,7 +16,7 @@ try {
 	$cmd = 'SELECT g.id, g.localita, g.nome, g.data 
 		FROM gara g, stagione s 
 		WHERE (g.localita LIKE :localita or g.nome like :nome) 
-			and g.id_stagione = s.id and s.id = '.$_SESSION['stagione'].' 
+			and g.id_stagione = s.id and s.id = '.$_SESSION['idStagioneSessione'].' 
 		order by g.data desc, g.nome, g.localita';
 
 	$term = "%" . $_GET['term'] . "%";
