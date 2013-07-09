@@ -36,6 +36,25 @@ $stagione = $StagioneManager->getDescrizioneStagione($_SESSION['idStagioneSessio
     <script type="text/javascript" src="js/jquery.form.js"></script>
     <script type="text/javascript" src="js/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="js/jquery.validationEngine-it.js"></script>
+	<script type="text/javascript">
+            $(function(){
+                var browser
+                if ($.browser.msie) {
+                    browser = "Internet Explorer";
+                } else if ($.browser.mozilla) {
+                    browser = "Mozilla";
+                }else if ($.browser.webkit) {
+                    browser = "SafariWE";
+                }else if ($.browser.opera) {
+                    browser = "Opera";
+                } else {
+                    browser = "sconosciuto"
+                }
+                var versione = $.browser.version
+
+                $("#browser").append(browser + " versione: " + versione)
+            })
+        </script>
 
 </head>
 	
@@ -43,10 +62,11 @@ $stagione = $StagioneManager->getDescrizioneStagione($_SESSION['idStagioneSessio
 
 <div align="right" class="version">
 	<table>
-		<tr><td>versione    : </td><td><?php echo $versione; ?></td></tr>
-		<tr><td>ambiente    : </td><td><?php echo $ambiente; ?></td></tr>
-		<tr><td>utenza      : </td><td><?php echo $utenza; ?></td></tr>
-		<tr><td>stagione    : </td><td><?php echo $stagione; ?></td></tr>
+		<tr><td>versione</td><td>:</td><td><?php echo $versione; ?></td></tr>
+		<tr><td>ambiente</td><td>:</td><td><?php echo $ambiente; ?></td></tr>
+		<tr><td>utenza</td><td>:</td><td><?php echo $utenza; ?></td></tr>
+		<tr><td>stagione</td><td>:</td><td><?php echo $stagione; ?></td></tr>
+		<tr><td>browser</td><td>:</td><td id="browser"></td></tr>
 	</table>
 </div>
 
@@ -62,7 +82,8 @@ $stagione = $StagioneManager->getDescrizioneStagione($_SESSION['idStagioneSessio
 	<a href="PresenzaView.php"> Presenze </a>								| 
 	<a href="ClassificaView.php" target="new"> Classifica </a>		
 	&nbsp;&nbsp;&nbsp;															
-	<a href="AccessiView.php"> Accessi </a>		
+	<a href="AccessiView.php"> Accessi </a>									| 
+	<a href="view/diagnostica.php" target="new"> Diagnostica </a>	
 </div>
 
 <br /><br />

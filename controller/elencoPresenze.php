@@ -26,6 +26,11 @@ try {
 			tg.ID as ID_TIPOLOGIA_GARA,
 			tg.TIPO as TIPOLOGIA_GARA_DESCRIZIONE,
 			tg.PUNTEGGIO as TIPOLOGIA_GARA_PUNTEGGIO,
+			p.POSIZIONE_ASSOLUTA as POSIZIONE_ASSOLUTA,
+			p.TOTALE_ASSOLUTI as TOTALE_ASSOLUTI,
+			p.POSIZIONE_CATEGORIA as POSIZIONE_CATEGORIA,
+			p.TOTALE_CATEGORIA as TOTALE_CATEGORIA,
+			p.BONUS as BONUS,
 			s.ID as ID_STAGIONE,
 			s.ANNO as ANNO
 		from 
@@ -60,6 +65,13 @@ try {
 		$row_array['tipologiaGara'] = utf8_encode($row['ID_TIPOLOGIA_GARA']);
 		$row_array['tipologiaGaraDescrizione'] = utf8_encode($row['TIPOLOGIA_GARA_DESCRIZIONE']);
 		$row_array['tipologiaGaraPunteggio'] = utf8_encode($row['TIPOLOGIA_GARA_PUNTEGGIO']);
+		
+		$row_array['posizioneAssoluta'] = utf8_encode($row['POSIZIONE_ASSOLUTA']);
+		$row_array['totaleAssoluti'] = utf8_encode($row['TOTALE_ASSOLUTI']);
+		$row_array['posizioneCategoria'] = utf8_encode($row['POSIZIONE_CATEGORIA']);
+		$row_array['totaleCategoria'] = utf8_encode($row['TOTALE_CATEGORIA']);
+		$row_array['bonus'] = utf8_encode($row['BONUS']);
+		
 		$row_array['idStagione'] = utf8_encode($row['ID_STAGIONE']);
 		$row_array['anno'] = utf8_encode($row['ANNO']);
 		array_push($return_arr,$row_array);

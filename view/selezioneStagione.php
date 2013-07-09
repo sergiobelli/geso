@@ -76,17 +76,35 @@ $stagione = "n.d.";
 			$(function(){
 				$( "#seleziona" ).button();
 			});
+
+            $(function(){
+                var browser
+                if ($.browser.msie) {
+                    browser = "Internet Explorer";
+                } else if ($.browser.mozilla) {
+                    browser = "Mozilla";
+                }else if ($.browser.webkit) {
+                    browser = "SafariWE";
+                }else if ($.browser.opera) {
+                    browser = "Opera";
+                } else {
+                    browser = "sconosciuto"
+                }
+                var versione = $.browser.version
+
+                $("#browser").append(browser + " versione: " + versione)
+            })
 		</script>
-		
 	</head>
 	<body bgcolor="#FFFFFF" link="#504C43" alink="#000000" vlink="#504C43" text="#000000">
 		
 <div align="right" class="version">
 	<table>
-		<tr><td>versione    : </td><td><?php echo $versione; ?></td></tr>
-		<tr><td>ambiente    : </td><td><?php echo $ambiente; ?></td></tr>
-		<tr><td>utenza      : </td><td><?php echo $utenza; ?></td></tr>
-		<tr><td>stagione    : </td><td><?php echo $stagione; ?></td></tr>
+		<tr><td>versione</td><td>:</td><td><?php echo $versione; ?></td></tr>
+		<tr><td>ambiente</td><td>:</td><td><?php echo $ambiente; ?></td></tr>
+		<tr><td>utenza</td><td>:</td><td><?php echo $utenza; ?></td></tr>
+		<tr><td>stagione</td><td>:</td><td><?php echo $stagione; ?></td></tr>
+		<tr><td>browser</td><td>:</td><td id="browser"></td></tr>
 	</table>
 </div>
 

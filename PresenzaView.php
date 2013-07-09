@@ -191,6 +191,9 @@ $idStagioneSessione = $_SESSION['idStagioneSessione'];
 								"		<td class='FacetFormHeaderFont'>Atleta</td> " + 
 								"		<td class='FacetFormHeaderFont'>Gara</td> " + 
 								"		<td class='FacetFormHeaderFont'>Tipologia gara</td> " + 
+								"		<td class='FacetFormHeaderFont'>Posizione assoluta</td> " + 
+								"		<td class='FacetFormHeaderFont'>Posizione categoria</td> " + 
+								"		<td class='FacetFormHeaderFont'>Bonus</td> " + 
 								"		<td class='FacetFormHeaderFont'>Data Gara</td> " + 
 								"		<td class='FacetFormHeaderFont'>Stagione</td> " + 
 								"		<td class='FacetFormHeaderFont' colspan='2'>Operazioni</td> " + 
@@ -203,6 +206,9 @@ $idStagioneSessione = $_SESSION['idStagioneSessione'];
 									"	<td class=\"FacetDataTD\" align=\"left\">"+data.cognomeAtleta+"&nbsp;"+data.nomeAtleta+" &nbsp;</td>" +
 									"	<td class=\"FacetDataTD\" align=\"left\">"+data.localitaGara+" - "+data.nomeGara+"</td>" +
 									"	<td class=\"FacetDataTD\" align=\"center\">"+data.tipologiaGaraDescrizione+" ("+data.tipologiaGaraPunteggio+" punti)</td>" +			
+									"	<td class=\"FacetDataTD\" align=\"center\">" + data.posizioneAssoluta + " / " + data.totaleAssoluti + "</td>" +
+									"	<td class=\"FacetDataTD\" align=\"center\">" + data.posizioneCategoria + " / " + data.totaleCategoria + "</td>" +
+									"	<td class=\"FacetDataTD\" align=\"center\">" + data.bonus + "</td>" +
 									"	<td class=\"FacetDataTD\" align=\"left\">"+data.dataGara+"</td>" +
 									"	<td class=\"FacetDataTD\" align=\"center\">"+data.anno+" &nbsp;</td>" +
 									"	<td class=\"FacetDataTD\" align=\"center\"><a href='PresenzaView.php?operazione=modifica&idPresenza="+data.id+"'>modifica</a></td>" +
@@ -258,13 +264,13 @@ $idStagioneSessione = $_SESSION['idStagioneSessione'];
 					select: function(event, ui){
                         $("#idAtleta").val(ui.item.idAtleta);
 						$("#sessoAtleta").val(ui.item.sessoAtleta);
-						if ($("#sessoAtleta").val() == 'F') {
+						/*if ($("#sessoAtleta").val() == 'F') {
 							$('#rigaPosizioneAssolutaFemminile').css('display', 'block');
 							$('#rigaPosizioneAssolutaFemminile').css('align', 'right');
 						} else {
 							$('#rigaPosizioneAssolutaFemminile').css('display', 'none');
 							$('#rigaPosizioneAssolutaFemminile').css('align', 'right');
-						}
+						}*/
                     },
 					minLength: 2
                 });
